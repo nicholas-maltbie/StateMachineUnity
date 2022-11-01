@@ -17,11 +17,11 @@
   ],
   "samples": [
     {
-      "displayName": "Example Sample",
-      "description": "Example Sample folder for template project.",
-      "path": "Samples~/ExampleSample"
+      "displayName": "ExampleFSM",
+      "description": "Example Finite State Machine.",
+      "path": "Samples~/ExampleFSM"
     }
   ],
   "license": "MIT",
-  "type": "template"
+  "type": "library"
 }
