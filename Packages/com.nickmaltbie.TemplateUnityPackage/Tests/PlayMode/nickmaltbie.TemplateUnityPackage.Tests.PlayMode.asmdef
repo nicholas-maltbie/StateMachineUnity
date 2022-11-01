@@ -1,0 +1,19 @@
+{
+    "name": "nickmaltbie.TemplateUnityPackage.Tests.PlayMode",
+    "rootNamespace": "nickmaltbie.TemplateUnityPackage.Tests.PlayMode",
+    "references": [
+        "nickmaltbie.TemplateUnityPackage"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

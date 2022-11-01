@@ -1,0 +1,10 @@
+apiRules:
+- include:
+    uidRegex: ^nickmaltbie\.TemplateUnityPackage
+    type: Namespace
+- include:
+    uidRegex: ^nickmaltbie\.TemplateUnityPackage\.*
+    type: Namespace
+- exclude:
+    uidRegex: .*
+    type: Namespace

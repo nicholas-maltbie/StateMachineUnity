@@ -1,0 +1,92 @@
+{
+    "metadata": [
+        {
+            "src": [
+                {
+                    "src": "../Packages/com.nickmaltbie.TemplateUnityPackage",
+                    "files": [
+                        "**/*.cs"
+                    ]
+                }
+            ],
+            "globalNamespaceId": "Global",
+            "filter": "filterConfig.yml",
+            "dest": "api",
+            "version": "latest"
+        }
+    ],
+    "build": {
+        "globalMetadata": {
+            "_appTitle": "Template Unity Package Documentation",
+            "_appFooter": "Template Unity Package Documentation",
+            "_enableSearch": true
+        },
+        "content": [
+            {
+                "files": [
+                    "toc.yml",
+                    "index.md"
+                ]
+            },
+            {
+                "src": "api",
+                "files": [
+                    "toc.yml",
+                    "*.yml"
+                ],
+                "dest": "api"
+            },
+            {
+                "src": "changelog",
+                "files":
+                [
+                    "toc.yml",
+                    "*.md"
+                ],
+                "dest": "changelog"
+            },
+            {
+                "src": "manual",
+                "files": [
+                    "toc.yml",
+                    "*.md"
+                ],
+                "dest": "manual"
+            }
+        ],
+        "overwrite": [
+            {
+                "src": "../Packages/com.nickmaltbie.TemplateUnityPackage",
+                "files": [
+                    "**/*.cs"
+                ]
+            }
+        ],
+        "resource": [
+            {
+                "src": ".",
+                "files": [
+                    "resources/**/*",
+                    "Demo/**/*",
+                    "LICENSE.txt"
+                ]
+            }
+        ],
+        "sitemap": {
+            "baseUrl": "https://nickmaltbie.com/TemplateUnityPackage/docs",
+            "changefreq": "weekly",
+            "fileOptions": {
+                "latest/api/*": {
+                    "changefreq": "daily"
+                }
+            }
+        },
+        "xref": [
+            "https://normanderwan.github.io/UnityXrefMaps/xrefmap.yml"
+        ],
+        "xrefService": [
+            "https://xref.docs.microsoft.com/query?uid={uid}"
+        ],
+        "dest": "../_site"
+    }
+}

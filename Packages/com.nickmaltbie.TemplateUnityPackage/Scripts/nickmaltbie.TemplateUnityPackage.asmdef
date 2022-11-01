@@ -1,0 +1,14 @@
+{
+    "name": "nickmaltbie.TemplateUnityPackage",
+    "rootNamespace": "com.nickmaltbie.TemplateUnityPackage",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,27 @@
+{
+  "name": "com.nickmaltbie.templateunitypackage",
+  "displayName": "Template Unity Package",
+  "version": "1.0.0",
+  "unity": "2021.3",
+  "unityRelease": "11f1",
+  "description": "Template Unity Package for creating and sharing assets.",
+  "author": {
+    "name": "Nick Maltbie",
+    "email": "nick.dmalt@gmail.com",
+    "url": "https://nickmaltbie.com"
+  },
+  "documentationUrl": "https://nickmaltbie.com/TemplateUnityPackage/docs",
+  "keywords": [
+    "template",
+    "package"
+  ],
+  "samples": [
+    {
+      "displayName": "Example Sample",
+      "description": "Example Sample folder for template project.",
+      "path": "Samples~/ExampleSample"
+    }
+  ],
+  "license": "MIT",
+  "type": "template"
+}

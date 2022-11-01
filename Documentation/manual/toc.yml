@@ -1,0 +1,9 @@
+- name: Introduction
+  href: introduction.md
+- name: Package Setup and Installation
+  href: package_setup.md
+- name: Rename Script
+  href: rename_script.md
+- name: Github Actions
+  href: github_actions.md
+
