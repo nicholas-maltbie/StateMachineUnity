@@ -1,6 +1,6 @@
 # State Machine Unity
 
-Nick Maltbie's State Machine Unity for 
+Nick Maltbie's State Machine Unity for
 State Machine management in unity projects..
 
 State Machine Unity is an open source project hosted at
@@ -93,7 +93,8 @@ and is automatically deployed with each update to the codebase.
 ## Samples
 
 The samples in the project include:
-* ExampleSample - Example sample for State Machine Unity.
+
+* ExampleFSM - Example Finite State Machine.
 
 ## Documentation
 
