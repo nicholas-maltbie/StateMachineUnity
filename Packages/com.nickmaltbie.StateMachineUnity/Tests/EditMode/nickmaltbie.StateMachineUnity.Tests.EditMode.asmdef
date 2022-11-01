@@ -1,0 +1,21 @@
+{
+    "name": "nickmaltbie.StateMachineUnity.Tests.EditMode",
+    "rootNamespace": "nickmaltbie.StateMachineUnity.Tests.EditMode",
+    "references": [
+        "nickmaltbie.StateMachineUnity"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

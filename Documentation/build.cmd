@@ -2,7 +2,7 @@
 echo Setting up website and copying files
 copy %~dp0\..\README.md %~dp0\index.md
 copy %~dp0\..\LICENSE.txt %~dp0\LICENSE.txt
-copy %~dp0\..\Packages\com.nickmaltbie.TemplateUnityPackage\CHANGELOG.md %~dp0\changelog\CHANGELOG.md
+copy %~dp0\..\Packages\com.nickmaltbie.StateMachineUnity\CHANGELOG.md %~dp0\changelog\CHANGELOG.md
 xcopy /E /S /Y %~dp0\..\Demo %~dp0\Demo\
 
 @REM Generate website with docfx

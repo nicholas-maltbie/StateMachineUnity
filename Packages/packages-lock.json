@@ -1,7 +1,17 @@
 {
   "dependencies": {
-    "com.nickmaltbie.templateunitypackage": {
-      "version": "file:com.nickmaltbie.TemplateUnityPackage",
+    "com.nickmaltbie.screenmanager": {
+      "version": "3.1.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.inputsystem": "1.0.2",
+        "com.unity.textmeshpro": "3.0.6"
+      },
+      "url": "https://registry.npmjs.org"
+    },
+    "com.nickmaltbie.statemachineunity": {
+      "version": "file:com.nickmaltbie.StateMachineUnity",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
@@ -66,6 +76,15 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.inputsystem": {
+      "version": "1.4.3",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.uielements": "1.0.0"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.nuget.newtonsoft-json": {

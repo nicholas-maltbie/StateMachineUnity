@@ -59,7 +59,7 @@ will verify the style of all changed files.
 
 ```PowerShell
 dotnet tool restore
-dotnet format --fix-style warn -v d .\TemplateUnityPackage.sln --check
+dotnet format --fix-style warn -v d .\StateMachineUnity.sln --check
 ```
 
 ## 5. Done
