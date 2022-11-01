@@ -1,7 +1,7 @@
 # State Machine Unity
 
-Nick Maltbie's State Machine Unity for easily creating and sharing unity
-packages over git and NPM.
+Nick Maltbie's State Machine Unity for 
+State Machine management in unity projects..
 
 State Machine Unity is an open source project hosted at
 [https://github.com/nicholas-maltbie/StateMachineUnity](https://github.com/nicholas-maltbie/StateMachineUnity)
@@ -31,14 +31,6 @@ https://github.com/nicholas-maltbie/StateMachineUnity.git#release/latest
 
 For a full list of all tags, check the [StateMachineUnity Tags](https://github.com/nicholas-maltbie/StateMachineUnity/tags)
 list on github. I will usually associated a tag with each release of the project.
-
-_Note_: before I started using the package format for the project, I manually
-released a unity package you needed to import. Any version before `v1.0.0`
-will not work to import the project.
-
-If you do not include a tag, this means that your project will update whenever
-you reimport from main. This may cause some errors or problems due to
-experimental or breaking changes in the project.
 
 You can also import the project via a tarball if you download the source
 code and extract it on your local machine. Make sure to import
@@ -85,9 +77,9 @@ the `com.nickmaltbie.StateMachineUnity` to the testables
 of the project manifest.
 
 ```json
-  "testables": [
-    "com.nickmaltbie.StateMachineUnity"
-  ]
+"testables": [
+  "com.nickmaltbie.StateMachineUnity"
+]
 ```
 
 ## Demo
