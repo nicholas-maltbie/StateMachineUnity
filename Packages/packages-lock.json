@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "com.nickmaltbie.templateunitypackage": {
-      "version": "file:com.nickmaltbie.TemplateUnityPackage",
+    "com.nickmaltbie.statemachineunity": {
+      "version": "file:com.nickmaltbie.StateMachineUnity",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}

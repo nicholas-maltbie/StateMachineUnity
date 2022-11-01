@@ -16,11 +16,11 @@
 // ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using com.nickmaltbie.TemplateUnityPackage;
+using com.nickmaltbie.StateMachineUnity;
 using NUnit.Framework;
 using UnityEngine;
 
-namespace nickmaltbie.TemplateUnityPackage.Tests.EditMode
+namespace nickmaltbie.StateMachineUnity.Tests.EditMode
 {
     /// <summary>
     /// Tests meant to be run in EditMode.

@@ -1,15 +1,13 @@
 {
-    "name": "nickmaltbie.TemplateUnityPackage.Tests.EditMode",
-    "rootNamespace": "nickmaltbie.TemplateUnityPackage.Tests.EditMode",
+    "name": "nickmaltbie.StateMachineUnity.Tests.PlayMode",
+    "rootNamespace": "nickmaltbie.StateMachineUnity.Tests.PlayMode",
     "references": [
-        "nickmaltbie.TemplateUnityPackage"
+        "nickmaltbie.StateMachineUnity"
     ],
     "optionalUnityReferences": [
         "TestAssemblies"
     ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": true,

@@ -1,6 +1,6 @@
 {
-    "name": "nickmaltbie.TemplateUnityPackage",
-    "rootNamespace": "com.nickmaltbie.TemplateUnityPackage",
+    "name": "nickmaltbie.StateMachineUnity",
+    "rootNamespace": "com.nickmaltbie.StateMachineUnity",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

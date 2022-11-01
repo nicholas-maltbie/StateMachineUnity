@@ -75,7 +75,7 @@ public class RenameAssetsWindow : EditorWindow
     };
 
     private const string sourceCompanyName = "nickmaltbie";
-    private const string sourceProjectName = "Template Unity Package";
+    private const string sourceProjectName = "State Machine Unity";
     private const string sourceWebsiteName = "https://nickmaltbie.com";
     private const string sourceGitHubUsername = "nicholas-maltbie";
 

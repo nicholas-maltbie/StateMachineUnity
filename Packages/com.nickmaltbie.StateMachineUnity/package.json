@@ -1,16 +1,16 @@
 {
-  "name": "com.nickmaltbie.templateunitypackage",
-  "displayName": "Template Unity Package",
+  "name": "com.nickmaltbie.statemachineunity",
+  "displayName": "State Machine Unity",
   "version": "1.0.0",
   "unity": "2021.3",
   "unityRelease": "11f1",
-  "description": "Template Unity Package for creating and sharing assets.",
+  "description": "State Machine Unity for creating and sharing assets.",
   "author": {
     "name": "Nick Maltbie",
     "email": "nick.dmalt@gmail.com",
     "url": "https://nickmaltbie.com"
   },
-  "documentationUrl": "https://nickmaltbie.com/TemplateUnityPackage/docs",
+  "documentationUrl": "https://nickmaltbie.com/StateMachineUnity/docs",
   "keywords": [
     "template",
     "package"

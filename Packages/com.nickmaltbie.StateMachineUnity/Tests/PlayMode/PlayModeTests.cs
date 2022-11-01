@@ -16,34 +16,38 @@
 // ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System.Collections;
+using com.nickmaltbie.StateMachineUnity;
+using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.TestTools;
 
-namespace com.nickmaltbie.TemplateUnityPackage
+namespace nickmaltbie.StateMachineUnity.Tests.PlayMode
 {
     /// <summary>
-    /// Basic sample script in project.
+    /// Simple tests meant to be run in PlayMode
     /// </summary>
-    public class SampleScript : MonoBehaviour
+    public class PlayModeTests
     {
         /// <summary>
-        /// Value associated with sample script.
+        /// Simple sample script test.
         /// </summary>
-        public int Value { get; private set; } = 0;
-
-        /// <summary>
-        /// Increment value associated with sample script.
-        /// </summary>
-        public void IncrementValue()
+        [UnityTest]
+        public IEnumerator SimpleSampleScriptTest()
         {
-            Value++;
-        }
+            var go = new GameObject();
+            SampleScript sample = go.AddComponent<SampleScript>();
 
-        /// <summary>
-        /// Update function run each frame.
-        /// </summary>
-        public void Update()
-        {
-            IncrementValue();
+            Assert.AreEqual(sample.Value, 0);
+
+            yield return null;
+            Assert.IsTrue(sample.Value > 0);
+            int value = sample.Value;
+
+            yield return new WaitForSeconds(1.0f);
+            Assert.IsTrue(sample.Value > value);
+
+            GameObject.DestroyImmediate(go);
         }
     }
 }
