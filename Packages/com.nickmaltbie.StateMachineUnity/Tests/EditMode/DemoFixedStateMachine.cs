@@ -18,7 +18,6 @@
 
 using System;
 using System.Collections.Concurrent;
-using nickmaltbie.StateMachineUnity;
 using nickmaltbie.StateMachineUnity.Attributes;
 
 namespace nickmaltbie.StateMachineUnity.Tests.EditMode

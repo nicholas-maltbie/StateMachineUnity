@@ -18,7 +18,6 @@
 
 using System;
 using System.Collections.Concurrent;
-using nickmaltbie.StateMachineUnity;
 using nickmaltbie.StateMachineUnity.Attributes;
 using nickmaltbie.StateMachineUnity.TestCommon;
 using NUnit.Framework;

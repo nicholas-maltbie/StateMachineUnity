@@ -20,7 +20,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
-using nickmaltbie.StateMachineUnity;
 using nickmaltbie.StateMachineUnity.TestCommon;
 using NUnit.Framework;
 
