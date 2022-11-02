@@ -1,13 +1,12 @@
 {
-    "name": "nickmaltbie.StateMachineUnity.Tests.EditMode",
-    "rootNamespace": "nickmaltbie.StateMachineUnity.Tests.EditMode",
+    "name": "nickmaltbie.StateMachineUnity.TestCommon",
+    "rootNamespace": "nickmaltbie.StateMachineUnity.TestCommon",
     "references": [
         "nickmaltbie.StateMachineUnity",
-        "nickmaltbie.StateMachineUnity.TestCommon",
-        "UnityEngine.TestRunner",
-        "UnityEditor.TestRunner",
         "Unity.InputSystem",
-        "Unity.InputSystem.TestFramework"
+        "Unity.InputSystem.TestFramework",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
     ],
     "includePlatforms": [
         "Editor"
