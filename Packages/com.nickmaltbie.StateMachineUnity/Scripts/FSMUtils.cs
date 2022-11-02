@@ -21,9 +21,9 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using nickmaltbie.StateMachine.FSM.Attributes;
+using nickmaltbie.StateMachineUnity.Attributes;
 
-namespace nickmaltbie.StateMachine.FSM
+namespace nickmaltbie.StateMachineUnity
 {
     /// <summary>
     /// Class with utility functions for state machine.
@@ -71,10 +71,10 @@ namespace nickmaltbie.StateMachine.FSM
 
         /// <summary>
         /// Sets up an action lookup by enumerating the <see cref="State"/> classes
-        /// defined within a state machine type and getting all <see cref="nickmaltbie.StateMachine.FSM.Attributes.ActionAttribute"/>
+        /// defined within a state machine type and getting all <see cref="nickmaltbie.StateMachineUnity.Attributes.ActionAttribute"/>
         /// decorators defined for each <see cref="State"/> within the class.
         /// </summary>
-        /// <param name="stateMachine">State machine to lookup <see cref="State"/> and <see cref="nickmaltbie.StateMachine.FSM.Attributes.ActionAttribute"/> for.</param>
+        /// <param name="stateMachine">State machine to lookup <see cref="State"/> and <see cref="nickmaltbie.StateMachineUnity.Attributes.ActionAttribute"/> for.</param>
         /// <returns>A lookup table mapped as (state, actionType) -> Method</returns>
         public static Dictionary<(Type, Type), MethodInfo> CreateActionAttributeCache(Type stateMachine)
         {
@@ -97,10 +97,10 @@ namespace nickmaltbie.StateMachine.FSM
 
         /// <summary>
         /// Sets up an transition lookup by enumerating the <see cref="State"/> classes
-        /// defined within a state machine type and getting all <see cref="nickmaltbie.StateMachine.FSM.Attributes.TransitionAttribute"/>
+        /// defined within a state machine type and getting all <see cref="nickmaltbie.StateMachineUnity.Attributes.TransitionAttribute"/>
         /// decorators defined for each <see cref="State"/> within the class.
         /// </summary>
-        /// <param name="stateMachine">State machine to lookup <see cref="State"/> and <see cref="nickmaltbie.StateMachine.FSM.Attributes.TransitionAttribute"/> for.</param>
+        /// <param name="stateMachine">State machine to lookup <see cref="State"/> and <see cref="nickmaltbie.StateMachineUnity.Attributes.TransitionAttribute"/> for.</param>
         /// <returns>A lookup table mapped as (state, event) -> state</returns>
         public static Dictionary<(Type, Type), Type> CreateTransationAttributeCache(Type stateMachine)
         {
@@ -122,10 +122,10 @@ namespace nickmaltbie.StateMachine.FSM
 
         /// <summary>
         /// Sets up an event lookup by enumerating the <see cref="State"/> classes
-        /// defined within a state machine type and getting all <see cref="nickmaltbie.StateMachine.FSM.Attributes.OnEventDoActionAttribute"/>
+        /// defined within a state machine type and getting all <see cref="nickmaltbie.StateMachineUnity.Attributes.OnEventDoActionAttribute"/>
         /// decorators defined for each <see cref="State"/> within the class.
         /// </summary>
-        /// <param name="stateMachine">State machine to lookup <see cref="State"/> and <see cref="nickmaltbie.StateMachine.FSM.Attributes.OnEventDoActionAttribute"/> for.</param>
+        /// <param name="stateMachine">State machine to lookup <see cref="State"/> and <see cref="nickmaltbie.StateMachineUnity.Attributes.OnEventDoActionAttribute"/> for.</param>
         /// <returns>A lookup table mapped as (state, event) -> [ methods ]</returns>
         public static Dictionary<(Type, Type), List<MethodInfo>> CreateEventActionCache(Type stateMachine)
         {
@@ -160,13 +160,13 @@ namespace nickmaltbie.StateMachine.FSM
         /// <br/>
         /// First checks if this state machine expects any events of this type
         /// for the state machine's CurrentState. These
-        /// would follow an attribute of type <see cref="nickmaltbie.StateMachine.FSM.Attributes.OnEventDoActionAttribute"/>.
+        /// would follow an attribute of type <see cref="nickmaltbie.StateMachineUnity.Attributes.OnEventDoActionAttribute"/>.
         /// <br/>
         /// If the state machine's CurrentState expects a transition
-        /// based on the event, then this will trigger the <see cref="nickmaltbie.StateMachine.FSM.Attributes.OnExitStateAttribute"/>
-        /// of the nickmaltbie.StateMachineUnity.FSM.IStateMachine, change to the next state defined in
-        /// the <see cref="nickmaltbie.StateMachine.FSM.Attributes.TransitionAttribute"/>, then trigger the
-        /// <see cref="nickmaltbie.StateMachine.FSM.Attributes.OnEnterStateAttribute"/>
+        /// based on the event, then this will trigger the <see cref="nickmaltbie.StateMachineUnity.Attributes.OnExitStateAttribute"/>
+        /// of the nickmaltbie.StateMachineUnity.IStateMachine, change to the next state defined in
+        /// the <see cref="nickmaltbie.StateMachineUnity.Attributes.TransitionAttribute"/>, then trigger the
+        /// <see cref="nickmaltbie.StateMachineUnity.Attributes.OnEnterStateAttribute"/>
         /// of the next state.
         /// </summary>
         /// <param name="StateMachine">state machine to invoke method of.</param>

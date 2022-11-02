@@ -18,12 +18,12 @@
 
 using System;
 using System.Collections.Concurrent;
-using nickmaltbie.StateMachine.FSM;
-using nickmaltbie.StateMachine.FSM.Attributes;
-using nickmaltbie.StateMachine.TestCommon;
+using nickmaltbie.StateMachineUnity;
+using nickmaltbie.StateMachineUnity.Attributes;
+using nickmaltbie.StateMachineUnity.TestCommon;
 using NUnit.Framework;
 
-namespace nickmaltbie.StateMachine.Tests.EditMode.FSM
+namespace nickmaltbie.StateMachineUnity.Tests.EditMode
 {
     /// <summary>
     /// Demo state machine for 
@@ -148,7 +148,7 @@ namespace nickmaltbie.StateMachine.Tests.EditMode.FSM
     }
 
     /// <summary>
-    /// Basic tests for <see cref="nickmaltbie.StateMachine.FSM.FixedStateMachineBehaviour"/> in edit mode.
+    /// Basic tests for <see cref="nickmaltbie.StateMachineUnity.FixedStateMachineBehaviour"/> in edit mode.
     /// </summary>
     [TestFixture]
     public class StateMachineBehaviourTests : TestBase

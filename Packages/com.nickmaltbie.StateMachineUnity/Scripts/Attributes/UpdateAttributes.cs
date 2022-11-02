@@ -18,7 +18,7 @@
 
 using System;
 
-namespace nickmaltbie.StateMachine.FSM.Attributes
+namespace nickmaltbie.StateMachineUnity.Attributes
 {
     /// <summary>
     /// Event invoked with every frame update. See unity doc's

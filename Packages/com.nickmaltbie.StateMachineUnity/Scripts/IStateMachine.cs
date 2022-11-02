@@ -18,7 +18,7 @@
 
 using System;
 
-namespace nickmaltbie.StateMachine.FSM
+namespace nickmaltbie.StateMachineUnity
 {
     /// <summary>
     /// Abstract state machine to manage a set of given states

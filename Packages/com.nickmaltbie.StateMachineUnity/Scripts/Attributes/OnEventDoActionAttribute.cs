@@ -18,7 +18,7 @@
 
 using System;
 
-namespace nickmaltbie.StateMachine.FSM.Attributes
+namespace nickmaltbie.StateMachineUnity.Attributes
 {
     /// <summary>
     /// Basic attribute that maps an event to an action.

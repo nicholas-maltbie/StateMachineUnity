@@ -17,9 +17,9 @@
 // SOFTWARE.
 
 using System;
-using nickmaltbie.StateMachine.FSM.Attributes;
+using nickmaltbie.StateMachineUnity.Attributes;
 
-namespace nickmaltbie.StateMachine.FSM
+namespace nickmaltbie.StateMachineUnity
 {
     /// <summary>
     /// Basic state to represent the current configuration of a state machine.

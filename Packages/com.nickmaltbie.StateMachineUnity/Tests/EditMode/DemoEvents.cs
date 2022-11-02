@@ -16,9 +16,9 @@
 // ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using nickmaltbie.StateMachine.FSM;
+using nickmaltbie.StateMachineUnity;
 
-namespace nickmaltbie.StateMachine.Tests.EditMode.FSM
+namespace nickmaltbie.StateMachineUnity.Tests.EditMode
 {
     public class AEvent : IEvent { }
 

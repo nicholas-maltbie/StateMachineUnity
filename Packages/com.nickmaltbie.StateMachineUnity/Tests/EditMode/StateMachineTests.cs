@@ -20,14 +20,14 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
-using nickmaltbie.StateMachine.FSM;
-using nickmaltbie.StateMachine.TestCommon;
+using nickmaltbie.StateMachineUnity;
+using nickmaltbie.StateMachineUnity.TestCommon;
 using NUnit.Framework;
 
-namespace nickmaltbie.StateMachine.Tests.EditMode.FSM
+namespace nickmaltbie.StateMachineUnity.Tests.EditMode
 {
     /// <summary>
-    /// Basic tests for <see cref="nickmaltbie.StateMachine.FSM.FixedStateMachine"/> in edit mode.
+    /// Basic tests for <see cref="nickmaltbie.StateMachineUnity.FixedStateMachine"/> in edit mode.
     /// </summary>
     [TestFixture]
     public class StateMachineTests : TestBase

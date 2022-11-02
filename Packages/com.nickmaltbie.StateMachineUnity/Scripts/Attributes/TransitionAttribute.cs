@@ -18,7 +18,7 @@
 
 using System;
 
-namespace nickmaltbie.StateMachine.FSM.Attributes
+namespace nickmaltbie.StateMachineUnity.Attributes
 {
     /// <summary>
     /// Transition attribute to manage transitions between states for a state machine.

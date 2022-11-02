@@ -18,7 +18,7 @@
 
 using System;
 
-namespace nickmaltbie.StateMachine.FSM.Attributes
+namespace nickmaltbie.StateMachineUnity.Attributes
 {
     /// <summary>
     /// Initial state for starting a state machine.

@@ -18,10 +18,10 @@
 
 using System;
 using System.Collections.Concurrent;
-using nickmaltbie.StateMachine.FSM;
-using nickmaltbie.StateMachine.FSM.Attributes;
+using nickmaltbie.StateMachineUnity;
+using nickmaltbie.StateMachineUnity.Attributes;
 
-namespace nickmaltbie.StateMachine.Tests.EditMode.FSM
+namespace nickmaltbie.StateMachineUnity.Tests.EditMode
 {
     /// <summary>
     /// Demo state machine for 
