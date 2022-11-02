@@ -17,14 +17,16 @@
 // SOFTWARE.
 
 using System;
+using nickmaltbie.StateMachineUnity.Event;
+using nickmaltbie.StateMachineUnity.Utils;
 
-namespace nickmaltbie.StateMachineUnity
+namespace nickmaltbie.StateMachineUnity.Fixed
 {
     /// <summary>
     /// Abstract state machine to manage a set of given states
     /// and transitions.
     /// </summary>
-    public abstract class FixedStateMachine : IStateMachine<Type>
+    public abstract class FixedSM : IStateMachine<Type>
     {
         /// <summary>
         /// Current state of the state machine.
@@ -37,7 +39,7 @@ namespace nickmaltbie.StateMachineUnity
         /// state to the state defined under this class with an
         /// <see cref="nickmaltbie.StateMachineUnity.Attributes.InitialStateAttribute"/>.
         /// </summary>
-        public FixedStateMachine()
+        public FixedSM()
         {
             FSMUtils.InitializeStateMachine(this);
         }

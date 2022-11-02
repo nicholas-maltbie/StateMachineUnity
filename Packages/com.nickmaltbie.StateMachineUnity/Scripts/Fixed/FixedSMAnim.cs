@@ -16,17 +16,14 @@
 // ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using nickmaltbie.StateMachineUnity.Event;
-
-namespace nickmaltbie.StateMachineUnity.Tests.EditMode
+namespace nickmaltbie.StateMachineUnity.Fixed
 {
-    public class AEvent : IEvent { }
-
-    public class BEvent : IEvent { }
-
-    public class CEvent : IEvent { }
-
-    public class ResetEvent : IEvent { }
-
-    public class EmptyEvent : IEvent { }
+    /// <summary>
+    /// Abstract state machine to manage a set of given states
+    /// and transitions. Supports basic unity events in addition
+    /// to running an animation for each given state.
+    /// </summary>
+    public abstract class FixedSMAnim : FixedSMBehaviour
+    {
+    }
 }

@@ -22,8 +22,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using nickmaltbie.StateMachineUnity.Attributes;
+using nickmaltbie.StateMachineUnity.Event;
 
-namespace nickmaltbie.StateMachineUnity
+namespace nickmaltbie.StateMachineUnity.Utils
 {
     /// <summary>
     /// Class with utility functions for state machine.
@@ -33,20 +34,17 @@ namespace nickmaltbie.StateMachineUnity
         /// <summary>
         /// Map of actions of state machine -> state, attribute) -> action.
         /// </summary>
-        internal static ConcurrentDictionary<Type, Dictionary<(Type, Type), MethodInfo>> ActionCache =
-            new ConcurrentDictionary<Type, Dictionary<(Type, Type), MethodInfo>>();
+        internal static ConcurrentDictionary<Type, Dictionary<(Type, Type), MethodInfo>> ActionCache = new ();
 
         /// <summary>
         /// Map of transitions of state machine -> (state, event) -> state.
         /// </summary>
-        internal static ConcurrentDictionary<Type, Dictionary<(Type, Type), Type>> TransitionCache =
-            new ConcurrentDictionary<Type, Dictionary<(Type, Type), Type>>();
+        internal static ConcurrentDictionary<Type, Dictionary<(Type, Type), TransitionAttribute>> TransitionCache = new ();
 
         /// <summary>
         /// Map of actions of state machine -> (state, event) -> [ actions ]
         /// </summary>
-        internal static ConcurrentDictionary<Type, Dictionary<(Type, Type), List<MethodInfo>>> EventCache =
-            new ConcurrentDictionary<Type, Dictionary<(Type, Type), List<MethodInfo>>>();
+        internal static ConcurrentDictionary<Type, Dictionary<(Type, Type), List<MethodInfo>>> EventCache = new ();
 
         /// <summary>
         /// Returns the action with the specified name.
@@ -102,9 +100,9 @@ namespace nickmaltbie.StateMachineUnity
         /// </summary>
         /// <param name="stateMachine">State machine to lookup <see cref="State"/> and <see cref="nickmaltbie.StateMachineUnity.Attributes.TransitionAttribute"/> for.</param>
         /// <returns>A lookup table mapped as (state, event) -> state</returns>
-        public static Dictionary<(Type, Type), Type> CreateTransationAttributeCache(Type stateMachine)
+        public static Dictionary<(Type, Type), TransitionAttribute> CreateTransitionAttributeCache(Type stateMachine)
         {
-            var transitionLookup = new Dictionary<(Type, Type), Type>();
+            var transitionLookup = new Dictionary<(Type, Type), TransitionAttribute>();
 
             // Find all the supported states for the state machine.
             foreach (Type state in stateMachine.GetNestedTypes()
@@ -113,7 +111,7 @@ namespace nickmaltbie.StateMachineUnity
                 // Find all transition attributes of given state
                 foreach (TransitionAttribute attr in Attribute.GetCustomAttributes(state, typeof(TransitionAttribute)))
                 {
-                    transitionLookup[(state, attr.TriggerEvent)] = attr.TargetState;
+                    transitionLookup[(state, attr.TriggerEvent)] = attr;
                 }
             }
 
@@ -181,10 +179,11 @@ namespace nickmaltbie.StateMachineUnity
                 }
             }
 
-            if (TransitionCache[stateMachine.GetType()].TryGetValue((stateMachine.CurrentState, evt.GetType()), out Type nextState))
+            if (TransitionCache[stateMachine.GetType()].TryGetValue((stateMachine.CurrentState, evt.GetType()), out TransitionAttribute transition))
             {
                 InvokeAction<OnExitStateAttribute>(stateMachine, stateMachine.CurrentState);
-                stateMachine.SetStateQuiet(nextState);
+                transition.OnTransition();
+                stateMachine.SetStateQuiet(transition.TargetState);
                 InvokeAction<OnEnterStateAttribute>(stateMachine, stateMachine.CurrentState);
             }
         }
@@ -250,7 +249,7 @@ namespace nickmaltbie.StateMachineUnity
 
             if (!TransitionCache.ContainsKey(stateMachine))
             {
-                TransitionCache.TryAdd(stateMachine, FSMUtils.CreateTransationAttributeCache(stateMachine));
+                TransitionCache.TryAdd(stateMachine, FSMUtils.CreateTransitionAttributeCache(stateMachine));
             }
 
             if (!EventCache.ContainsKey(stateMachine))

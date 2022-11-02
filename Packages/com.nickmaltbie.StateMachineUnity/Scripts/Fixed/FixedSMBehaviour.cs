@@ -18,11 +18,18 @@
 
 using System;
 using nickmaltbie.StateMachineUnity.Attributes;
+using nickmaltbie.StateMachineUnity.Event;
+using nickmaltbie.StateMachineUnity.Utils;
 using UnityEngine;
 
-namespace nickmaltbie.StateMachineUnity
+namespace nickmaltbie.StateMachineUnity.Fixed
 {
-    public abstract class FixedStateMachineBehaviour : MonoBehaviour, IStateMachine<Type>
+    /// <summary>
+    /// Abstract state machine to manage a set of given states
+    /// and transitions. Supports basic unity events for
+    /// unity updates and features.
+    /// </summary>
+    public abstract class FixedSMBehaviour : MonoBehaviour, IStateMachine<Type>
     {
         /// <summary>
         /// Current state of the state machine.
@@ -34,7 +41,7 @@ namespace nickmaltbie.StateMachineUnity
         /// and will set the initial
         /// state to the state defined under this class with a <see cref="nickmaltbie.StateMachineUnity.Attributes.InitialStateAttribute"/>.
         /// </summary>
-        public FixedStateMachineBehaviour()
+        public FixedSMBehaviour()
         {
             FSMUtils.InitializeStateMachine(this);
         }

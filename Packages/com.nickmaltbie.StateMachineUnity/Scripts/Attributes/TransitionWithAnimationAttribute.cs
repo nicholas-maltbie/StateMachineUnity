@@ -24,32 +24,30 @@ namespace nickmaltbie.StateMachineUnity.Attributes
     /// Transition attribute to manage transitions between states for a state machine.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
-    public class TransitionAttribute : Attribute
+    public class TransitionWithAnimationAttribute : TransitionAttribute
     {
         /// <summary>
-        /// Type of event to listen for.
+        /// Animation to play upon tarnsition.
         /// </summary>
-        public Type TriggerEvent { get; private set; }
-
-        /// <summary>
-        /// Target state upon event trigger.
-        /// </summary>
-        public Type TargetState { get; private set; }
+        public string Animation { get; private set; }
 
         /// <summary>
         /// Transition to another state on a given event.
         /// </summary>
         /// <param name="triggerEvent">Trigger event to cause transition.</param>
         /// <param name="targetState">New state to transition to upon trigger.</param>
-        public TransitionAttribute(Type triggerEvent, Type targetState)
+        public TransitionWithAnimationAttribute(Type triggerEvent, Type targetState, string animation)
+            : base(triggerEvent, targetState)
         {
-            TriggerEvent = triggerEvent;
-            TargetState = targetState;
+            Animation = animation;
         }
 
         /// <summary>
         /// Behaviour to invoke when this transition is triggered.
         /// </summary>
-        public virtual void OnTransition() { }
+        public override void OnTransition()
+        {
+
+        }
     }
 }

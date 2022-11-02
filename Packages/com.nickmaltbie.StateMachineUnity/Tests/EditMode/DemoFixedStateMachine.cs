@@ -19,13 +19,14 @@
 using System;
 using System.Collections.Concurrent;
 using nickmaltbie.StateMachineUnity.Attributes;
+using nickmaltbie.StateMachineUnity.Fixed;
 
 namespace nickmaltbie.StateMachineUnity.Tests.EditMode
 {
     /// <summary>
     /// Demo state machine for 
     /// </summary>
-    public class DemoFixedStateMachine : FixedStateMachine
+    public class DemoFixedStateMachine : FixedSM
     {
         /// <summary>
         /// Counts of actions for each combination of (Action, State).

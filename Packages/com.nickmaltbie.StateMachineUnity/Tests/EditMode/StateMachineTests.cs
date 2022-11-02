@@ -20,7 +20,9 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
+using nickmaltbie.StateMachineUnity.Event;
 using nickmaltbie.StateMachineUnity.TestCommon;
+using nickmaltbie.StateMachineUnity.Utils;
 using NUnit.Framework;
 
 namespace nickmaltbie.StateMachineUnity.Tests.EditMode
@@ -42,9 +44,9 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode
         [Test]
         public void RebuildCache()
         {
-            FSMUtils.ActionCache = new ConcurrentDictionary<Type, Dictionary<(Type, Type), MethodInfo>>();
-            FSMUtils.TransitionCache = new ConcurrentDictionary<Type, Dictionary<(Type, Type), Type>>();
-            FSMUtils.EventCache = new ConcurrentDictionary<Type, Dictionary<(Type, Type), List<MethodInfo>>>();
+            FSMUtils.EventCache = new ();
+            FSMUtils.ActionCache = new ();
+            FSMUtils.TransitionCache = new ();
             FSMUtils.SetupCache(typeof(DemoFixedStateMachine));
             FSMUtils.SetupCache(typeof(DemoFixedStateMachineMonoBehaviour));
         }

@@ -19,6 +19,7 @@
 using System;
 using System.Collections.Concurrent;
 using nickmaltbie.StateMachineUnity.Attributes;
+using nickmaltbie.StateMachineUnity.Fixed;
 using nickmaltbie.StateMachineUnity.TestCommon;
 using NUnit.Framework;
 
@@ -27,7 +28,7 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode
     /// <summary>
     /// Demo state machine for 
     /// </summary>
-    public class DemoFixedStateMachineMonoBehaviour : FixedStateMachineBehaviour
+    public class DemoFixedStateMachineMonoBehaviour : FixedSMBehaviour
     {
         /// <summary>
         /// Counts of actions for each combination of (Action, State).
