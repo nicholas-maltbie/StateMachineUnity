@@ -182,7 +182,7 @@ namespace nickmaltbie.StateMachineUnity.Utils
             if (TransitionCache[stateMachine.GetType()].TryGetValue((stateMachine.CurrentState, evt.GetType()), out TransitionAttribute transition))
             {
                 InvokeAction<OnExitStateAttribute>(stateMachine, stateMachine.CurrentState);
-                transition.OnTransition();
+                transition.OnTransition(stateMachine);
                 stateMachine.SetStateQuiet(transition.TargetState);
                 InvokeAction<OnEnterStateAttribute>(stateMachine, stateMachine.CurrentState);
             }

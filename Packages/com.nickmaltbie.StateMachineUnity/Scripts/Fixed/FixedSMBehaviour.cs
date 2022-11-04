@@ -39,7 +39,8 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         /// <summary>
         /// Initializes a state machine
         /// and will set the initial
-        /// state to the state defined under this class with a <see cref="nickmaltbie.StateMachineUnity.Attributes.InitialStateAttribute"/>.
+        /// state to the state defined under this class with a
+        /// <see cref="nickmaltbie.StateMachineUnity.Attributes.InitialStateAttribute"/>.
         /// </summary>
         public FixedSMBehaviour()
         {

@@ -1,0 +1,17 @@
+{
+    "name": "nickmaltbie.StateMachineUnity.ExampleFSM",
+    "rootNamespace": "nickmaltbie.StateMachineUnity.ExampleFSM",
+    "references": [
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:ef35993bd7c22e243bb26a52fcfafa36"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

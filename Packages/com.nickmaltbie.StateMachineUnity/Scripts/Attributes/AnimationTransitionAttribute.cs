@@ -17,6 +17,7 @@
 // SOFTWARE.
 
 using System;
+using UnityEngine;
 
 namespace nickmaltbie.StateMachineUnity.Attributes
 {
@@ -24,34 +25,38 @@ namespace nickmaltbie.StateMachineUnity.Attributes
     /// Transition attribute to manage transitions between states for a state machine.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
-    public class TransitionAttribute : Attribute
+    public class AnimationTransitionAttribute : TransitionAttribute
     {
         /// <summary>
-        /// Type of event to listen for.
+        /// name of the animation state to play upon transition.
         /// </summary>
-        public Type TriggerEvent { get; private set; }
+        public string StateName { get; private set; }
 
         /// <summary>
-        /// Target state upon event trigger.
+        /// Fixed time to transition to new state.
         /// </summary>
-        public Type TargetState { get; private set; }
+        public float TransitionTime { get; private set; }
 
         /// <summary>
         /// Transition to another state on a given event.
         /// </summary>
         /// <param name="triggerEvent">Trigger event to cause transition.</param>
         /// <param name="targetState">New state to transition to upon trigger.</param>
-        public TransitionAttribute(Type triggerEvent, Type targetState)
+        /// <param name="stateName">Name of animation state to play upon transition.</param>
+        /// <param name="transitionTime">Fixed time to transition to new state.</param>
+        public AnimationTransitionAttribute(Type triggerEvent, Type targetState, string stateName, float transitionTime)
+            : base(triggerEvent, targetState)
         {
-            TriggerEvent = triggerEvent;
-            TargetState = targetState;
+            StateName = stateName;
+            TransitionTime = transitionTime;
         }
 
-        /// <summary>
-        /// Behaviour to invoke when this transition is triggered.
-        /// </summary>
-        /// <param name="sm">State machine being transitioned.</param>
-        /// <typeparam name="E">Type of the state machine.</typeparam>
-        public virtual void OnTransition<E>(IStateMachine<E> sm) { }
+        /// <inheritdoc/>
+        public override void OnTransition<E>(IStateMachine<E> sm)
+        {
+            IAnimStateMachine<E> animStateMachine = sm as IAnimStateMachine<E>;
+            Animator animator = animStateMachine.GetAnimator();
+            animator.CrossFadeInFixedTime(StateName, TransitionTime);
+        }
     }
 }

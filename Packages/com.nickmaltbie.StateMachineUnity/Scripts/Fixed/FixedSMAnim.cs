@@ -16,6 +16,9 @@
 // ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System;
+using UnityEngine;
+
 namespace nickmaltbie.StateMachineUnity.Fixed
 {
     /// <summary>
@@ -23,7 +26,26 @@ namespace nickmaltbie.StateMachineUnity.Fixed
     /// and transitions. Supports basic unity events in addition
     /// to running an animation for each given state.
     /// </summary>
-    public abstract class FixedSMAnim : FixedSMBehaviour
+    [RequireComponent(typeof(Animator))]
+    public abstract class FixedSMAnim : FixedSMBehaviour, IAnimStateMachine<Type>
     {
+        /// <summary>
+        /// Animator associated with this state machine.
+        /// </summary>
+        private Animator animator;
+
+        /// <summary>
+        /// Configure and setup the fixed state machine with animations.
+        /// </summary>
+        public virtual void Awake()
+        {
+            this.animator = GetComponent<Animator>();
+        }
+
+        /// <inheritdoc/>
+        public Animator GetAnimator()
+        {
+            return animator;
+        }
     }
 }

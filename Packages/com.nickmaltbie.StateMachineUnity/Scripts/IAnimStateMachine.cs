@@ -17,37 +17,21 @@
 // SOFTWARE.
 
 using System;
+using nickmaltbie.StateMachineUnity.Event;
+using UnityEngine;
 
-namespace nickmaltbie.StateMachineUnity.Attributes
+namespace nickmaltbie.StateMachineUnity
 {
     /// <summary>
-    /// Transition attribute to manage transitions between states for a state machine.
+    /// Interface to represent state machine with a reference to
+    /// an animator.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
-    public class TransitionWithAnimationAttribute : TransitionAttribute
+    public interface IAnimStateMachine<E> : IStateMachine<E>
     {
         /// <summary>
-        /// Animation to play upon tarnsition.
+        /// Gets the animator associated with this state machine.
         /// </summary>
-        public string Animation { get; private set; }
-
-        /// <summary>
-        /// Transition to another state on a given event.
-        /// </summary>
-        /// <param name="triggerEvent">Trigger event to cause transition.</param>
-        /// <param name="targetState">New state to transition to upon trigger.</param>
-        public TransitionWithAnimationAttribute(Type triggerEvent, Type targetState, string animation)
-            : base(triggerEvent, targetState)
-        {
-            Animation = animation;
-        }
-
-        /// <summary>
-        /// Behaviour to invoke when this transition is triggered.
-        /// </summary>
-        public override void OnTransition()
-        {
-
-        }
+        /// <returns>Get the animator associated with this state machine.</returns>
+        public Animator GetAnimator();
     }
 }
