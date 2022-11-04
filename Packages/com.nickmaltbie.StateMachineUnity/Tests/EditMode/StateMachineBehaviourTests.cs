@@ -20,7 +20,7 @@ using System;
 using System.Collections.Concurrent;
 using nickmaltbie.StateMachineUnity.Attributes;
 using nickmaltbie.StateMachineUnity.Fixed;
-using nickmaltbie.StateMachineUnity.TestCommon;
+using nickmaltbie.TestUtilsUnity.Tests.TestCommon;
 using NUnit.Framework;
 
 namespace nickmaltbie.StateMachineUnity.Tests.EditMode

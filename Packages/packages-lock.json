@@ -16,6 +16,15 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "com.nickmaltbie.testutilsunity": {
+      "version": "0.0.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.inputsystem": "1.0.0"
+      },
+      "url": "https://registry.npmjs.org"
+    },
     "com.unity.collab-proxy": {
       "version": "1.17.6",
       "depth": 0,
