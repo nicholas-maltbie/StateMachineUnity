@@ -16,10 +16,29 @@
 // ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-namespace nickmaltbie.StateMachineUnity.Event
+using System;
+using nickmaltbie.StateMachineUnity.Event;
+
+namespace nickmaltbie.StateMachineUnity.Attributes
 {
     /// <summary>
-    /// Event for managing transitions or executing actions in state machines.
+    /// Transition attribute to transition to a new state upon completion
+    /// of a current animation.
     /// </summary>
-    public interface IEvent { }
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+    public class TransitionOnAnimationCompleteAttribute : AnimationTransitionAttribute
+    {
+        /// <summary>
+        /// Transition to another state upon completion of the animation for
+        /// the current state.
+        /// </summary>
+        /// <param name="targetState">New state to transition to upon trigger.</param>
+        /// <param name="transitionTime">Fixed time to transition to new state.</param>
+        /// <param name="fixedTimeTransition">Is this transition in fixed time (true) or normalized time (false).</param>
+        public TransitionOnAnimationCompleteAttribute(Type targetState, float transitionTime = 0.0f, bool fixedTimeTransition = false)
+            : base(typeof(AnimationCompleteEvent), targetState, transitionTime, fixedTimeTransition)
+        {
+            
+        }
+    }
 }

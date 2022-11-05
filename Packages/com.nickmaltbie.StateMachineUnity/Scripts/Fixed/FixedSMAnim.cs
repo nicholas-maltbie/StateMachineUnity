@@ -17,7 +17,9 @@
 // SOFTWARE.
 
 using System;
+using System.Threading;
 using nickmaltbie.StateMachineUnity.Attributes;
+using nickmaltbie.StateMachineUnity.Event;
 using UnityEngine;
 
 namespace nickmaltbie.StateMachineUnity.Fixed
@@ -27,12 +29,18 @@ namespace nickmaltbie.StateMachineUnity.Fixed
     /// and transitions. Supports basic unity events in addition
     /// to running an animation for each given state.
     /// </summary>
+    [RequireComponent(typeof(Animator))]
     public abstract class FixedSMAnim : FixedSMBehaviour, IAnimStateMachine<Type>
     {
         /// <summary>
         /// Animator associated with this state machine.
         /// </summary>
         private Animator animator;
+
+        /// <summary>
+        /// Has the completed event been raised for the current state yet.
+        /// </summary>
+        private int raisedCompletedEvent;
 
         /// <inheritdoc/>
         public int CurrentAnimationState { get; private set; }
@@ -42,13 +50,14 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         /// </summary>
         public virtual void Awake()
         {
-            this.animator = gameObject.GetComponent<Animator>();
+            animator = gameObject.GetComponent<Animator>();
         }
 
         /// <inheritdoc/>
         public void CrossFade(int targetState, float transitionTime = 0, int layerIdx = 0)
         {
-            this.CurrentAnimationState = targetState;
+            raisedCompletedEvent = 0;
+            CurrentAnimationState = targetState;
             if (animator.HasState(layerIdx, targetState))
             {
                 animator.CrossFade(targetState, transitionTime);
@@ -62,7 +71,8 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         /// <inheritdoc/>
         public void CrossFadeInFixedTime(int targetState, float transitionTime = 0, int layerIdx = 0)
         {
-            this.CurrentAnimationState = targetState;
+            raisedCompletedEvent = 0;
+            CurrentAnimationState = targetState;
             if (animator.HasState(layerIdx, targetState))
             {
                 animator.CrossFadeInFixedTime(targetState, transitionTime);
@@ -86,10 +96,18 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         public override void Update()
         {
             base.Update();
-            int? targetState = AnimationAttribute.GetStateAnimation(this.CurrentState);
-            if (targetState.HasValue && CurrentAnimationState != targetState)
+            int? targetState = AnimationAttribute.GetStateAnimation(CurrentState);
+            if (targetState.HasValue)
             {
-                this.CrossFade(targetState.Value, 0.0f);
+                if (CurrentAnimationState != targetState)
+                {
+                    CrossFade(targetState.Value, 0.0f);
+                }
+                else if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 &&
+                    Interlocked.CompareExchange(ref raisedCompletedEvent, 1, 0) == 0)
+                {
+                    RaiseEvent(AnimationCompleteEvent.Instance);    
+                }
             }
         }
     }

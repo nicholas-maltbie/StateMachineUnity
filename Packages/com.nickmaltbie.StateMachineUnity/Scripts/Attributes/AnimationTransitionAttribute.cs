@@ -44,7 +44,7 @@ namespace nickmaltbie.StateMachineUnity.Attributes
         /// <param name="targetState">New state to transition to upon trigger.</param>
         /// <param name="transitionTime">Fixed time to transition to new state.</param>
         /// <param name="fixedTimeTransition">Is this transition in fixed time (true) or normalized time (false).</param>
-        public AnimationTransitionAttribute(Type triggerEvent, Type targetState, float transitionTime, bool fixedTimeTransition)
+        public AnimationTransitionAttribute(Type triggerEvent, Type targetState, float transitionTime = 0.0f, bool fixedTimeTransition = false)
             : base(triggerEvent, targetState)
         {
             TransitionTime = transitionTime;

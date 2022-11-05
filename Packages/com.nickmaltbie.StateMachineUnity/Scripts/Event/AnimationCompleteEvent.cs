@@ -19,7 +19,19 @@
 namespace nickmaltbie.StateMachineUnity.Event
 {
     /// <summary>
-    /// Event for managing transitions or executing actions in state machines.
+    /// Event raised whenever the current animation
+    /// for a state machine has completed.
     /// </summary>
-    public interface IEvent { }
+    public class AnimationCompleteEvent : IEvent
+    {
+        /// <summary>
+        /// Global instance of the <see cref="AnimationCompleteEvent"/>
+        /// </summary>
+        public static readonly AnimationCompleteEvent Instance = new AnimationCompleteEvent();
+
+        /// <summary>
+        /// Private constructor to create an instance of the class.
+        /// </summary>
+        private AnimationCompleteEvent() { }
+    }
 }
