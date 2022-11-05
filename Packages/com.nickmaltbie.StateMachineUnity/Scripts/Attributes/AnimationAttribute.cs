@@ -32,21 +32,28 @@ namespace nickmaltbie.StateMachineUnity.Attributes
         /// </summary>
         public int AnimationHash { get; private set; }
 
+        /// <summary>
+        /// Default transition time when transitioning to this animation.
+        /// </summary>
+        public float DefaultTransitionTime { get; private set; }
 
         /// <summary>
         /// Associate an animation with a given state.
         /// </summary>
-        /// <param name="stateName">String name of the state</param>
-        public AnimationAttribute(string stateName)
-            : this(Animator.StringToHash(stateName)) { }
+        /// <param name="stateName">String name of the state.</param>
+        /// <param name="defaultTransitionTime">Default transition time when transitioning to this animation.</param>
+        public AnimationAttribute(string stateName, float defaultTransitionTime = 0.0f)
+            : this(Animator.StringToHash(stateName), defaultTransitionTime) { }
 
         /// <summary>
         /// Associate an animation with a given state.
         /// </summary>
         /// <param name="animationHash">Hash of the animation state</param>
-        public AnimationAttribute(int animationHash)
+        /// <param name="defaultTransitionTime">Default transition time when transitioning to this animation.</param>
+        public AnimationAttribute(int animationHash, float defaultTransitionTime = 0.0f)
         {
             AnimationHash = animationHash;
+            DefaultTransitionTime = defaultTransitionTime;
         }
 
         /// <summary>

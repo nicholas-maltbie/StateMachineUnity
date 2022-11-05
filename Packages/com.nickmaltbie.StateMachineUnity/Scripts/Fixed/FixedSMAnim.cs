@@ -95,20 +95,21 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         /// </summary>
         public override void Update()
         {
-            base.Update();
-            int? targetState = AnimationAttribute.GetStateAnimation(CurrentState);
-            if (targetState.HasValue)
+            var animAttr = Attribute.GetCustomAttribute(CurrentState, typeof(AnimationAttribute)) as AnimationAttribute;
+            if (animAttr != null)
             {
-                if (CurrentAnimationState != targetState)
-                {
-                    CrossFade(targetState.Value, 0.0f);
-                }
-                else if (AttachedAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 &&
+                if (AttachedAnimator.GetCurrentAnimatorStateInfo(0).shortNameHash == animAttr.AnimationHash &&
+                    AttachedAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 &&
                     Interlocked.CompareExchange(ref raisedCompletedEvent, 1, 0) == 0)
                 {
                     RaiseEvent(AnimationCompleteEvent.Instance);    
                 }
+                else if (CurrentAnimationState != animAttr.AnimationHash)
+                {
+                    CrossFadeInFixedTime(animAttr.AnimationHash, animAttr.DefaultTransitionTime);
+                }
             }
+            base.Update();
         }
     }
 }

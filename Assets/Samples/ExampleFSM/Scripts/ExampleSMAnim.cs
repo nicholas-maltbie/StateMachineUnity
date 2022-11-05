@@ -43,10 +43,21 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         /// </summary>
         [InitialState]
         [OnEventDoAction(typeof(OnUpdateEvent), nameof(CheckWalking))]
-        [Animation("Idle")]
+        [Animation("Idle", 0.1f)]
         [Transition(typeof(JumpEvent), typeof(JumpState))]
         [AnimationTransition(typeof(MoveEvent), typeof(WalkingState), 0.1f, true)]
+        [TransitionAfterTime(typeof(Yawn), 10.0f, false)]
         public class IdleState : State { }
+
+        /// <summary>
+        /// Yawn animation to play after the player stands still for too long.
+        /// </summary>
+        [Animation("Yawn", 1.0f)]
+        [OnEventDoAction(typeof(OnUpdateEvent), nameof(CheckWalking))]
+        [AnimationTransition(typeof(MoveEvent), typeof(WalkingState), 0.5f, true)]
+        [AnimationTransition(typeof(JumpEvent), typeof(JumpState), 0.5f, true)]
+        [TransitionOnAnimationComplete(typeof(IdleState))]
+        public class Yawn : State { }
 
         /// <summary>
         /// Walking state for example state machine.
@@ -97,8 +108,8 @@ namespace nickmaltbie.StateMachineUnity.Fixed
             if (moveValue.magnitude > 0.001f)
             {
                 RaiseEvent(new MoveEvent());
-                base.AttachedAnimator.SetFloat("MoveX", moveValue.x);
-                base.AttachedAnimator.SetFloat("MoveY", moveValue.y);
+                base.AttachedAnimator.SetFloat("MoveX", Mathf.Lerp(base.AttachedAnimator.GetFloat("MoveX"), moveValue.x, 5.0f * base.unityService.deltaTime));
+                base.AttachedAnimator.SetFloat("MoveY", Mathf.Lerp(base.AttachedAnimator.GetFloat("MoveY"), moveValue.y, 5.0f * base.unityService.deltaTime));
             }
             else
             {

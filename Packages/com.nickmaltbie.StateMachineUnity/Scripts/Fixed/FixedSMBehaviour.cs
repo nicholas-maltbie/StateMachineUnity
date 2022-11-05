@@ -88,9 +88,9 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         /// <inheritdoc/>
         public void SetStateQuiet(Type newState)
         {
-            CurrentState = newState;
             deltaTimeInCurrentState = 0.0f;
             fixedDeltaTimeInCurrentState = 0.0f;
+            CurrentState = newState;
         }
 
         /// <summary>
@@ -102,6 +102,15 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         public virtual void Update()
         {
             deltaTimeInCurrentState += unityService.deltaTime;
+            var timeoutAttr = Attribute.GetCustomAttribute(CurrentState, typeof(TransitionAfterTimeAttribute)) as TransitionAfterTimeAttribute;
+            if (timeoutAttr != null && !timeoutAttr.FixedUpdate)
+            {
+                if (timeoutAttr.TimeToTransition <= deltaTimeInCurrentState)
+                {
+                    RaiseEvent(StateTimeoutEvent.Instance);
+                }
+            }
+
             RaiseEvent(OnUpdateEvent.Instance);
         }
 
@@ -114,6 +123,15 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         public virtual void FixedUpdate()
         {
             fixedDeltaTimeInCurrentState += unityService.fixedDeltaTime;
+            var timeoutAttr = Attribute.GetCustomAttribute(CurrentState, typeof(TransitionAfterTimeAttribute)) as TransitionAfterTimeAttribute;
+            if (timeoutAttr != null && timeoutAttr.FixedUpdate)
+            {
+                if (timeoutAttr.TimeToTransition <= fixedDeltaTimeInCurrentState)
+                {
+                    RaiseEvent(StateTimeoutEvent.Instance);
+                }
+            }
+
             RaiseEvent(OnFixedUpdateEvent.Instance);
         }
 
