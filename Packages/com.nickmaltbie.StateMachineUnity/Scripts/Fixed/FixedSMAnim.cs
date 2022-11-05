@@ -33,14 +33,14 @@ namespace nickmaltbie.StateMachineUnity.Fixed
     public abstract class FixedSMAnim : FixedSMBehaviour, IAnimStateMachine<Type>
     {
         /// <summary>
-        /// Animator associated with this state machine.
-        /// </summary>
-        private Animator animator;
-
-        /// <summary>
         /// Has the completed event been raised for the current state yet.
         /// </summary>
         private int raisedCompletedEvent;
+
+        /// <summary>
+        /// Animator associated with this state machine.
+        /// </summary>
+        protected Animator AttachedAnimator { get; private set; }
 
         /// <inheritdoc/>
         public int CurrentAnimationState { get; private set; }
@@ -50,7 +50,7 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         /// </summary>
         public virtual void Awake()
         {
-            animator = gameObject.GetComponent<Animator>();
+            AttachedAnimator = gameObject.GetComponent<Animator>();
         }
 
         /// <inheritdoc/>
@@ -58,13 +58,13 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         {
             raisedCompletedEvent = 0;
             CurrentAnimationState = targetState;
-            if (animator.HasState(layerIdx, targetState))
+            if (AttachedAnimator.HasState(layerIdx, targetState))
             {
-                animator.CrossFade(targetState, transitionTime);
+                AttachedAnimator.CrossFade(targetState, transitionTime);
             }
             else
             {
-                Debug.LogError($"Warning, did not find expected stateId:{targetState} in layer:{layerIdx} for animator:{animator.name}");
+                Debug.LogError($"Warning, did not find expected stateId:{targetState} in layer:{layerIdx} for animator:{AttachedAnimator.name}");
             }
         }
 
@@ -73,20 +73,20 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         {
             raisedCompletedEvent = 0;
             CurrentAnimationState = targetState;
-            if (animator.HasState(layerIdx, targetState))
+            if (AttachedAnimator.HasState(layerIdx, targetState))
             {
-                animator.CrossFadeInFixedTime(targetState, transitionTime);
+                AttachedAnimator.CrossFadeInFixedTime(targetState, transitionTime);
             }
             else
             {
-                Debug.LogError($"Warning, did not find expected stateId:{targetState} in layer:{layerIdx} for animator:{animator.name}");
+                Debug.LogError($"Warning, did not find expected stateId:{targetState} in layer:{layerIdx} for animator:{AttachedAnimator.name}");
             }
         }
 
         /// <inheritdoc/>
         public Animator GetAnimator()
         {
-            return animator;
+            return AttachedAnimator;
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace nickmaltbie.StateMachineUnity.Fixed
                 {
                     CrossFade(targetState.Value, 0.0f);
                 }
-                else if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 &&
+                else if (AttachedAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 &&
                     Interlocked.CompareExchange(ref raisedCompletedEvent, 1, 0) == 0)
                 {
                     RaiseEvent(AnimationCompleteEvent.Instance);    

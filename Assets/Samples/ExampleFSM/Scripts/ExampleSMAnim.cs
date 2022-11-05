@@ -54,6 +54,7 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         [Animation("Walking")]
         [OnEventDoAction(typeof(OnUpdateEvent), nameof(CheckWalking))]
         [AnimationTransition(typeof(IdleEvent), typeof(IdleState), 0.35f)]
+        [AnimationTransition(typeof(JumpEvent), typeof(JumpState), 0.1f, true)]
         public class WalkingState : State { }
 
         /// <summary>
@@ -96,6 +97,8 @@ namespace nickmaltbie.StateMachineUnity.Fixed
             if (moveValue.magnitude > 0.001f)
             {
                 RaiseEvent(new MoveEvent());
+                base.AttachedAnimator.SetFloat("MoveX", moveValue.x);
+                base.AttachedAnimator.SetFloat("MoveY", moveValue.y);
             }
             else
             {
