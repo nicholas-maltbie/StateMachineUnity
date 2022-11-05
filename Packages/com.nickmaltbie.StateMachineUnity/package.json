@@ -22,6 +22,10 @@
       "path": "Samples~/ExampleFSM"
     }
   ],
+  "dependencies": {
+    "com.nickmaltbie.testutilsunity" : "0.0.2",
+    "com.unity.inputsystem": "1.0.0"
+  },
   "license": "MIT",
   "type": "library"
 }

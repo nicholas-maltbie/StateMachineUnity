@@ -14,7 +14,10 @@
       "version": "file:com.nickmaltbie.StateMachineUnity",
       "depth": 0,
       "source": "embedded",
-      "dependencies": {}
+      "dependencies": {
+        "com.nickmaltbie.testutilsunity": "0.0.2",
+        "com.unity.inputsystem": "1.0.0"
+      }
     },
     "com.nickmaltbie.testutilsunity": {
       "version": "0.0.2",
