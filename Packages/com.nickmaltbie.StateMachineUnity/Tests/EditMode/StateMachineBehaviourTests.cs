@@ -148,7 +148,7 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode
     }
 
     /// <summary>
-    /// Basic tests for <see cref="nickmaltbie.StateMachineUnity.FixedStateMachineBehaviour"/> in edit mode.
+    /// Basic tests for <see cref="nickmaltbie.StateMachineUnity.Fixed.FixedSMBehaviour"/> in edit mode.
     /// </summary>
     [TestFixture]
     public class StateMachineBehaviourTests : TestBase

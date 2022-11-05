@@ -26,7 +26,7 @@ using NUnit.Framework;
 namespace nickmaltbie.StateMachineUnity.Tests.EditMode
 {
     /// <summary>
-    /// Basic tests for <see cref="nickmaltbie.StateMachineUnity.FixedStateMachine"/> in edit mode.
+    /// Basic tests for <see cref="nickmaltbie.StateMachineUnity.Fixed.FixedSM"/> in edit mode.
     /// </summary>
     [TestFixture]
     public class StateMachineTests : TestBase

@@ -20,6 +20,7 @@ using System;
 using nickmaltbie.StateMachineUnity.Attributes;
 using nickmaltbie.StateMachineUnity.Event;
 using nickmaltbie.StateMachineUnity.Utils;
+using nickmaltbie.TestUtilsUnity;
 using UnityEngine;
 
 namespace nickmaltbie.StateMachineUnity.Fixed
@@ -31,6 +32,22 @@ namespace nickmaltbie.StateMachineUnity.Fixed
     /// </summary>
     public abstract class FixedSMBehaviour : MonoBehaviour, IStateMachine<Type>
     {
+        /// <summary>
+        /// Unity service for managing getting static unity values
+        /// in a testable manner.
+        /// </summary>
+        public IUnityService unityService = UnityService.Instance;
+
+        /// <summary>
+        /// Delta time from the unity update function in the current state.
+        /// </summary>
+        protected float deltaTimeInCurrentState;
+
+        /// <summary>
+        /// Fixed delta time from the unity fixed update function in the current state.
+        /// </summary>
+        protected float fixedDeltaTimeInCurrentState;
+
         /// <summary>
         /// Current state of the state machine.
         /// </summary>
@@ -45,6 +62,8 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         public FixedSMBehaviour()
         {
             FSMUtils.InitializeStateMachine(this);
+            deltaTimeInCurrentState = 0.0f;
+            fixedDeltaTimeInCurrentState = 0.0f;
         }
 
         /// <summary>
@@ -70,38 +89,74 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         public void SetStateQuiet(Type newState)
         {
             CurrentState = newState;
+            deltaTimeInCurrentState = 0.0f;
+            fixedDeltaTimeInCurrentState = 0.0f;
         }
 
+        /// <summary>
+        /// Update the <see cref="nickmaltbie.StateMachineUnity.Fixed.FixedSMBehaviour.deltaTimeInCurrentState"/>
+        /// based on the [IUnityService.deltaTime](xref:nickmaltbie.TestUtilsUnity.IUnityService.deltaTime)
+        /// as well as raising an instance of the <see cref="nickmaltbie.StateMachineUnity.Attributes.OnUpdateEvent"/>
+        /// for this state machine.
+        /// </summary>
         public virtual void Update()
         {
+            deltaTimeInCurrentState += unityService.deltaTime;
             RaiseEvent(OnUpdateEvent.Instance);
         }
 
+        /// <summary>
+        /// Update the <see cref="nickmaltbie.StateMachineUnity.Fixed.FixedSMBehaviour.fixedDeltaTimeInCurrentState"/>
+        /// based on the [IUnityService.fixedDeltaTime](xref:nickmaltbie.TestUtilsUnity.IUnityService.fixedDeltaTime)
+        /// as well as raising an instance of the <see cref="nickmaltbie.StateMachineUnity.Attributes.OnFixedUpdateEvent"/>
+        /// for this state machine.
+        /// </summary>
         public virtual void FixedUpdate()
         {
+            fixedDeltaTimeInCurrentState += unityService.fixedDeltaTime;
             RaiseEvent(OnFixedUpdateEvent.Instance);
         }
 
+        /// <summary>
+        /// Raises an instance of the <see cref="nickmaltbie.StateMachineUnity.Attributes.OnLateUpdateEvent"/>
+        /// for this state machine.
+        /// </summary>
         public virtual void LateUpdate()
         {
             RaiseEvent(OnLateUpdateEvent.Instance);
         }
 
+        /// <summary>
+        /// Raises an instance of the <see cref="nickmaltbie.StateMachineUnity.Attributes.OnGUIEvent"/>
+        /// for this state machine.
+        /// </summary>
         public virtual void OnGUI()
         {
             RaiseEvent(OnGUIEvent.Instance);
         }
 
+        /// <summary>
+        /// Raises an instance of the <see cref="nickmaltbie.StateMachineUnity.Attributes.OnEnableEvent"/>
+        /// for this state machine.
+        /// </summary>
         public virtual void OnEnable()
         {
             RaiseEvent(OnEnableEvent.Instance);
         }
 
+        /// <summary>
+        /// Raises an instance of the <see cref="nickmaltbie.StateMachineUnity.Attributes.OnDisableEvent"/>
+        /// for this state machine.
+        /// </summary>
         public virtual void OnDisable()
         {
             RaiseEvent(OnDisableEvent.Instance);
         }
 
+        /// <summary>
+        /// Raises an instance of the <see cref="nickmaltbie.StateMachineUnity.Attributes.OnAnimatorIKEvent"/>
+        /// for this state machine.
+        /// </summary>
         public virtual void OnAnimatorIK()
         {
             RaiseEvent(OnAnimatorIKEvent.Instance);

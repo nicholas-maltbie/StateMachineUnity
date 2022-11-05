@@ -28,35 +28,45 @@ namespace nickmaltbie.StateMachineUnity.Attributes
     public class AnimationTransitionAttribute : TransitionAttribute
     {
         /// <summary>
-        /// name of the animation state to play upon transition.
-        /// </summary>
-        public string StateName { get; private set; }
-
-        /// <summary>
         /// Fixed time to transition to new state.
         /// </summary>
         public float TransitionTime { get; private set; }
+
+        /// <summary>
+        /// Is this transition in fixed time or normalized time.
+        /// </summary>
+        public bool FixedTimeTransition { get; private set; }
 
         /// <summary>
         /// Transition to another state on a given event.
         /// </summary>
         /// <param name="triggerEvent">Trigger event to cause transition.</param>
         /// <param name="targetState">New state to transition to upon trigger.</param>
-        /// <param name="stateName">Name of animation state to play upon transition.</param>
         /// <param name="transitionTime">Fixed time to transition to new state.</param>
-        public AnimationTransitionAttribute(Type triggerEvent, Type targetState, string stateName, float transitionTime)
+        /// <param name="fixedTimeTransition">Is this transition in fixed time (true) or normalized time (false).</param>
+        public AnimationTransitionAttribute(Type triggerEvent, Type targetState, float transitionTime, bool fixedTimeTransition)
             : base(triggerEvent, targetState)
         {
-            StateName = stateName;
             TransitionTime = transitionTime;
+            FixedTimeTransition = fixedTimeTransition;
         }
 
         /// <inheritdoc/>
         public override void OnTransition<E>(IStateMachine<E> sm)
         {
             IAnimStateMachine<E> animStateMachine = sm as IAnimStateMachine<E>;
-            Animator animator = animStateMachine.GetAnimator();
-            animator.CrossFadeInFixedTime(StateName, TransitionTime);
+            int? nextState = AnimationAttribute.GetStateAnimation(TargetState);
+            if (nextState.HasValue)
+            {
+                if (FixedTimeTransition)
+                {
+                    animStateMachine.CrossFadeInFixedTime(nextState.Value, TransitionTime);
+                }
+                else
+                {
+                    animStateMachine.CrossFade(nextState.Value, TransitionTime);
+                }
+            }
         }
     }
 }

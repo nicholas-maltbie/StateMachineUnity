@@ -1,7 +1,9 @@
 {
     "name": "nickmaltbie.StateMachineUnity",
     "rootNamespace": "com.nickmaltbie.StateMachineUnity",
-    "references": [],
+    "references": [
+        "GUID:e95bf247f53845e48930d69810b90522"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

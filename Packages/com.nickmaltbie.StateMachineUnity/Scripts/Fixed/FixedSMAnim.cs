@@ -17,6 +17,7 @@
 // SOFTWARE.
 
 using System;
+using nickmaltbie.StateMachineUnity.Attributes;
 using UnityEngine;
 
 namespace nickmaltbie.StateMachineUnity.Fixed
@@ -26,7 +27,6 @@ namespace nickmaltbie.StateMachineUnity.Fixed
     /// and transitions. Supports basic unity events in addition
     /// to running an animation for each given state.
     /// </summary>
-    [RequireComponent(typeof(Animator))]
     public abstract class FixedSMAnim : FixedSMBehaviour, IAnimStateMachine<Type>
     {
         /// <summary>
@@ -34,18 +34,63 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         /// </summary>
         private Animator animator;
 
+        /// <inheritdoc/>
+        public int CurrentAnimationState { get; private set; }
+
         /// <summary>
         /// Configure and setup the fixed state machine with animations.
         /// </summary>
         public virtual void Awake()
         {
-            this.animator = GetComponent<Animator>();
+            this.animator = gameObject.GetComponent<Animator>();
+        }
+
+        /// <inheritdoc/>
+        public void CrossFade(int targetState, float transitionTime = 0, int layerIdx = 0)
+        {
+            this.CurrentAnimationState = targetState;
+            if (animator.HasState(layerIdx, targetState))
+            {
+                animator.CrossFade(targetState, transitionTime);
+            }
+            else
+            {
+                Debug.LogError($"Warning, did not find expected stateId:{targetState} in layer:{layerIdx} for animator:{animator.name}");
+            }
+        }
+
+        /// <inheritdoc/>
+        public void CrossFadeInFixedTime(int targetState, float transitionTime = 0, int layerIdx = 0)
+        {
+            this.CurrentAnimationState = targetState;
+            if (animator.HasState(layerIdx, targetState))
+            {
+                animator.CrossFadeInFixedTime(targetState, transitionTime);
+            }
+            else
+            {
+                Debug.LogError($"Warning, did not find expected stateId:{targetState} in layer:{layerIdx} for animator:{animator.name}");
+            }
         }
 
         /// <inheritdoc/>
         public Animator GetAnimator()
         {
             return animator;
+        }
+
+        /// <summary>
+        /// Performs the action of <see cref="FixedSMBehaviour.Update"/>
+        /// in addition to updating the 
+        /// </summary>
+        public override void Update()
+        {
+            base.Update();
+            int? targetState = AnimationAttribute.GetStateAnimation(this.CurrentState);
+            if (targetState.HasValue && CurrentAnimationState != targetState)
+            {
+                this.CrossFade(targetState.Value, 0.0f);
+            }
         }
     }
 }

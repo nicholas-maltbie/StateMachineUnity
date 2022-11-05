@@ -17,6 +17,7 @@
 // SOFTWARE.
 
 using System;
+using UnityEngine;
 
 namespace nickmaltbie.StateMachineUnity.Attributes
 {
@@ -26,6 +27,37 @@ namespace nickmaltbie.StateMachineUnity.Attributes
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
     public class AnimationAttribute : Attribute
     {
+        /// <summary>
+        /// Animation hash associated with the state this is attached to.
+        /// </summary>
+        public int AnimationHash { get; private set; }
 
+
+        /// <summary>
+        /// Associate an animation with a given state.
+        /// </summary>
+        /// <param name="stateName">String name of the state</param>
+        public AnimationAttribute(string stateName)
+            : this(Animator.StringToHash(stateName)) { }
+
+        /// <summary>
+        /// Associate an animation with a given state.
+        /// </summary>
+        /// <param name="animationHash">Hash of the animation state</param>
+        public AnimationAttribute(int animationHash)
+        {
+            AnimationHash = animationHash;
+        }
+
+        /// <summary>
+        /// Gets the animation associated with a given state.
+        /// </summary>
+        /// <param name="state">State to search attribute for.</param>
+        /// <returns></returns>
+        public static int? GetStateAnimation(Type state)
+        {
+            var animAttribute = GetCustomAttribute(state, typeof(AnimationAttribute)) as AnimationAttribute;
+            return animAttribute?.AnimationHash;
+        }
     }
 }
