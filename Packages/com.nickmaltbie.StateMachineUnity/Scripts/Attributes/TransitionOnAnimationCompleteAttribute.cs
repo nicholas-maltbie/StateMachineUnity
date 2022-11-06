@@ -19,31 +19,26 @@
 using System;
 using nickmaltbie.StateMachineUnity.Event;
 
-namespace nickmaltbie.StateMachineUnity
+namespace nickmaltbie.StateMachineUnity.Attributes
 {
     /// <summary>
-    /// Abstract state machine to manage a set of given states
-    /// and transitions.
+    /// Transition attribute to transition to a new state upon completion
+    /// of a current animation.
     /// </summary>
-    public interface IStateMachine<E>
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+    public class TransitionOnAnimationCompleteAttribute : AnimationTransitionAttribute
     {
         /// <summary>
-        /// Current state of the state machine.
+        /// Transition to another state upon completion of the animation for
+        /// the current state.
         /// </summary>
-        public E CurrentState { get; }
+        /// <param name="targetState">New state to transition to upon trigger.</param>
+        /// <param name="transitionTime">Fixed time to transition to new state.</param>
+        /// <param name="fixedTimeTransition">Is this transition in fixed time (true) or normalized time (false).</param>
+        public TransitionOnAnimationCompleteAttribute(Type targetState, float transitionTime = 0.0f, bool fixedTimeTransition = false)
+            : base(typeof(AnimationCompleteEvent), targetState, transitionTime, fixedTimeTransition)
+        {
 
-        /// <summary>
-        /// Raise an event to the current state machine.
-        /// </summary>
-        /// <param name="evt">Event to send to the state machine.</param>
-        public void RaiseEvent(IEvent evt);
-
-        /// <summary>
-        /// Internal method to set the current state of the state machine without
-        /// invoking the <see cref="Attributes.OnEnterStateAttribute"/>
-        /// or <see cref="Attributes.OnExitStateAttribute"/>
-        /// </summary>
-        /// <param name="newState">New state to set for the state machine.</param>
-        public void SetStateQuiet(Type newState);
+        }
     }
 }

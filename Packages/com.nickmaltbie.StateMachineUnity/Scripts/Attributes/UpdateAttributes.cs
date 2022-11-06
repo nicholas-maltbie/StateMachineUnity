@@ -17,6 +17,7 @@
 // SOFTWARE.
 
 using System;
+using nickmaltbie.StateMachineUnity.Event;
 
 namespace nickmaltbie.StateMachineUnity.Attributes
 {

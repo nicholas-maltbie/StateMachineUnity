@@ -16,34 +16,10 @@
 // ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using nickmaltbie.StateMachineUnity.Event;
-
-namespace nickmaltbie.StateMachineUnity
+namespace nickmaltbie.StateMachineUnity.Event
 {
     /// <summary>
-    /// Abstract state machine to manage a set of given states
-    /// and transitions.
+    /// Event for managing transitions or executing actions in state machines.
     /// </summary>
-    public interface IStateMachine<E>
-    {
-        /// <summary>
-        /// Current state of the state machine.
-        /// </summary>
-        public E CurrentState { get; }
-
-        /// <summary>
-        /// Raise an event to the current state machine.
-        /// </summary>
-        /// <param name="evt">Event to send to the state machine.</param>
-        public void RaiseEvent(IEvent evt);
-
-        /// <summary>
-        /// Internal method to set the current state of the state machine without
-        /// invoking the <see cref="Attributes.OnEnterStateAttribute"/>
-        /// or <see cref="Attributes.OnExitStateAttribute"/>
-        /// </summary>
-        /// <param name="newState">New state to set for the state machine.</param>
-        public void SetStateQuiet(Type newState);
-    }
+    public interface IEvent { }
 }

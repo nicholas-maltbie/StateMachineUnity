@@ -1,7 +1,9 @@
 {
-    "name": "nickmaltbie.StateMachineUnity",
-    "rootNamespace": "com.nickmaltbie.StateMachineUnity",
+    "name": "nickmaltbie.StateMachineUnity.ExampleFSM",
+    "rootNamespace": "nickmaltbie.StateMachineUnity.ExampleFSM",
     "references": [
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:ef35993bd7c22e243bb26a52fcfafa36",
         "GUID:e95bf247f53845e48930d69810b90522"
     ],
     "includePlatforms": [],

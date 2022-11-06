@@ -17,41 +17,43 @@
 // SOFTWARE.
 
 using System;
+using nickmaltbie.StateMachineUnity.Event;
 
 namespace nickmaltbie.StateMachineUnity.Attributes
 {
     /// <summary>
-    /// Transition attribute to manage transitions between states for a state machine.
+    /// Attribute to transition after a given period of time
+    /// from one state to another.
+    /// 
+    /// Supported by any implementation of the
+    /// <see cref="nickmaltbie.StateMachineUnity.Fixed.FixedSMBehaviour"/> that has a sense of how much
+    /// time has passed in the update or fixed update time.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
-    public class TransitionAttribute : Attribute
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+    public class TransitionAfterTimeAttribute : TransitionAttribute
     {
         /// <summary>
-        /// Type of event to listen for.
+        /// Should fixed delta time be used to determine timeout.
         /// </summary>
-        public Type TriggerEvent { get; private set; }
+        public bool FixedUpdate { get; private set; }
 
         /// <summary>
-        /// Target state upon event trigger.
+        /// Time in seconds to wait before transitioning.
         /// </summary>
-        public Type TargetState { get; private set; }
+        public float TimeToTransition { get; private set; }
 
         /// <summary>
-        /// Transition to another state on a given event.
+        /// Transition to another state after a period of time.
         /// </summary>
-        /// <param name="triggerEvent">Trigger event to cause transition.</param>
         /// <param name="targetState">New state to transition to upon trigger.</param>
-        public TransitionAttribute(Type triggerEvent, Type targetState)
+        /// <param name="timeToTransition">Fixed time to transition to new state.</param>
+        /// <param name="fixedUpdate">Should time from fixedDeltaTime or deltaTime be used.
+        /// True corresponds to fixedDeltaTime, false corresponds to deltaTime</param>
+        public TransitionAfterTimeAttribute(Type targetState, float timeToTransition, bool fixedUpdate = false)
+            : base(typeof(StateTimeoutEvent), targetState)
         {
-            TriggerEvent = triggerEvent;
-            TargetState = targetState;
+            TimeToTransition = timeToTransition;
+            FixedUpdate = fixedUpdate;
         }
-
-        /// <summary>
-        /// Behaviour to invoke when this transition is triggered.
-        /// </summary>
-        /// <param name="sm">State machine being transitioned.</param>
-        /// <typeparam name="E">Type of the state machine.</typeparam>
-        public virtual void OnTransition<E>(IStateMachine<E> sm) { }
     }
 }

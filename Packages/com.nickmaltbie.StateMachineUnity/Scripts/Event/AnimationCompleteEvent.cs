@@ -16,34 +16,22 @@
 // ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using nickmaltbie.StateMachineUnity.Event;
-
-namespace nickmaltbie.StateMachineUnity
+namespace nickmaltbie.StateMachineUnity.Event
 {
     /// <summary>
-    /// Abstract state machine to manage a set of given states
-    /// and transitions.
+    /// Event raised whenever the current animation
+    /// for a state machine has completed.
     /// </summary>
-    public interface IStateMachine<E>
+    public class AnimationCompleteEvent : IEvent
     {
         /// <summary>
-        /// Current state of the state machine.
+        /// Global instance of the <see cref="AnimationCompleteEvent"/>
         /// </summary>
-        public E CurrentState { get; }
+        public static readonly AnimationCompleteEvent Instance = new AnimationCompleteEvent();
 
         /// <summary>
-        /// Raise an event to the current state machine.
+        /// Private constructor to create an instance of the class.
         /// </summary>
-        /// <param name="evt">Event to send to the state machine.</param>
-        public void RaiseEvent(IEvent evt);
-
-        /// <summary>
-        /// Internal method to set the current state of the state machine without
-        /// invoking the <see cref="Attributes.OnEnterStateAttribute"/>
-        /// or <see cref="Attributes.OnExitStateAttribute"/>
-        /// </summary>
-        /// <param name="newState">New state to set for the state machine.</param>
-        public void SetStateQuiet(Type newState);
+        private AnimationCompleteEvent() { }
     }
 }

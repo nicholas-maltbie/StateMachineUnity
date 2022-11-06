@@ -16,34 +16,22 @@
 // ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System;
-using nickmaltbie.StateMachineUnity.Event;
-
-namespace nickmaltbie.StateMachineUnity
+namespace nickmaltbie.StateMachineUnity.Event
 {
     /// <summary>
-    /// Abstract state machine to manage a set of given states
-    /// and transitions.
+    /// Event raised whenever a state has timed out. Used with the
+    /// <see cref="nickmaltbie.StateMachineUnity.Attributes.TransitionAfterTimeAttribute"/> attribute.
     /// </summary>
-    public interface IStateMachine<E>
+    public class StateTimeoutEvent : IEvent
     {
         /// <summary>
-        /// Current state of the state machine.
+        /// Global instance of the <see cref="StateTimeoutEvent"/>
         /// </summary>
-        public E CurrentState { get; }
+        public static readonly StateTimeoutEvent Instance = new StateTimeoutEvent();
 
         /// <summary>
-        /// Raise an event to the current state machine.
+        /// Private constructor to create an instance of the class.
         /// </summary>
-        /// <param name="evt">Event to send to the state machine.</param>
-        public void RaiseEvent(IEvent evt);
-
-        /// <summary>
-        /// Internal method to set the current state of the state machine without
-        /// invoking the <see cref="Attributes.OnEnterStateAttribute"/>
-        /// or <see cref="Attributes.OnExitStateAttribute"/>
-        /// </summary>
-        /// <param name="newState">New state to set for the state machine.</param>
-        public void SetStateQuiet(Type newState);
+        private StateTimeoutEvent() { }
     }
 }

@@ -76,13 +76,14 @@
             "baseUrl": "https://nickmaltbie.com/StateMachineUnity/docs",
             "changefreq": "weekly",
             "fileOptions": {
-                "latest/api/*": {
+                "api/*": {
                     "changefreq": "daily"
                 }
             }
         },
         "xref": [
-            "https://normanderwan.github.io/UnityXrefMaps/xrefmap.yml"
+            "https://normanderwan.github.io/UnityXrefMaps/xrefmap.yml",
+            "https://nickmaltbie.com/TestUtilsUnity/docs/xrefmap.yml"
         ],
         "xrefService": [
             "https://xref.docs.microsoft.com/query?uid={uid}"

@@ -3,11 +3,12 @@
     "rootNamespace": "nickmaltbie.StateMachineUnity.Tests.EditMode",
     "references": [
         "nickmaltbie.StateMachineUnity",
-        "nickmaltbie.StateMachineUnity.TestCommon",
-        "UnityEngine.TestRunner",
-        "UnityEditor.TestRunner",
+        "nickmaltbie.TestUtilsUnity.Tests.TestCommon",
+        "nickmaltbie.TestUtilsUnity",
         "Unity.InputSystem",
-        "Unity.InputSystem.TestFramework"
+        "Unity.InputSystem.TestFramework",
+        "UnityEditor.TestRunner",
+        "UnityEngine.TestRunner"
     ],
     "includePlatforms": [
         "Editor"
