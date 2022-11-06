@@ -43,9 +43,9 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed
         [Test]
         public void RebuildCache()
         {
-            FSMUtils.EventCache = new ();
-            FSMUtils.ActionCache = new ();
-            FSMUtils.TransitionCache = new ();
+            FSMUtils.EventCache = new();
+            FSMUtils.ActionCache = new();
+            FSMUtils.TransitionCache = new();
             FSMUtils.SetupCache(typeof(DemoFixedStateMachine));
             FSMUtils.SetupCache(typeof(DemoFixedStateMachineMonoBehaviour));
         }

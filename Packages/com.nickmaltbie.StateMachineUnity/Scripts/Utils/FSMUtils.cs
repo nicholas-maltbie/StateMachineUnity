@@ -34,17 +34,17 @@ namespace nickmaltbie.StateMachineUnity.Utils
         /// <summary>
         /// Map of actions of state machine -> state, attribute) -> action.
         /// </summary>
-        internal static ConcurrentDictionary<Type, Dictionary<(Type, Type), MethodInfo>> ActionCache = new ();
+        internal static ConcurrentDictionary<Type, Dictionary<(Type, Type), MethodInfo>> ActionCache = new();
 
         /// <summary>
         /// Map of transitions of state machine -> (state, event) -> state.
         /// </summary>
-        internal static ConcurrentDictionary<Type, Dictionary<(Type, Type), TransitionAttribute>> TransitionCache = new ();
+        internal static ConcurrentDictionary<Type, Dictionary<(Type, Type), TransitionAttribute>> TransitionCache = new();
 
         /// <summary>
         /// Map of actions of state machine -> (state, event) -> [ actions ]
         /// </summary>
-        internal static ConcurrentDictionary<Type, Dictionary<(Type, Type), List<MethodInfo>>> EventCache = new ();
+        internal static ConcurrentDictionary<Type, Dictionary<(Type, Type), List<MethodInfo>>> EventCache = new();
 
         /// <summary>
         /// Returns the action with the specified name.

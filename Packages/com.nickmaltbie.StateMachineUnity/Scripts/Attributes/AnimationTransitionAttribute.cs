@@ -17,7 +17,6 @@
 // SOFTWARE.
 
 using System;
-using UnityEngine;
 
 namespace nickmaltbie.StateMachineUnity.Attributes
 {
@@ -54,7 +53,7 @@ namespace nickmaltbie.StateMachineUnity.Attributes
         /// <inheritdoc/>
         public override void OnTransition<E>(IStateMachine<E> sm)
         {
-            IAnimStateMachine<E> animStateMachine = sm as IAnimStateMachine<E>;
+            var animStateMachine = sm as IAnimStateMachine<E>;
             int? nextState = AnimationAttribute.GetStateAnimation(TargetState);
             if (nextState.HasValue)
             {

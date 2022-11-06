@@ -107,14 +107,13 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         /// </summary>
         protected void UpdateAnimationState()
         {
-            var animAttr = Attribute.GetCustomAttribute(CurrentState, typeof(AnimationAttribute)) as AnimationAttribute;
-            if (animAttr != null)
+            if (Attribute.GetCustomAttribute(CurrentState, typeof(AnimationAttribute)) is AnimationAttribute animAttr)
             {
                 if (AttachedAnimator.GetCurrentAnimatorStateInfo(0).shortNameHash == animAttr.AnimationHash &&
                     AttachedAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 &&
                     Interlocked.CompareExchange(ref raisedCompletedEvent, 1, 0) == 0)
                 {
-                    RaiseEvent(AnimationCompleteEvent.Instance);    
+                    RaiseEvent(AnimationCompleteEvent.Instance);
                 }
                 else if (CurrentAnimationState != animAttr.AnimationHash)
                 {

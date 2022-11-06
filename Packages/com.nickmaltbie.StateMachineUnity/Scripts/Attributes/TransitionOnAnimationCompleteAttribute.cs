@@ -38,7 +38,7 @@ namespace nickmaltbie.StateMachineUnity.Attributes
         public TransitionOnAnimationCompleteAttribute(Type targetState, float transitionTime = 0.0f, bool fixedTimeTransition = false)
             : base(typeof(AnimationCompleteEvent), targetState, transitionTime, fixedTimeTransition)
         {
-            
+
         }
     }
 }

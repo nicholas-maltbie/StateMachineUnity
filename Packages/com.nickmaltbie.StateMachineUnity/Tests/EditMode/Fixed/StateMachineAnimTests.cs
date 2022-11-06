@@ -37,7 +37,7 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed
         public const string AnimA = "animA";
         public const string AnimB = "animB";
         public const string AnimC = "animC";
-        public const string AnimD = "animD";        
+        public const string AnimD = "animD";
 
         [InitialState]
         [Animation(AnimA)]
@@ -47,17 +47,17 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed
         [AnimationTransition(typeof(DEvent2), typeof(StateD), fixedTimeTransition: true)]
         [TransitionOnAnimationComplete(typeof(TimeoutState))]
         public class StateA : State { }
-        
+
         [Animation(AnimB)]
         [AnimationTransition(typeof(AEvent), typeof(StateA), 0.5f, false)]
         [Transition(typeof(CEvent), typeof(StateC))]
         public class StateB : State { }
-        
+
         [Animation(AnimC)]
         [AnimationTransition(typeof(AEvent), typeof(StateA), 0.5f, true)]
         [Transition(typeof(BEvent), typeof(StateB))]
         public class StateC : State { }
-        
+
         [Animation(AnimD)]
         [AnimationTransition(typeof(AEvent), typeof(StateA))]
         public class StateD : State { }
@@ -93,7 +93,7 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed
             unityServiceMock.Setup(e => e.deltaTime).Returns(0.1f);
             unityServiceMock.Setup(e => e.fixedDeltaTime).Returns(0.1f);
 
-            AnimatorController controller = new AnimatorController();
+            var controller = new AnimatorController();
 
             // Add State Machines
             controller.AddLayer("base");
@@ -169,7 +169,7 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed
             Assert.AreEqual(sm.CurrentAnimationState, Animator.StringToHash(AnimA));
             Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimA));
         }
-        
+
         [Test]
         public void VerifyAnimationTransitionStateCrossFade()
         {
@@ -180,7 +180,7 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed
             Assert.AreEqual(sm.CrossFadeCount, 1);
             Assert.AreEqual(sm.CrossFadeFixedCount, 0);
         }
-        
+
         [Test]
         public void VerifyAnimationTransitionStateCrossFadeFixed()
         {
