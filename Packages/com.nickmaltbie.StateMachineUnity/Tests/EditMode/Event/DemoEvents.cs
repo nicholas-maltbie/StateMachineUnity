@@ -26,6 +26,10 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Event
 
     public class CEvent : IEvent { }
 
+    public class DEvent1 : IEvent { }
+
+    public class DEvent2 : IEvent { }
+
     public class ResetEvent : IEvent { }
 
     public class EmptyEvent : IEvent { }

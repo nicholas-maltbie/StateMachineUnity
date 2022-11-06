@@ -56,7 +56,7 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         [OnEventDoAction(typeof(OnUpdateEvent), nameof(CheckWalking))]
         [AnimationTransition(typeof(MoveEvent), typeof(WalkingState), 0.5f, true)]
         [AnimationTransition(typeof(JumpEvent), typeof(JumpState), 0.5f, true)]
-        [TransitionOnAnimationComplete(typeof(IdleState))]
+        [TransitionOnAnimationComplete(typeof(IdleState), 0.35f, true)]
         public class Yawn : State { }
 
         /// <summary>

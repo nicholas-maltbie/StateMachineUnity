@@ -51,10 +51,11 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         public virtual void Awake()
         {
             AttachedAnimator = gameObject.GetComponent<Animator>();
+            UpdateAnimationState();
         }
 
         /// <inheritdoc/>
-        public void CrossFade(int targetState, float transitionTime = 0, int layerIdx = 0)
+        public virtual void CrossFade(int targetState, float transitionTime = 0, int layerIdx = 0)
         {
             raisedCompletedEvent = 0;
             CurrentAnimationState = targetState;
@@ -69,7 +70,7 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         }
 
         /// <inheritdoc/>
-        public void CrossFadeInFixedTime(int targetState, float transitionTime = 0, int layerIdx = 0)
+        public virtual void CrossFadeInFixedTime(int targetState, float transitionTime = 0, int layerIdx = 0)
         {
             raisedCompletedEvent = 0;
             CurrentAnimationState = targetState;
@@ -95,6 +96,17 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         /// </summary>
         public override void Update()
         {
+            UpdateAnimationState();
+            base.Update();
+        }
+
+        /// <summary>
+        /// Update the animation state of this fixed sm animator
+        /// based on the current animation tag of the current state of
+        /// the state machine.
+        /// </summary>
+        protected void UpdateAnimationState()
+        {
             var animAttr = Attribute.GetCustomAttribute(CurrentState, typeof(AnimationAttribute)) as AnimationAttribute;
             if (animAttr != null)
             {
@@ -109,7 +121,6 @@ namespace nickmaltbie.StateMachineUnity.Fixed
                     CrossFadeInFixedTime(animAttr.AnimationHash, animAttr.DefaultTransitionTime);
                 }
             }
-            base.Update();
         }
     }
 }
