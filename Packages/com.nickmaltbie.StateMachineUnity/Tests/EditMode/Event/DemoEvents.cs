@@ -18,7 +18,7 @@
 
 using nickmaltbie.StateMachineUnity.Event;
 
-namespace nickmaltbie.StateMachineUnity.Tests.EditMode
+namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Event
 {
     public class AEvent : IEvent { }
 
@@ -29,4 +29,6 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode
     public class ResetEvent : IEvent { }
 
     public class EmptyEvent : IEvent { }
+
+    public class TestEvent : IEvent { }
 }

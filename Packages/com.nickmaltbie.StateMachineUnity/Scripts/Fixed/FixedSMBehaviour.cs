@@ -80,7 +80,7 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         /// of the next state.
         /// </summary>
         /// <param name="evt">Event to send to this state machine.</param>
-        public void RaiseEvent(IEvent evt)
+        public virtual void RaiseEvent(IEvent evt)
         {
             FSMUtils.RaiseCachedEvent(this, evt);
         }
@@ -102,8 +102,9 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         public virtual void Update()
         {
             deltaTimeInCurrentState += unityService.deltaTime;
-            var timeoutAttr = Attribute.GetCustomAttribute(CurrentState, typeof(TransitionAfterTimeAttribute)) as TransitionAfterTimeAttribute;
-            if (timeoutAttr != null && !timeoutAttr.FixedUpdate)
+            if (Attribute.GetCustomAttribute(CurrentState, typeof(TransitionAfterTimeAttribute))
+                    is TransitionAfterTimeAttribute timeoutAttr &&
+                !timeoutAttr.FixedUpdate)
             {
                 if (timeoutAttr.TimeToTransition <= deltaTimeInCurrentState)
                 {
@@ -123,8 +124,9 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         public virtual void FixedUpdate()
         {
             fixedDeltaTimeInCurrentState += unityService.fixedDeltaTime;
-            var timeoutAttr = Attribute.GetCustomAttribute(CurrentState, typeof(TransitionAfterTimeAttribute)) as TransitionAfterTimeAttribute;
-            if (timeoutAttr != null && timeoutAttr.FixedUpdate)
+            if (Attribute.GetCustomAttribute(CurrentState, typeof(TransitionAfterTimeAttribute))
+                    is TransitionAfterTimeAttribute timeoutAttr &&
+                timeoutAttr.FixedUpdate)
             {
                 if (timeoutAttr.TimeToTransition <= fixedDeltaTimeInCurrentState)
                 {

@@ -18,12 +18,17 @@
 
 using System;
 using System.Collections.Concurrent;
+using Moq;
 using nickmaltbie.StateMachineUnity.Attributes;
+using nickmaltbie.StateMachineUnity.Event;
 using nickmaltbie.StateMachineUnity.Fixed;
+using nickmaltbie.StateMachineUnity.Tests.EditMode.Event;
+using nickmaltbie.TestUtilsUnity;
 using nickmaltbie.TestUtilsUnity.Tests.TestCommon;
 using NUnit.Framework;
+using static nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachineMonoBehaviour;
 
-namespace nickmaltbie.StateMachineUnity.Tests.EditMode
+namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed
 {
     /// <summary>
     /// Demo state machine for 
@@ -38,17 +43,24 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode
         /// <summary>
         /// Times that a state is entered.
         /// </summary>
-        public ConcurrentDictionary<Type, int> OnEntryCount = new ConcurrentDictionary<Type, int>();
+        public ConcurrentDictionary<Type, int> onEntryCount = new ConcurrentDictionary<Type, int>();
 
         /// <summary>
         /// Times that a state is exited.
         /// </summary>
-        public ConcurrentDictionary<Type, int> OnExitCount = new ConcurrentDictionary<Type, int>();
+        public ConcurrentDictionary<Type, int> onExitCount = new ConcurrentDictionary<Type, int>();
+
+        /// <summary>
+        /// Times that specific events have been raised
+        /// </summary>
+        public ConcurrentDictionary<Type, int> eventCounts = new ConcurrentDictionary<Type, int>();
 
         [InitialState]
         [Transition(typeof(AEvent), typeof(StateA))]
         [Transition(typeof(BEvent), typeof(StateB))]
         [Transition(typeof(CEvent), typeof(StateC))]
+        [Transition(typeof(TestEvent), typeof(TempFixedTimeState))]
+        [TransitionAfterTime(typeof(TimeoutState), 3.0f)]
         [OnEnterState(nameof(OnEnterStartingState))]
         [OnExitState(nameof(OnExitStartingState))]
         [OnUpdate(nameof(OnUpdateStartingState))]
@@ -60,21 +72,34 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode
         [OnAnimatorIK(nameof(OnAnimatorIKStartingState))]
         public class StartingState : State { }
 
+        [TransitionAfterTime(typeof(TimeoutFixedState), 3.0f, true)]
+        [OnEnterState(nameof(IncrementStateEntryCount))]
+        public class TempFixedTimeState : State { }
+
         [Transition(typeof(BEvent), typeof(StateB))]
         [Transition(typeof(CEvent), typeof(StateC))]
-        [OnEnterState(nameof(OnEnterStateACount))]
+        [OnEnterState(nameof(IncrementStateEntryCount))]
         [OnUpdate(nameof(OnUpdateStateA))]
         [OnEventDoAction(typeof(AEvent), nameof(DoNothing))]
         [OnEventDoAction(typeof(OnUpdateEvent), nameof(DoNothing))]
         public class StateA : State { }
 
-        [OnEnterState(nameof(OnEnterStateBCount))]
+        [OnEnterState(nameof(IncrementStateEntryCount))]
         public class StateB : State { }
 
         [Transition(typeof(ResetEvent), typeof(StartingState))]
         [Transition(typeof(CEvent), typeof(StateC))]
-        [OnEnterState(nameof(OnEnterStateCCount))]
+        [OnEnterState(nameof(IncrementStateEntryCount))]
         public class StateC : State { }
+
+        [Transition(typeof(ResetEvent), typeof(StartingState))]
+        [OnEnterState(nameof(IncrementStateEntryCount))]
+        public class TimeoutState : State { }
+
+        [Transition(typeof(ResetEvent), typeof(StartingState))]
+        [OnEnterState(nameof(IncrementStateEntryCount))]
+        public class TimeoutFixedState : State { }
+
         public void OnUpdateStateA()
         {
             actionStateCounts.AddOrUpdate((typeof(OnUpdateAttribute), typeof(StateA)), 1, (_, v) => v + 1);
@@ -83,6 +108,12 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode
         public void DoNothing()
         {
 
+        }
+
+        public override void RaiseEvent(IEvent evt)
+        {
+            base.RaiseEvent(evt);
+            eventCounts.AddOrUpdate(evt.GetType(), 1, (Type _, int v) => v + 1);
         }
 
         public void OnUpdateStartingState()
@@ -123,27 +154,17 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode
         public void OnEnterStartingState()
         {
             UnityEngine.Debug.Log("On Enter Starting State Invoked");
-            OnEntryCount.AddOrUpdate(typeof(StartingState), 1, (Type t, int v) => v + 1);
+            onEntryCount.AddOrUpdate(typeof(StartingState), 1, (Type t, int v) => v + 1);
         }
 
         public void OnExitStartingState()
         {
-            OnExitCount.AddOrUpdate(typeof(StartingState), 1, (Type t, int v) => v + 1);
+            onExitCount.AddOrUpdate(typeof(StartingState), 1, (Type t, int v) => v + 1);
         }
 
-        public void OnEnterStateACount()
+        public void IncrementStateEntryCount()
         {
-            OnEntryCount.AddOrUpdate(typeof(StateA), 1, (Type t, int v) => v + 1);
-        }
-
-        public void OnEnterStateBCount()
-        {
-            OnEntryCount.AddOrUpdate(typeof(StateB), 1, (Type t, int v) => v + 1);
-        }
-
-        public void OnEnterStateCCount()
-        {
-            OnEntryCount.AddOrUpdate(typeof(StateC), 1, (Type t, int v) => v + 1);
+            onEntryCount.AddOrUpdate(CurrentState, 1, (Type t, int v) => v + 1);
         }
     }
 
@@ -153,10 +174,20 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode
     [TestFixture]
     public class StateMachineBehaviourTests : TestBase
     {
-        [Test]
-        public void VerifyUpdateActionCounts()
+        private Mock<IUnityService> unityServiceMock;
+        private DemoFixedStateMachineMonoBehaviour sm;
+
+        [SetUp]
+        public override void Setup()
         {
-            DemoFixedStateMachineMonoBehaviour sm = CreateGameObject().AddComponent<DemoFixedStateMachineMonoBehaviour>();
+            base.Setup();
+            sm = CreateGameObject().AddComponent<DemoFixedStateMachineMonoBehaviour>();
+
+            unityServiceMock = new Mock<IUnityService>();
+            unityServiceMock.Setup(e => e.deltaTime).Returns(1.0f);
+            unityServiceMock.Setup(e => e.fixedDeltaTime).Returns(1.0f);
+
+            sm.unityService = unityServiceMock.Object;
 
             Assert.AreEqual(sm.actionStateCounts.GetOrAdd((typeof(OnUpdateAttribute), typeof(DemoFixedStateMachineMonoBehaviour.StartingState)), t => 0), 0);
             Assert.AreEqual(sm.actionStateCounts.GetOrAdd((typeof(OnFixedUpdateAttribute), typeof(DemoFixedStateMachineMonoBehaviour.StartingState)), t => 0), 0);
@@ -165,7 +196,46 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode
             Assert.AreEqual(sm.actionStateCounts.GetOrAdd((typeof(OnEnableAttribute), typeof(DemoFixedStateMachineMonoBehaviour.StartingState)), t => 0), 0);
             Assert.AreEqual(sm.actionStateCounts.GetOrAdd((typeof(OnDisableAttribute), typeof(DemoFixedStateMachineMonoBehaviour.StartingState)), t => 0), 0);
             Assert.AreEqual(sm.actionStateCounts.GetOrAdd((typeof(OnAnimatorIKAttribute), typeof(DemoFixedStateMachineMonoBehaviour.StartingState)), t => 0), 0);
+        }
 
+        [Test]
+        public void TimoutAfterUpdate()
+        {
+            Assert.AreEqual(sm.CurrentState, typeof(StartingState));
+            sm.Update();
+            Assert.AreEqual(sm.CurrentState, typeof(StartingState));
+
+            unityServiceMock.Setup(e => e.deltaTime).Returns(1000.0f);
+            sm.Update();
+            Assert.AreEqual(sm.CurrentState, typeof(TimeoutState));
+
+            Assert.AreEqual(sm.eventCounts[typeof(StateTimeoutEvent)], 1);
+
+            sm.RaiseEvent(new ResetEvent());
+            Assert.AreEqual(sm.CurrentState, typeof(StartingState));
+        }
+
+        [Test]
+        public void FixedTimoutAfterUpdate()
+        {
+            sm.RaiseEvent(new TestEvent());
+            Assert.AreEqual(sm.CurrentState, typeof(TempFixedTimeState));
+            sm.FixedUpdate();
+            Assert.AreEqual(sm.CurrentState, typeof(TempFixedTimeState));
+
+            unityServiceMock.Setup(e => e.fixedDeltaTime).Returns(1000.0f);
+            sm.FixedUpdate();
+            Assert.AreEqual(sm.CurrentState, typeof(TimeoutFixedState));
+
+            Assert.AreEqual(sm.eventCounts[typeof(StateTimeoutEvent)], 1);
+
+            sm.RaiseEvent(new ResetEvent());
+            Assert.AreEqual(sm.CurrentState, typeof(StartingState));
+        }
+
+        [Test]
+        public void VerifyUpdateActionCounts()
+        {
             sm.Update();
             Assert.AreEqual(sm.actionStateCounts[(typeof(OnUpdateAttribute), typeof(DemoFixedStateMachineMonoBehaviour.StartingState))], 1);
 

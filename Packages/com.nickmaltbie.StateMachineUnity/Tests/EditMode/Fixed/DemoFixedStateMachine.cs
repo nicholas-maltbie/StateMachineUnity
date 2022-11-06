@@ -20,8 +20,9 @@ using System;
 using System.Collections.Concurrent;
 using nickmaltbie.StateMachineUnity.Attributes;
 using nickmaltbie.StateMachineUnity.Fixed;
+using nickmaltbie.StateMachineUnity.Tests.EditMode.Event;
 
-namespace nickmaltbie.StateMachineUnity.Tests.EditMode
+namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed
 {
     /// <summary>
     /// Demo state machine for 

@@ -4,10 +4,11 @@
     "references": [
         "nickmaltbie.StateMachineUnity",
         "nickmaltbie.TestUtilsUnity.Tests.TestCommon",
-        "UnityEngine.TestRunner",
-        "UnityEditor.TestRunner",
+        "nickmaltbie.TestUtilsUnity",
         "Unity.InputSystem",
-        "Unity.InputSystem.TestFramework"
+        "Unity.InputSystem.TestFramework",
+        "UnityEditor.TestRunner",
+        "UnityEngine.TestRunner"
     ],
     "includePlatforms": [
         "Editor"

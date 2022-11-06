@@ -19,11 +19,12 @@
 using System;
 using System.Collections.Generic;
 using nickmaltbie.StateMachineUnity.Event;
+using nickmaltbie.StateMachineUnity.Tests.EditMode.Event;
 using nickmaltbie.StateMachineUnity.Utils;
 using nickmaltbie.TestUtilsUnity.Tests.TestCommon;
 using NUnit.Framework;
 
-namespace nickmaltbie.StateMachineUnity.Tests.EditMode
+namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed
 {
     /// <summary>
     /// Basic tests for <see cref="nickmaltbie.StateMachineUnity.Fixed.FixedSM"/> in edit mode.
