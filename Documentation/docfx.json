@@ -16,6 +16,10 @@
         }
     ],
     "build": {
+        "template": [
+            "default",
+            "templates/custom"
+        ],
         "globalMetadata": {
             "_appTitle": "State Machine Unity Documentation",
             "_appFooter": "State Machine Unity Documentation",
