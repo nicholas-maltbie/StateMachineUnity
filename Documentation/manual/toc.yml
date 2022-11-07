@@ -1,2 +1,7 @@
 - name: Introduction
   href: introduction.md
+
+- name: Example FSM
+  href: example-fsm.md
+- name: FSM Design
+  href: fsm-design.md
