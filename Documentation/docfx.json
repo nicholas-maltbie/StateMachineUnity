@@ -7,6 +7,12 @@
                     "files": [
                         "**/*.cs"
                     ]
+                },
+                {
+                    "src": "../Assets/Samples",
+                    "files": [
+                        "**/*.cs"
+                    ]
                 }
             ],
             "globalNamespaceId": "Global",

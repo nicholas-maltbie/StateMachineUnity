@@ -59,7 +59,7 @@ implementations of the state machines.
   * @nickmaltbie.StateMachineUnity.Attributes.OnExitStateAttribute
     \- Called when the state is exited
 
-* @nickmaltbie.StateMachineUnity.Attributes.OnEventDoAction
+* @nickmaltbie.StateMachineUnity.Attributes.OnEventDoActionAttribute
   \- Whenever an @nickmaltbie.StateMachineUnity.Event.IEvent
   is thrown invoke a given action.
 

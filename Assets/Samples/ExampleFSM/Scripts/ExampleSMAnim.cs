@@ -18,10 +18,11 @@
 
 using nickmaltbie.StateMachineUnity.Attributes;
 using nickmaltbie.StateMachineUnity.Event;
+using nickmaltbie.StateMachineUnity.Fixed;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace nickmaltbie.StateMachineUnity.Fixed
+namespace nickmaltbie.StateMachineUnity.ExampleFSM
 {
     /// <summary>
     /// Example implementation of the ExampleSMAnim.

@@ -2,6 +2,8 @@
 
 Introduction to Nick Maltbie's State Machine Utility Package for Unity Projects.
 
+See example usage in the [Usage](usage.md) document.
+
 ## Code Design
 
 The code design of the state machine is explained in

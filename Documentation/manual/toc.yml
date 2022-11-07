@@ -5,3 +5,5 @@
   href: example-fsm.md
 - name: FSM Design
   href: fsm-design.md
+- name: Usage
+  href: usage.md
