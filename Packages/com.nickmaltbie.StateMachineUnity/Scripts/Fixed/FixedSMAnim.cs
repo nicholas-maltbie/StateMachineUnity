@@ -29,7 +29,6 @@ namespace nickmaltbie.StateMachineUnity.Fixed
     /// and transitions. Supports basic unity events in addition
     /// to running an animation for each given state.
     /// </summary>
-    [RequireComponent(typeof(Animator))]
     public abstract class FixedSMAnim : FixedSMBehaviour, IAnimStateMachine<Type>
     {
         /// <summary>
@@ -40,7 +39,17 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         /// <summary>
         /// Animator associated with this state machine.
         /// </summary>
-        protected Animator AttachedAnimator { get; private set; }
+        [SerializeField]
+        protected Animator _attachedAnimator;
+
+        /// <summary>
+        /// Animator associated with this state machine.
+        /// </summary>
+        public Animator AttachedAnimator
+        {
+            get => _attachedAnimator;
+            protected set => _attachedAnimator = value;
+        }
 
         /// <inheritdoc/>
         public int CurrentAnimationState { get; private set; }
@@ -50,7 +59,7 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         /// </summary>
         public virtual void Awake()
         {
-            AttachedAnimator = gameObject.GetComponent<Animator>();
+            AttachedAnimator ??= gameObject.GetComponent<Animator>();
             UpdateAnimationState();
         }
 
