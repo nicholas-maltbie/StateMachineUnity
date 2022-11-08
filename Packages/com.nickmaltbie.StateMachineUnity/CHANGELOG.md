@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## In Progress
 
-## [1.0.0] - 2022-11-08
+## [1.0.1] - 2022-11-08
 
 * Modified attached animator component of FixedSMAnim to allow to be
     overwritten and will default to the animator attached to the FixedSMAnim
