@@ -18,10 +18,11 @@
 
 using nickmaltbie.StateMachineUnity.Attributes;
 using nickmaltbie.StateMachineUnity.Event;
+using nickmaltbie.StateMachineUnity.Fixed;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace nickmaltbie.StateMachineUnity.Fixed
+namespace nickmaltbie.StateMachineUnity.ExampleFSM
 {
     /// <summary>
     /// Example implementation of the ExampleSMAnim.
@@ -46,7 +47,7 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         [Animation("Idle", 0.1f)]
         [Transition(typeof(JumpEvent), typeof(JumpState))]
         [AnimationTransition(typeof(MoveEvent), typeof(WalkingState), 0.1f, true)]
-        [TransitionAfterTime(typeof(Yawn), 10.0f, false)]
+        [TransitionAfterTime(typeof(YawnState), 10.0f, false)]
         public class IdleState : State { }
 
         /// <summary>
@@ -57,7 +58,7 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         [AnimationTransition(typeof(MoveEvent), typeof(WalkingState), 0.5f, true)]
         [AnimationTransition(typeof(JumpEvent), typeof(JumpState), 0.5f, true)]
         [TransitionOnAnimationComplete(typeof(IdleState), 0.35f, true)]
-        public class Yawn : State { }
+        public class YawnState : State { }
 
         /// <summary>
         /// Walking state for example state machine.
