@@ -59,6 +59,9 @@ implementations of the state machines.
   * @nickmaltbie.StateMachineUnity.Attributes.OnExitStateAttribute
     \- Called when the state is exited
 
+* @nickmaltbie.StateMachineUnity.Attributes.InitialStateAttribute
+  \- Attribute that defines the initial state of a given state machine.
+
 * @nickmaltbie.StateMachineUnity.Attributes.OnEventDoActionAttribute
   \- Whenever an @nickmaltbie.StateMachineUnity.Event.IEvent
   is thrown invoke a given action.
@@ -90,17 +93,61 @@ implementations of the state machines.
   the @nickmaltbie.StateMachineUnity.IAnimStateMachine`1.CrossFade* call
   for the animation transition between states.
 
-## Customization
+* @nickmaltbie.StateMachineUnity.Attributes.TransitionAfterTimeAttribute
+  \- Extension of @nickmaltbie.StateMachineUnity.Attributes.TransitionAttribute
+  will trigger a transition automatically after a given period of time
+  in the current state. Will only work for implementations of
+  @nickmaltbie.StateMachineUnity.Fixed.FixedSMBehaviour and its
+  sub classes.
+
+* @nickmaltbie.StateMachineUnity.Attributes.TransitionOnAnimationCompleteAttribute
+  \- Automatically transition after an animation has been completed.
+  Supported by @nickmaltbie.StateMachineUnity.Fixed.FixedSMAnim
+
+## Creating a State Machine
+
+If you want to create your own state machine based off this library,
+first you need to select which abstract implementation of
+@nickmaltbie.StateMachineUnity.IStateMachine`1
+you would like to use.
+
+Next, define your set of states for the state machine as sub classes
+under the main class.
+The way transitions work for the state machine is defined by transitions via
+@nickmaltbie.StateMachineUnity.Attributes.TransitionAttribute
+which are triggered by Events which implement
+@nickmaltbie.StateMachineUnity.Event.IEvent .
+Make sure to label the initial state with an
+@nickmaltbie.StateMachineUnity.Attributes.InitialStateAttribute
+
+Whenever the @nickmaltbie.StateMachineUnity.IStateMachine`1.RaiseEvent(IEvent)
+is invoked, the state machine should check any transitions defined
+within the state machine for its current state. If any transitions specify
+that type of event, the state machine will transition from the current
+state to the targeted state.
+
+You can also define additional attributes to call a method
+whenever an event is raised using an
+@nickmaltbie.StateMachineUnity.Attributes.OnEventDoActionAttribute .
+Additionally, if you are using the
+@nickmaltbie.StateMachineUnity.Fixed.FixedSMBehaviour ,
+you can use attributes to trigger functions with the @UnityEngine.MonoBehaviour
+such as @nickmaltbie.StateMachineUnity.Attributes.OnUpdateAttribute .
+
+### Examples
 
 Some examples of custom state machines are added
 in the test code under
 
 * @nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachine
-    \- Example implementation of a @nickmaltbie.StateMachineUnity.Fixed.FixedSM.
+  \- Example implementation of a @nickmaltbie.StateMachineUnity.Fixed.FixedSM.
 * @nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachineMonoBehaviour
-    \- Example implementation of a @nickmaltbie.StateMachineUnity.Fixed.FixedSMBehaviour
+  \- Example implementation of a @nickmaltbie.StateMachineUnity.Fixed.FixedSMBehaviour
 * @nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedSMAim
-    \- Example implementation of a @nickmaltbie.StateMachineUnity.Fixed.FixedSMAnim
+  \- Example implementation of a @nickmaltbie.StateMachineUnity.Fixed.FixedSMAnim
+
+* @nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMAnim
+  \- Example state machine added as a sample to the project.
 
 In addition, the example FSM is explained in further detail in the
 [Example FSM](example-fsm.md) document.
