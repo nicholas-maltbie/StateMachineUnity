@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ## In Progress
 
+## [1.1.0] - 2022-11-09
+
+* Added locked animations to the IAnimStateMachine
+* Changed IAnimStateMachine to use AnimSMRequest instead of directly
+    calling the CrossFade api
+* Added example locked animation in the form of Punching state.
+
 ## [1.0.1] - 2022-11-08
 
 * Modified attached animator component of FixedSMAnim to allow to be
