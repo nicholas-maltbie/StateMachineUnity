@@ -39,7 +39,7 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         /// <summary>
         /// Pending request for the animator.
         /// </summary>
-        private Nullable<AnimSMRequest> pendingReq;
+        public Nullable<AnimSMRequest> PendingReq { get; private set; }
 
         /// <summary>
         /// Time in which the animation is locked.
@@ -79,7 +79,7 @@ namespace nickmaltbie.StateMachineUnity.Fixed
             // If we are currently locked, set the request as pending.
             if (lockUntilTime >= unityService.time)
             {
-                pendingReq = req;
+                PendingReq = req;
                 return;
             }
 
@@ -143,10 +143,10 @@ namespace nickmaltbie.StateMachineUnity.Fixed
                 {
                     // We are locked, do not cross fade into new animation.
                 }
-                else if (pendingReq.HasValue)
+                else if (PendingReq.HasValue)
                 {
-                    CrossFade(pendingReq.Value, 0);
-                    pendingReq = null;
+                    CrossFade(PendingReq.Value, 0);
+                    PendingReq = null;
                 }
                 else if (CurrentAnimationState != animAttr.AnimationHash)
                 {

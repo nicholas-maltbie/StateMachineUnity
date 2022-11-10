@@ -47,6 +47,17 @@ namespace nickmaltbie.StateMachineUnity
         public readonly float lockAnimationTime;
 
         public AnimSMRequest(
+            string targetStateName,
+            float transitionTime = 0.0f,
+            bool fixedTimeTransition = false,
+            float lockAnimationTime = 0.0f)
+        : this(
+            Animator.StringToHash(targetStateName),
+            transitionTime,
+            fixedTimeTransition,
+            lockAnimationTime) { }
+
+        public AnimSMRequest(
             int targetStateHash,
             float transitionTime = 0.0f,
             bool fixedTimeTransition = false,
