@@ -21,28 +21,41 @@ using UnityEngine;
 namespace nickmaltbie.StateMachineUnity
 {
     /// <summary>
-    /// Interface to represent state machine with a reference to
-    /// an animator.
+    /// Animation request for an animation state machine.
     /// </summary>
-    public interface IAnimStateMachine<E> : IStateMachine<E>
+    public readonly struct AnimSMRequest
     {
         /// <summary>
-        /// Gets the animator associated with this state machine.
+        /// Target state to transition into.
         /// </summary>
-        /// <returns>Get the animator associated with this state machine.</returns>
-        public Animator GetAnimator();
+        public readonly int targetStateHash;
 
         /// <summary>
-        /// Current target animation state for the animator.
+        /// Time to take between transition.
         /// </summary>
-        public int CurrentAnimationState { get; }
+        public readonly float transitionTime;
 
         /// <summary>
-        /// Set the animation state of the anim state machine using a normalized transition time.
+        /// Is the transition in fixed time or normalized time.
         /// </summary>
-        /// <param name="animState">Description of animation state to transition
-        /// anim state machine into.</param>
-        /// <param name="layerIdx">Layer to trigger animation in animator.</param>
-        public void CrossFade(AnimSMRequest animState, int layerIdx = 0);
+        public readonly bool fixedTimeTransition;
+
+        /// <summary>
+        /// Should the animation be locked for a given number of
+        /// seconds before transitioning to a new state.
+        /// </summary>
+        public readonly float lockAnimationTime;
+
+        public AnimSMRequest(
+            int targetStateHash,
+            float transitionTime = 0.0f,
+            bool fixedTimeTransition = false,
+            float lockAnimationTime = 0.0f)
+        {
+            this.targetStateHash = targetStateHash;
+            this.transitionTime = transitionTime;
+            this.fixedTimeTransition = fixedTimeTransition;
+            this.lockAnimationTime = lockAnimationTime;
+        }
     }
 }

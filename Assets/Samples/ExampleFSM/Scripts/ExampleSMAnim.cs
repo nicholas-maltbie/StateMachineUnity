@@ -40,12 +40,18 @@ namespace nickmaltbie.StateMachineUnity.ExampleFSM
         public InputActionReference jumpAction;
 
         /// <summary>
+        /// Punch action for the player.
+        /// </summary>
+        public InputActionReference punchAction;
+
+        /// <summary>
         /// Idle state for example state machine.
         /// </summary>
         [InitialState]
         [OnEventDoAction(typeof(OnUpdateEvent), nameof(CheckWalking))]
         [Animation("Idle", 0.1f)]
         [Transition(typeof(JumpEvent), typeof(JumpState))]
+        [Transition(typeof(PunchEvent), typeof(PunchingState))]
         [AnimationTransition(typeof(MoveEvent), typeof(WalkingState), 0.1f, true)]
         [TransitionAfterTime(typeof(YawnState), 10.0f, false)]
         public class IdleState : State { }
@@ -55,6 +61,7 @@ namespace nickmaltbie.StateMachineUnity.ExampleFSM
         /// </summary>
         [Animation("Yawn", 1.0f)]
         [OnEventDoAction(typeof(OnUpdateEvent), nameof(CheckWalking))]
+        [Transition(typeof(PunchEvent), typeof(PunchingState))]
         [AnimationTransition(typeof(MoveEvent), typeof(WalkingState), 0.5f, true)]
         [AnimationTransition(typeof(JumpEvent), typeof(JumpState), 0.5f, true)]
         [TransitionOnAnimationComplete(typeof(IdleState), 0.35f, true)]
@@ -65,6 +72,7 @@ namespace nickmaltbie.StateMachineUnity.ExampleFSM
         /// </summary>
         [Animation("Walking")]
         [OnEventDoAction(typeof(OnUpdateEvent), nameof(CheckWalking))]
+        [Transition(typeof(PunchEvent), typeof(PunchingState))]
         [AnimationTransition(typeof(IdleEvent), typeof(IdleState), 0.35f)]
         [AnimationTransition(typeof(JumpEvent), typeof(JumpState), 0.1f, true)]
         public class WalkingState : State { }
@@ -75,6 +83,16 @@ namespace nickmaltbie.StateMachineUnity.ExampleFSM
         [Animation("Jump")]
         [TransitionOnAnimationComplete(typeof(IdleState))]
         public class JumpState : State { }
+
+        /// <summary>
+        /// Punching state
+        /// </summary>
+        [Animation("Punching", 0.35f, true, 0.75f)]
+        [OnEventDoAction(typeof(OnUpdateEvent), nameof(CheckWalking))]
+        [TransitionOnAnimationComplete(typeof(IdleState), 0.35f)]
+        [AnimationTransition(typeof(JumpEvent), typeof(JumpState), 0.35f, true)]
+        [AnimationTransition(typeof(MoveEvent), typeof(WalkingState), 0.35f, true)]
+        public class PunchingState : State { }
 
         /// <summary>
         /// Event to start moving the player.
@@ -92,12 +110,18 @@ namespace nickmaltbie.StateMachineUnity.ExampleFSM
         public class JumpEvent : IEvent { }
 
         /// <summary>
+        /// Event to perform the punching action.
+        /// </summary>
+        public class PunchEvent : IEvent { }
+
+        /// <summary>
         /// Configure actions for the example state machine with animations.
         /// </summary>
         public override void Awake()
         {
             base.Awake();
             jumpAction.action.performed += _ => RaiseEvent(new JumpEvent());
+            punchAction.action.performed += _ => RaiseEvent(new PunchEvent());
         }
 
         /// <summary>

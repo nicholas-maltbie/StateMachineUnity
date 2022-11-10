@@ -64,16 +64,17 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed
 
         public class TimeoutState : State { }
 
-        public override void CrossFadeInFixedTime(int targetState, float transitionTime = 0, int layerIdx = 0)
+        public override void CrossFade(AnimSMRequest req, int layerIdx = 0)
         {
-            base.CrossFadeInFixedTime(targetState, transitionTime, layerIdx);
-            CrossFadeFixedCount++;
-        }
-
-        public override void CrossFade(int targetState, float transitionTime = 0, int layerIdx = 0)
-        {
-            base.CrossFade(targetState, transitionTime, layerIdx);
-            CrossFadeCount++;
+            base.CrossFade(req, layerIdx);
+            if (req.fixedTimeTransition)
+            {
+                CrossFadeFixedCount++;
+            }
+            else
+            {
+                CrossFadeCount++;
+            }
         }
     }
 

@@ -37,6 +37,16 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         private int raisedCompletedEvent;
 
         /// <summary>
+        /// Pending request for the animator.
+        /// </summary>
+        private Nullable<AnimSMRequest> pendingReq;
+
+        /// <summary>
+        /// Time in which the animation is locked.
+        /// </summary>
+        private float lockUntilTime = Mathf.NegativeInfinity;
+
+        /// <summary>
         /// Animator associated with this state machine.
         /// </summary>
         [SerializeField]
@@ -64,32 +74,37 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         }
 
         /// <inheritdoc/>
-        public virtual void CrossFade(int targetState, float transitionTime = 0, int layerIdx = 0)
+        public virtual void CrossFade(AnimSMRequest req, int layerIdx = 0)
         {
-            raisedCompletedEvent = 0;
-            CurrentAnimationState = targetState;
-            if (AttachedAnimator.HasState(layerIdx, targetState))
+            // If we are currently locked, set the request as pending.
+            if (lockUntilTime >= unityService.time)
             {
-                AttachedAnimator.CrossFade(targetState, transitionTime);
+                pendingReq = req;
+                return;
             }
-            else
-            {
-                Debug.LogError($"Warning, did not find expected stateId:{targetState} in layer:{layerIdx} for animator:{AttachedAnimator.name}");
-            }
-        }
 
-        /// <inheritdoc/>
-        public virtual void CrossFadeInFixedTime(int targetState, float transitionTime = 0, int layerIdx = 0)
-        {
             raisedCompletedEvent = 0;
-            CurrentAnimationState = targetState;
-            if (AttachedAnimator.HasState(layerIdx, targetState))
+            CurrentAnimationState = req.targetStateHash;
+
+            if (req.lockAnimationTime > 0)
             {
-                AttachedAnimator.CrossFadeInFixedTime(targetState, transitionTime);
+                lockUntilTime = unityService.time + req.lockAnimationTime;
+            }
+
+            if (AttachedAnimator.HasState(layerIdx, req.targetStateHash))
+            {
+                if (req.fixedTimeTransition)
+                {
+                    AttachedAnimator.CrossFadeInFixedTime(CurrentAnimationState, req.transitionTime, layerIdx);
+                }
+                else
+                {
+                    AttachedAnimator.CrossFade(CurrentAnimationState, req.transitionTime, layerIdx);
+                }
             }
             else
             {
-                Debug.LogError($"Warning, did not find expected stateId:{targetState} in layer:{layerIdx} for animator:{AttachedAnimator.name}");
+                Debug.LogError($"Warning, did not find expected stateId:{CurrentAnimationState} in layer:{layerIdx} for animator:{AttachedAnimator.name}");
             }
         }
 
@@ -124,9 +139,22 @@ namespace nickmaltbie.StateMachineUnity.Fixed
                 {
                     RaiseEvent(AnimationCompleteEvent.Instance);
                 }
+                else if (lockUntilTime >= unityService.time)
+                {
+                    // We are locked, do not cross fade into new animation.
+                }
+                else if (pendingReq.HasValue)
+                {
+                    CrossFade(pendingReq.Value, 0);
+                    pendingReq = null;
+                }
                 else if (CurrentAnimationState != animAttr.AnimationHash)
                 {
-                    CrossFadeInFixedTime(animAttr.AnimationHash, animAttr.DefaultTransitionTime);
+                    CrossFade(new AnimSMRequest(
+                        animAttr.AnimationHash,
+                        animAttr.DefaultTransitionTime,
+                        animAttr.FixedTimeTransition,
+                        animAttr.AnimationLockTime));
                 }
             }
         }

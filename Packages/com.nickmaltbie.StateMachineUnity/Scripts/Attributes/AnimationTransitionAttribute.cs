@@ -37,17 +37,29 @@ namespace nickmaltbie.StateMachineUnity.Attributes
         public bool FixedTimeTransition { get; private set; }
 
         /// <summary>
+        /// Time to lock animation during transition.
+        /// </summary>
+        public float AnimationLockTime { get; private set; }
+
+        /// <summary>
         /// Transition to another state on a given event.
         /// </summary>
         /// <param name="triggerEvent">Trigger event to cause transition.</param>
         /// <param name="targetState">New state to transition to upon trigger.</param>
         /// <param name="transitionTime">Fixed time to transition to new state.</param>
         /// <param name="fixedTimeTransition">Is this transition in fixed time (true) or normalized time (false).</param>
-        public AnimationTransitionAttribute(Type triggerEvent, Type targetState, float transitionTime = 0.0f, bool fixedTimeTransition = false)
+        /// <param name="animationLockTime">Time to lock animation during transition.</param>
+        public AnimationTransitionAttribute(
+            Type triggerEvent,
+            Type targetState,
+            float transitionTime = 0.0f,
+            bool fixedTimeTransition = false,
+            float animationLockTime = 0.0f)
             : base(triggerEvent, targetState)
         {
             TransitionTime = transitionTime;
             FixedTimeTransition = fixedTimeTransition;
+            AnimationLockTime = animationLockTime;
         }
 
         /// <inheritdoc/>
@@ -57,14 +69,7 @@ namespace nickmaltbie.StateMachineUnity.Attributes
             int? nextState = AnimationAttribute.GetStateAnimation(TargetState);
             if (nextState.HasValue)
             {
-                if (FixedTimeTransition)
-                {
-                    animStateMachine.CrossFadeInFixedTime(nextState.Value, TransitionTime);
-                }
-                else
-                {
-                    animStateMachine.CrossFade(nextState.Value, TransitionTime);
-                }
+                animStateMachine.CrossFade(new AnimSMRequest(nextState.Value, TransitionTime, FixedTimeTransition, AnimationLockTime));
             }
         }
     }
