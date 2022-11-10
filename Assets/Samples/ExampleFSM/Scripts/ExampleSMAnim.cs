@@ -59,7 +59,7 @@ namespace nickmaltbie.StateMachineUnity.ExampleFSM
         /// <summary>
         /// Yawn animation to play after the player stands still for too long.
         /// </summary>
-        [Animation("Yawn", 1.0f)]
+        [Animation("Yawn", 0.25f, true)]
         [OnEventDoAction(typeof(OnUpdateEvent), nameof(CheckWalking))]
         [Transition(typeof(PunchEvent), typeof(PunchingState))]
         [AnimationTransition(typeof(MoveEvent), typeof(WalkingState), 0.5f, true)]
