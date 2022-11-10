@@ -18,7 +18,6 @@
 
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace nickmaltbie.StateMachineUnity.ExampleFSM
 {
@@ -29,7 +28,7 @@ namespace nickmaltbie.StateMachineUnity.ExampleFSM
     {
         public void Update()
         {
-            GameObject player = GameObject.FindWithTag("Player");
+            var player = GameObject.FindWithTag("Player");
             ExampleSMAnim sm = player?.GetComponent<ExampleSMAnim>();
 
             string currentState = sm?.CurrentState.ToString() ?? "null";

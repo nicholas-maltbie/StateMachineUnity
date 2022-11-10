@@ -55,7 +55,8 @@ namespace nickmaltbie.StateMachineUnity
             Animator.StringToHash(targetStateName),
             transitionTime,
             fixedTimeTransition,
-            lockAnimationTime) { }
+            lockAnimationTime)
+        { }
 
         public AnimSMRequest(
             int targetStateHash,

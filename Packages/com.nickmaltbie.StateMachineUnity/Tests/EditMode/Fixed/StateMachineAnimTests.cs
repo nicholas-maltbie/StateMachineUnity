@@ -115,7 +115,7 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed
             sm.unityService = unityServiceMock.Object;
             sm.Awake();
         }
-        
+
         [Test]
         public void TestAnimationLockPending()
         {
