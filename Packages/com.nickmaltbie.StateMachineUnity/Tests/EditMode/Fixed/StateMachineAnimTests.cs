@@ -64,16 +64,17 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed
 
         public class TimeoutState : State { }
 
-        public override void CrossFadeInFixedTime(int targetState, float transitionTime = 0, int layerIdx = 0)
+        public override void CrossFade(AnimSMRequest req, int layerIdx = 0)
         {
-            base.CrossFadeInFixedTime(targetState, transitionTime, layerIdx);
-            CrossFadeFixedCount++;
-        }
-
-        public override void CrossFade(int targetState, float transitionTime = 0, int layerIdx = 0)
-        {
-            base.CrossFade(targetState, transitionTime, layerIdx);
-            CrossFadeCount++;
+            base.CrossFade(req, layerIdx);
+            if (req.fixedTimeTransition)
+            {
+                CrossFadeFixedCount++;
+            }
+            else
+            {
+                CrossFadeCount++;
+            }
         }
     }
 
@@ -113,6 +114,72 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed
             sm = go.AddComponent<DemoFixedSMAim>();
             sm.unityService = unityServiceMock.Object;
             sm.Awake();
+        }
+
+        [Test]
+        public void TestAnimationLockPending()
+        {
+            Assert.AreEqual(sm.CurrentState, typeof(StateA));
+            Assert.AreEqual(sm.CurrentAnimationState, Animator.StringToHash(AnimA));
+            Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimA));
+
+            // Manually cross fade with a lock to anim C for 5 seconds
+            unityServiceMock.Setup(e => e.time).Returns(0.0f);
+            sm.CrossFade(new AnimSMRequest(AnimC, lockAnimationTime: 5.0f));
+
+            // Assert that we are now in the AnimC animation.
+            anim.Update(1.0f);
+            Assert.AreEqual(sm.CurrentState, typeof(StateA));
+            Assert.AreEqual(sm.CurrentAnimationState, Animator.StringToHash(AnimC));
+            Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimC));
+            Assert.AreEqual(null, sm.PendingReq);
+
+            // Update the SM and assert that we don't save a new pending state
+            sm.Update();
+            Assert.AreEqual(null, sm.PendingReq);
+        }
+
+        [Test]
+        public void TestAnimationTransitionWithLocks()
+        {
+            Assert.AreEqual(sm.CurrentState, typeof(StateA));
+            Assert.AreEqual(sm.CurrentAnimationState, Animator.StringToHash(AnimA));
+            Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimA));
+
+            // Manually cross fade with a lock to anim C for 5 seconds
+            unityServiceMock.Setup(e => e.time).Returns(0.0f);
+            sm.CrossFade(new AnimSMRequest(AnimC, lockAnimationTime: 5.0f));
+
+            // Assert that we are now in the AnimC animation.
+            anim.Update(1.0f);
+            Assert.AreEqual(sm.CurrentState, typeof(StateA));
+            Assert.AreEqual(sm.CurrentAnimationState, Animator.StringToHash(AnimC));
+            Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimC));
+
+            // If we attempt to transition to AnimB, verify it is saved as pending request
+            var bRequest = new AnimSMRequest(AnimB);
+            sm.CrossFade(bRequest);
+            anim.Update(1.0f);
+            Assert.AreEqual(sm.CurrentAnimationState, Animator.StringToHash(AnimC));
+            Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimC));
+            Assert.AreEqual(bRequest, sm.PendingReq);
+
+            // If we wait for time to expire, assert that we read the pending
+            // animation instead of the current state
+            unityServiceMock.Setup(e => e.time).Returns(10);
+            sm.Update();
+            anim.Update(1.0f);
+            Assert.AreEqual(sm.CurrentAnimationState, Animator.StringToHash(AnimB));
+            Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimB));
+            Assert.AreEqual(null, sm.PendingReq);
+
+            // If we update again, it should read the animation from state A
+            // Since there is no longer any pending animation.
+            sm.Update();
+            anim.Update(1.0f);
+            Assert.AreEqual(sm.CurrentState, typeof(StateA));
+            Assert.AreEqual(sm.CurrentAnimationState, Animator.StringToHash(AnimA));
+            Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimA));
         }
 
         [Test]

@@ -55,6 +55,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AnimatedCharacter
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a6620ec1a85f96046b6f5c723c02c68f, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: a6620ec1a85f96046b6f5c723c02c68f, type: 3}
       propertyPath: m_Controller
       value: 
@@ -73,6 +77,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6620ec1a85f96046b6f5c723c02c68f, type: 3}
+--- !u!95 &3441396167880062856 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: a6620ec1a85f96046b6f5c723c02c68f, type: 3}
+  m_PrefabInstance: {fileID: 9126788999214598681}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8244322820510463816 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: a6620ec1a85f96046b6f5c723c02c68f, type: 3}
@@ -120,5 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4ff49362b7b1c44b878f13484e55b00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attachedAnimator: {fileID: 3441396167880062856}
   moveAction: {fileID: -1680190386980627800, guid: f6cac1f8685eedb44bfd112cca0046a4, type: 3}
   jumpAction: {fileID: 2531454637107331683, guid: f6cac1f8685eedb44bfd112cca0046a4, type: 3}
+  punchAction: {fileID: 1120369429361536294, guid: f6cac1f8685eedb44bfd112cca0046a4, type: 3}

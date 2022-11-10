@@ -44,6 +44,9 @@ The design of the example state machine is as follows:
 * Jump: @nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMAnim.JumpState
 * Yawn: @nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMAnim.YawnState
 * Walking: @nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMAnim.WalkingState
+* Punching: @nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMAnim.PunchingState
+  * _note_ the punching animation is a "locked" animation so it
+    will continue to play even if the player has exited this state.
 
 ### Events
 
@@ -53,8 +56,9 @@ The design of the example state machine is as follows:
   \- Event raised whenever the player stops hitting the
   move input.
 * @nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMAnim.JumpEvent
-  \- Event raised whenever the player stops hitting the
-  jump input.
+  \- Event raised whenever the player hits the jump input.
+* @nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMAnim.PunchEvent
+  \- Event raised whenever the player hits the punch input.
 
 ### Transition Diagram
 
@@ -65,13 +69,21 @@ stateDiagram-v2
   Idle --> Jump : JumpEvent
   Idle --> Walking : MoveEvent
   Idle --> Yawn : Wait 10 seconds
+  Idle --> Punch : PunchEvent
 
   Yawn --> Walking : MoveEvent
   Yawn --> Jump : JumpEvent
   Yawn --> Idle : Animation completed
+  Yawn --> Punch : PunchEvent
 
   Walking --> Idle : IdleEvent
   Walking --> Jump : JumpEvent
+  Walking --> Punch : PunchEvent
   
   Jump --> Idle : Animation completed
+
+  Punch --> Jump : JumpEvent
+  Punch --> Idle : IdleEvent
+  Punch --> Walking : MoveEvent
+  Punch --> Idle : Animation completed
 ```

@@ -16,33 +16,26 @@
 // ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using TMPro;
 using UnityEngine;
 
-namespace nickmaltbie.StateMachineUnity
+namespace nickmaltbie.StateMachineUnity.ExampleFSM
 {
     /// <summary>
-    /// Interface to represent state machine with a reference to
-    /// an animator.
+    /// Example label for a ExampleSMLabel.
     /// </summary>
-    public interface IAnimStateMachine<E> : IStateMachine<E>
+    public class ExampleSMLabel : MonoBehaviour
     {
-        /// <summary>
-        /// Gets the animator associated with this state machine.
-        /// </summary>
-        /// <returns>Get the animator associated with this state machine.</returns>
-        public Animator GetAnimator();
+        public void Update()
+        {
+            var player = GameObject.FindWithTag("Player");
+            ExampleSMAnim sm = player?.GetComponent<ExampleSMAnim>();
 
-        /// <summary>
-        /// Current target animation state for the animator.
-        /// </summary>
-        public int CurrentAnimationState { get; }
+            string currentState = sm?.CurrentState.ToString() ?? "null";
+            string animState = sm?.CurrentAnimationState.ToString() ?? "null";
 
-        /// <summary>
-        /// Set the animation state of the anim state machine using a normalized transition time.
-        /// </summary>
-        /// <param name="animState">Description of animation state to transition
-        /// anim state machine into.</param>
-        /// <param name="layerIdx">Layer to trigger animation in animator.</param>
-        public void CrossFade(AnimSMRequest animState, int layerIdx = 0);
+            TextMeshProUGUI label = GetComponent<TextMeshProUGUI>();
+            label.text = $"CurrentState: {currentState}\nAnimationState: {animState}";
+        }
     }
 }
