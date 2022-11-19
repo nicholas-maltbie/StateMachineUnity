@@ -240,7 +240,7 @@ namespace nickmaltbie.StateMachineUnity.Utils
         /// <summary>
         /// Setup the cache for the state machine if it hasn't been done already.
         /// </summary>
-        internal static void SetupCache(Type stateMachine)
+        public static void SetupCache(Type stateMachine)
         {
             if (!ActionCache.ContainsKey(stateMachine))
             {
