@@ -16,6 +16,7 @@
 // ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+using System;
 using UnityEngine;
 
 namespace nickmaltbie.StateMachineUnity
@@ -23,6 +24,7 @@ namespace nickmaltbie.StateMachineUnity
     /// <summary>
     /// Animation request for an animation state machine.
     /// </summary>
+    [Serializable]
     public readonly struct AnimSMRequest
     {
         /// <summary>
