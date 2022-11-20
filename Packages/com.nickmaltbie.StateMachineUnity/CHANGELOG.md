@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## In Progress
 
+## [1.1.2] - 2022-11-20
+
+* Updated AnimSMRequest to be Serializable.
+
 ## [1.1.1] - 2022-11-19
 
 * Changed FSMUtils.SetupCache value to be public instead of internal.
