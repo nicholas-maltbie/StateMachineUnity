@@ -1,0 +1,275 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>FSM Design | State Machine Unity Documentation </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="FSM Design | State Machine Unity Documentation ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="fsm-design">FSM Design</h1>
+
+<p>This project implements an example of a Finite State Machine (FSM). In the
+code, the example implementation of this is called a Fixed State Machine
+because each definition of the state machine is &#39;fixed&#39; and statically
+defined in its possible transitions and states.</p>
+<h2 id="finite-state-machine">Finite State Machine</h2>
+<p>The main design of these classes is managed
+by a set of <a href="https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/attributes/">C# Attributes</a>
+to configure and manage controls for the state machine
+directly from the C# code.</p>
+<h3 id="interfaces">Interfaces</h3>
+<ul>
+<li><a class="xref" href="../api/nickmaltbie.StateMachineUnity.IStateMachine-1.html">IStateMachine&lt;E&gt;</a> -
+  interface to manage a set of states and transitions.</li>
+<li><a class="xref" href="../api/nickmaltbie.StateMachineUnity.IAnimStateMachine-1.html">IAnimStateMachine&lt;E&gt;</a> -
+  extends <a class="xref" href="../api/nickmaltbie.StateMachineUnity.IStateMachine-1.html">IStateMachine&lt;E&gt;</a>
+  and supports extra features such as an attached <a class="xref" href="https://docs.unity3d.com/ScriptReference/Animator.html">Animator</a>
+  and a currently selected animation.</li>
+</ul>
+<h3 id="implementations">Implementations</h3>
+<p>implementations of the state machines.</p>
+<ul>
+<li><a class="xref" href="../api/nickmaltbie.StateMachineUnity.Fixed.FixedSM.html">FixedSM</a>
+- abstract implementation of <a class="xref" href="../api/nickmaltbie.StateMachineUnity.IStateMachine-1.html">IStateMachine&lt;E&gt;</a>
+with cached transitions and events from decorators from
+<a class="xref" href="../api/nickmaltbie.StateMachineUnity.Utils.FSMUtils.html">FSMUtils</a>.</li>
+<li><a class="xref" href="../api/nickmaltbie.StateMachineUnity.Fixed.FixedSMBehaviour.html">FixedSMBehaviour</a>
+- abstract implementation of <a class="xref" href="../api/nickmaltbie.StateMachineUnity.IStateMachine-1.html">IStateMachine&lt;E&gt;</a>
+with cached transitions and events from decorators from
+<a class="xref" href="../api/nickmaltbie.StateMachineUnity.Utils.FSMUtils.html">FSMUtils</a>
+in addition to firing off events for Unity Messages and supports
+attributes such as
+<a class="xref" href="../api/nickmaltbie.StateMachineUnity.Attributes.OnUpdateAttribute.html">OnUpdateAttribute</a></li>
+<li><a class="xref" href="../api/nickmaltbie.StateMachineUnity.Fixed.FixedSMAnim.html">FixedSMAnim</a>
+- abstract extension of the <a class="xref" href="../api/nickmaltbie.StateMachineUnity.Fixed.FixedSM.html">FixedSM</a>
+that supports updating an animation state of an <a class="xref" href="https://docs.unity3d.com/ScriptReference/Animator.html">Animator</a>
+component of a state machine and fully implements the
+<a class="xref" href="../api/nickmaltbie.StateMachineUnity.IAnimStateMachine-1.html">IAnimStateMachine&lt;E&gt;</a></li>
+</ul>
+<h3 id="components">Components</h3>
+<ul>
+<li><a class="xref" href="../api/nickmaltbie.StateMachineUnity.State.html">State</a> - A state for a given FSM.</li>
+<li><a class="xref" href="../api/nickmaltbie.StateMachineUnity.Attributes.TransitionAttribute.html">TransitionAttribute</a>
+- Attribute to define and manage the transitions for a given state.</li>
+<li><a class="xref" href="../api/nickmaltbie.StateMachineUnity.Attributes.AnimationAttribute.html">AnimationAttribute</a>
+- Attribute to select an animation state for the given <a class="xref" href="https://docs.unity3d.com/ScriptReference/Animator.html">Animator</a>
+of a state machine</li>
+<li><p><a class="xref" href="../api/nickmaltbie.StateMachineUnity.Event.IEvent.html">IEvent</a>
+- Event for managing transitions or executing actions in state machines.</p>
+</li>
+<li><p>Entry and exit behaviors defined via the attributes:</p>
+<ul>
+<li><a class="xref" href="../api/nickmaltbie.StateMachineUnity.Attributes.OnEnterStateAttribute.html">OnEnterStateAttribute</a>
+- Called when state is entered</li>
+<li><a class="xref" href="../api/nickmaltbie.StateMachineUnity.Attributes.OnExitStateAttribute.html">OnExitStateAttribute</a>
+- Called when the state is exited</li>
+</ul>
+</li>
+<li><p><a class="xref" href="../api/nickmaltbie.StateMachineUnity.Attributes.InitialStateAttribute.html">InitialStateAttribute</a>
+- Attribute that defines the initial state of a given state machine.</p>
+</li>
+<li><p><a class="xref" href="../api/nickmaltbie.StateMachineUnity.Attributes.OnEventDoActionAttribute.html">OnEventDoActionAttribute</a>
+- Whenever an <a class="xref" href="../api/nickmaltbie.StateMachineUnity.Event.IEvent.html">IEvent</a>
+is thrown invoke a given action.</p>
+</li>
+<li><p>Update Attributes to be triggered on various <a class="xref" href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.html">MonoBehaviour</a>
+functions including the following subset. There are other
+messages defined for the unity MonoBehaviour but these
+are the only planned ones as of now, feel free to extend
+the code or add your own events if you wish.</p>
+<ul>
+<li><a class="xref" href="../api/nickmaltbie.StateMachineUnity.Attributes.OnUpdateAttribute.html">OnUpdateAttribute</a>
+- Called each frame.</li>
+<li><a class="xref" href="../api/nickmaltbie.StateMachineUnity.Attributes.OnFixedUpdateAttribute.html">OnFixedUpdateAttribute</a>
+- Called each fixed update.</li>
+<li><a class="xref" href="../api/nickmaltbie.StateMachineUnity.Attributes.OnLateUpdateAttribute.html">OnLateUpdateAttribute</a>
+- Called at the end of each frame.</li>
+<li><a class="xref" href="../api/nickmaltbie.StateMachineUnity.Attributes.OnGUIAttribute.html">OnGUIAttribute</a>
+- Called each GUI update.</li>
+<li><a class="xref" href="../api/nickmaltbie.StateMachineUnity.Attributes.OnEnableAttribute.html">OnEnableAttribute</a>
+- Called when object is enabled.</li>
+<li><a class="xref" href="../api/nickmaltbie.StateMachineUnity.Attributes.OnDisableAttribute.html">OnDisableAttribute</a>
+- Called when object is disabled.</li>
+<li><a class="xref" href="../api/nickmaltbie.StateMachineUnity.Attributes.OnAnimatorIKAttribute.html">OnAnimatorIKAttribute</a>
+- Callback for setting up animation IK (inverse kinematics).</li>
+</ul>
+</li>
+<li><p><a class="xref" href="../api/nickmaltbie.StateMachineUnity.Attributes.AnimationTransitionAttribute.html">AnimationTransitionAttribute</a>
+- Extension of <a class="xref" href="../api/nickmaltbie.StateMachineUnity.Attributes.TransitionAttribute.html">TransitionAttribute</a>
+that will trigger an animation upon transition and can configure settings for
+the <a class="xref" href="../api/nickmaltbie.StateMachineUnity.IAnimStateMachine-1.html#nickmaltbie_StateMachineUnity_IAnimStateMachine_1_CrossFade_">CrossFade</a> call
+for the animation transition between states.</p>
+</li>
+<li><p><a class="xref" href="../api/nickmaltbie.StateMachineUnity.Attributes.TransitionAfterTimeAttribute.html">TransitionAfterTimeAttribute</a>
+- Extension of <a class="xref" href="../api/nickmaltbie.StateMachineUnity.Attributes.TransitionAttribute.html">TransitionAttribute</a>
+will trigger a transition automatically after a given period of time
+in the current state. Will only work for implementations of
+<a class="xref" href="../api/nickmaltbie.StateMachineUnity.Fixed.FixedSMBehaviour.html">FixedSMBehaviour</a> and its
+sub classes.</p>
+</li>
+<li><p><a class="xref" href="../api/nickmaltbie.StateMachineUnity.Attributes.TransitionOnAnimationCompleteAttribute.html">TransitionOnAnimationCompleteAttribute</a>
+- Automatically transition after an animation has been completed.
+Supported by <a class="xref" href="../api/nickmaltbie.StateMachineUnity.Fixed.FixedSMAnim.html">FixedSMAnim</a></p>
+</li>
+</ul>
+<h2 id="creating-a-state-machine">Creating a State Machine</h2>
+<p>If you want to create your own state machine based off this library,
+first you need to select which abstract implementation of
+<a class="xref" href="../api/nickmaltbie.StateMachineUnity.IStateMachine-1.html">IStateMachine&lt;E&gt;</a>
+you would like to use.</p>
+<p>Next, define your set of states for the state machine as sub classes
+under the main class.
+The way transitions work for the state machine is defined by transitions via
+<a class="xref" href="../api/nickmaltbie.StateMachineUnity.Attributes.TransitionAttribute.html">TransitionAttribute</a>
+which are triggered by Events which implement
+<a class="xref" href="../api/nickmaltbie.StateMachineUnity.Event.IEvent.html">IEvent</a> .
+Make sure to label the initial state with an
+<a class="xref" href="../api/nickmaltbie.StateMachineUnity.Attributes.InitialStateAttribute.html">InitialStateAttribute</a></p>
+<p>Whenever the <a class="xref" href="../api/nickmaltbie.StateMachineUnity.IStateMachine-1.html#nickmaltbie_StateMachineUnity_IStateMachine_1_RaiseEvent_IEvent_">RaiseEvent(IEvent)</a>
+is invoked, the state machine should check any transitions defined
+within the state machine for its current state. If any transitions specify
+that type of event, the state machine will transition from the current
+state to the targeted state.</p>
+<p>You can also define additional attributes to call a method
+whenever an event is raised using an
+<a class="xref" href="../api/nickmaltbie.StateMachineUnity.Attributes.OnEventDoActionAttribute.html">OnEventDoActionAttribute</a> .
+Additionally, if you are using the
+<a class="xref" href="../api/nickmaltbie.StateMachineUnity.Fixed.FixedSMBehaviour.html">FixedSMBehaviour</a> ,
+you can use attributes to trigger functions with the <a class="xref" href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.html">MonoBehaviour</a>
+such as <a class="xref" href="../api/nickmaltbie.StateMachineUnity.Attributes.OnUpdateAttribute.html">OnUpdateAttribute</a> .</p>
+<h3 id="examples">Examples</h3>
+<p>Some examples of custom state machines are added
+in the test code under</p>
+<ul>
+<li><a class="xref" href="../api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachine.html">DemoFixedStateMachine</a>
+- Example implementation of a <a class="xref" href="../api/nickmaltbie.StateMachineUnity.Fixed.FixedSM.html">FixedSM</a>.</li>
+<li><a class="xref" href="../api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachineMonoBehaviour.html">DemoFixedStateMachineMonoBehaviour</a>
+- Example implementation of a <a class="xref" href="../api/nickmaltbie.StateMachineUnity.Fixed.FixedSMBehaviour.html">FixedSMBehaviour</a></li>
+<li><p><a class="xref" href="../api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedSMAim.html">DemoFixedSMAim</a>
+- Example implementation of a <a class="xref" href="../api/nickmaltbie.StateMachineUnity.Fixed.FixedSMAnim.html">FixedSMAnim</a></p>
+</li>
+<li><p><a class="xref" href="../api/nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMAnim.html">ExampleSMAnim</a>
+- Example state machine added as a sample to the project.</p>
+</li>
+</ul>
+<p>In addition, the example FSM is explained in further detail in the
+<a href="example-fsm.html">Example FSM</a> document.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/nicholas-maltbie/StateMachineUnity/blob/main/Documentation/manual/fsm-design.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            State Machine Unity Documentation
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    
+    <!-- Derived from https://blog.christian-schou.dk/how-to-produce-static-documentation-using-docfx/#including-diagrams-in-your-documentation-mermaid-with-docfx !-->
+    <!-- mermaid support -->
+    <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+        startOnLoad: false
+    });
+    mermaid.init(undefined, ".lang-mermaid");
+    </script>  </body>
+</html>

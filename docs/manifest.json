@@ -1,0 +1,1243 @@
+{
+  "sitemap": {
+    "fileOptions": {
+      "api/*": {
+        "baseUrl": "https://nickmaltbie.com/StateMachineUnity/docs/",
+        "changefreq": "daily"
+      }
+    },
+    "baseUrl": "https://nickmaltbie.com/StateMachineUnity/docs/",
+    "changefreq": "weekly"
+  },
+  "homepages": [],
+  "source_base_path": "D:/a/StateMachineUnity/StateMachineUnity/Documentation",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      },
+      "is_incremental": false
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "Demo/project-demo.png",
+      "output": {
+        "resource": {
+          "relative_path": "Demo/project-demo.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "LICENSE.txt",
+      "output": {
+        "resource": {
+          "relative_path": "LICENSE.txt"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.AnimSMRequest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.AnimSMRequest.html",
+          "hash": "naHm0+b4AyACFMw1lo5WYBeYA2/qQ2RO1T64bggCAtw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.ActionAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.ActionAttribute.html",
+          "hash": "gSZPEA1StFWrY1o0Pq+Q4vknl+rWlcWZtJ8OI49Bho8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.AnimationAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.AnimationAttribute.html",
+          "hash": "7eSnJ+9mcvyvtAtz+Klc1xQuvp+h5ZBtME/nWlF591g="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.AnimationTransitionAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.AnimationTransitionAttribute.html",
+          "hash": "b7yaMekhe+WWdFd6bdsGrLUnO3He7mUJcj1hAFxYw1w="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.InitialStateAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.InitialStateAttribute.html",
+          "hash": "jl80pLbKGJ8oaU2uAWGsvFkEjZL+GjvEzOIv+zr741o="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnAnimatorIKAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnAnimatorIKAttribute.html",
+          "hash": "2BZLlqa1CvIkiA9FTqbsO1u/qn3yyvrG2rzCnIfUDAk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnAnimatorIKEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnAnimatorIKEvent.html",
+          "hash": "j26w7lEygX9EBskGegAtbn683DMJe1Ypiv6DkuNFwfY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnDisableAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnDisableAttribute.html",
+          "hash": "M6EzxyK+Pmkb/efcSK6ou1fDPd5HzlSLzX8STRrunqU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnDisableEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnDisableEvent.html",
+          "hash": "pXDb0ELu8aqJ2C86+AAjeQn2dvYHIuVYjTUsW8ZHZpI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnEnableAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnEnableAttribute.html",
+          "hash": "7ddLiR+KdLh3PiL9CxQpVpmXuKZfSCy2NOhbwIJgAVY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnEnableEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnEnableEvent.html",
+          "hash": "3H3r81L1aH0dckugxpbeseGEJjzG4cAU1lWfSylBkhw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnEnterStateAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnEnterStateAttribute.html",
+          "hash": "cUVh20h86c5qiJgwzrttEl9dJ5QMG5sLnJgMhtRf67M="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnEventDoActionAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnEventDoActionAttribute.html",
+          "hash": "d6oPyfftVloZe44kIuIi4qEjsc0zS7VghgTKchaUWf4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnExitStateAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnExitStateAttribute.html",
+          "hash": "pZy01FhO/86Jp3nEUaOUjtzG3iad2IXpSJ2vMHospBc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnFixedUpdateAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnFixedUpdateAttribute.html",
+          "hash": "FPkbO70E3oOZttc41x5At8oHiuuPGQ817ZkKdHFLoNw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnFixedUpdateEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnFixedUpdateEvent.html",
+          "hash": "KlkVRBT7/RXZaHNJVtOEUFCNWIBcvAdIJl+GTINSnW4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnGUIAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnGUIAttribute.html",
+          "hash": "YFPOjuIcbN+iJ5I5CmEHhdbU1/qGbTMdKXK+XBZCtsI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnGUIEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnGUIEvent.html",
+          "hash": "6gFFijReWOfXWHkCu5SW3/fzjmkLluNVFAmDZTRPKWI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnLateUpdateAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnLateUpdateAttribute.html",
+          "hash": "X1Vedk/E1j7slYT4REPHjp02NXxhByT52etalMKlGyg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnLateUpdateEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnLateUpdateEvent.html",
+          "hash": "L/feQIkHJm3M88CNEuIPiH59ikEsEXru5l9WI11kRUQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnUpdateAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnUpdateAttribute.html",
+          "hash": "TLHpsnddf0p2kYE9KToBAI83do3Mlguaz1tPlZrzIko="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnUpdateEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.OnUpdateEvent.html",
+          "hash": "lZV1kmAMMFOET1j1XysPi4Cv775MBM0igG7lOwmdWpk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.TransitionAfterTimeAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.TransitionAfterTimeAttribute.html",
+          "hash": "typloegGUaXt4V4N6A8sgLV1RKT9YMQtar6Z4d8sNBM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.TransitionAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.TransitionAttribute.html",
+          "hash": "PT2YSUn4Rk+hF9zGJg8TcSOCi/xx2deZMx0T14DJK6U="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.TransitionOnAnimationCompleteAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.TransitionOnAnimationCompleteAttribute.html",
+          "hash": "khlMBvFVz2n5tnOEj1+Q8AGWDF10VC2VeOJu2sVy1FE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Attributes.html",
+          "hash": "ZFHfFoqoyfII09jJiIGvGzz6P74AjtJ7U7PJ0gaDuAU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Event.AnimationCompleteEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Event.AnimationCompleteEvent.html",
+          "hash": "HAT0eYBOP6jGsfTfdKjE0PsW+UYOpiQCZkYC1RKUQIk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Event.IEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Event.IEvent.html",
+          "hash": "Byge3OZGLWLzcCh70JeMMRWEGUYa7zNywhgfX+IzKjM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Event.StateTimeoutEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Event.StateTimeoutEvent.html",
+          "hash": "DqyrJ83IW9ce+CXlKBuobcrmXV/O/JKS8dKTidvD6BE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Event.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Event.html",
+          "hash": "e/MzCEsoXqgywa/4ko1RhAmrv/gfXlxXmMbGOSoZLXE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMAnim.IdleEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMAnim.IdleEvent.html",
+          "hash": "M740QB0osJHfmtcmoN6gxjhHluL+UhyJTiOVqGnMr54="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMAnim.IdleState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMAnim.IdleState.html",
+          "hash": "4RCTHa8F6y/pX0vw6zWqiY1A/MqIuPfZHZt0uE8xmoA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMAnim.JumpEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMAnim.JumpEvent.html",
+          "hash": "QTVhtSztbQWvKPRFYROxVSIzuZJvsyb7NK3cZyjq79k="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMAnim.JumpState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMAnim.JumpState.html",
+          "hash": "yvV2GFso7c29L2dYa0CAtbLROBPTlxxM25B0txUJNsw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMAnim.MoveEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMAnim.MoveEvent.html",
+          "hash": "WTsEzFmBBBn4+RjLOTIkb3nsmeRtZVfqA3qVXUaYpQg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMAnim.PunchEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMAnim.PunchEvent.html",
+          "hash": "K6JjO0k0AEemmJIlGwgiF6hMgbH9ZXFBevw4qyFUk+g="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMAnim.PunchingState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMAnim.PunchingState.html",
+          "hash": "n9qlZDe/Bmp/vcL9sHy10/31mRFCIfSCqweWEjPRvo0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMAnim.WalkingState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMAnim.WalkingState.html",
+          "hash": "3YyceJhSsbXtOFXl19R7gojiEzFlZRCgo6rcX3v0pFs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMAnim.YawnState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMAnim.YawnState.html",
+          "hash": "k1o/khK5bLxQcqDh58pllA0mMVD5iO/vTf08P8uC5xI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMAnim.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMAnim.html",
+          "hash": "JnGB0I/15KgO1pwTLvdZX++IOOuRMCzppntO4yzzm8Q="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMLabel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.ExampleFSM.ExampleSMLabel.html",
+          "hash": "bMkZN64f8+hgXNxf2tlt3NbZ3Gu/HkuuCoICUg8QbMY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.ExampleFSM.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.ExampleFSM.html",
+          "hash": "3FYDmT3QGqA+yIYDaFPLA8PZyh46hZ/hldH/VrEq7WM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Fixed.FixedSM.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Fixed.FixedSM.html",
+          "hash": "EGV13JYfDYwkaBbaG5b/az/efSKZMoeObBo81Mb3h5Y="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Fixed.FixedSMAnim.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Fixed.FixedSMAnim.html",
+          "hash": "1DgYg3P3Gb8/9pPL41S6n4+uifs7p0Xw1VohKNOr62E="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Fixed.FixedSMBehaviour.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Fixed.FixedSMBehaviour.html",
+          "hash": "e7fY2m3jAMx6EpmlBrsWoBSwCr72y8x0sjPEVh5Qgdc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Fixed.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Fixed.html",
+          "hash": "8IjJogg8T+4GjlWefshVuSu51NK1DGUYPW1wJeKQ4qE="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.IAnimStateMachine-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.IAnimStateMachine-1.html",
+          "hash": "z9gY3iynp2HkmVehgbVmCwvFx2U0K0VHqDgJftFNWX8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.IStateMachine-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.IStateMachine-1.html",
+          "hash": "4tYELYcdHd6vxOysHJ5G3Wn9T5dfXXPOS/zy62h0J5c="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.State.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.State.html",
+          "hash": "ajbhjSwG+4BUF2N/fRDbV3O9mL8FL8rCB49NFoHeZ80="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Event.AEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Event.AEvent.html",
+          "hash": "nOxqmSDeHcrqUgufGZjJawcpoAj7FYu6flt9neNy/hs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Event.BEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Event.BEvent.html",
+          "hash": "a7ncCJ2e9TJxFWC4IQw6eaYGY5ejoenAzFA+ijppmNI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Event.CEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Event.CEvent.html",
+          "hash": "GERPpYKAR0Yv2a/BJYWgYWZ2WEcsw9tVnpam3OGUHeg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Event.DEvent1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Event.DEvent1.html",
+          "hash": "I+zx58Zx0hMD99jQGWqzhJ7PE/HrKsp6mqEAO0+nt0U="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Event.DEvent2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Event.DEvent2.html",
+          "hash": "e3KD7PF3Fbv5HKul0WrDVIm6ulPWjT4fGkSTy4oqGoI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Event.EmptyEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Event.EmptyEvent.html",
+          "hash": "F7/g0WP/DTOSj1hz5PpFUXvPSZulaQQ1mPJzLUGZ204="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Event.ResetEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Event.ResetEvent.html",
+          "hash": "MfZS0PHwc4212R8+V/Rzxbvn9dtDolFkkqvwoebeO3U="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Event.TestEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Event.TestEvent.html",
+          "hash": "Lqlsz1Y2f20yoUrKF0B2XoN/73DbtMjn0j/a4TUg1mY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Event.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Event.html",
+          "hash": "MzeN2vfSgyVa529j/0ms7c1b7UdPtTp/7LVRSqx4+qk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedSMAim.StateA.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedSMAim.StateA.html",
+          "hash": "25Otu98KNrHdzD9iaD/uhvS3rinreSxv+PxocXyLbZI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedSMAim.StateB.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedSMAim.StateB.html",
+          "hash": "HYuaPPBWBTyyG/gbSI83i/n/fnCjHRTYPavSXYr0v8E="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedSMAim.StateC.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedSMAim.StateC.html",
+          "hash": "A5CEsZIdp7f0nL4ANmwT5NWP63sEIaWoYM453U7nkxo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedSMAim.StateD.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedSMAim.StateD.html",
+          "hash": "EffFcxZdRLNbNYlK5U5ypKi8TR2Miy1QPhD8RRze7/w="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedSMAim.TimeoutState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedSMAim.TimeoutState.html",
+          "hash": "oWILVMK2/CrXnIffJWSqo9P6UfMaYBV7XeN+1kOJRYc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedSMAim.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedSMAim.html",
+          "hash": "58FQ87r5IUN71ltalpl8TOTDnd043MZ85nNi395aioM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachine.StartingState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachine.StartingState.html",
+          "hash": "VIBIYxM+pw1zFymykmTx2FOOBwpPkkZkLqQcM6NjIsk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachine.StateA.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachine.StateA.html",
+          "hash": "jtDI5ljhHOQOcMMlizSOT+4WTW0PCHvorNT81ojD3gI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachine.StateB.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachine.StateB.html",
+          "hash": "cCOp9dIn1z8Jwk8dmXjPg1C0B+ukGOVXPst5gn3g2uw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachine.StateC.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachine.StateC.html",
+          "hash": "nkxELpCV7/Ajb3hDToI0+mexWOtxGsUkH85upF3RfwQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachine.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachine.html",
+          "hash": "rdFLPY872tFOgNdzwc2uhCBZTqyvcCHSptrhiR8Ea90="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachineMonoBehaviour.StartingState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachineMonoBehaviour.StartingState.html",
+          "hash": "PE7VNLBqxCf3Din/tDzaKxyFI3dwNp937vtd9avXYHo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachineMonoBehaviour.StateA.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachineMonoBehaviour.StateA.html",
+          "hash": "iVvFzBs9mHGnYCFVHGIlXu/rS95a4okNNw4HaKosdI4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachineMonoBehaviour.StateB.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachineMonoBehaviour.StateB.html",
+          "hash": "1LVdIqoMaDevVJWcE1bVHFzbRGq2pnw6nHtHTeFAd6w="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachineMonoBehaviour.StateC.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachineMonoBehaviour.StateC.html",
+          "hash": "BgHE5sxkWG9DmbbypHE9ZkDYECg75x29TQQRfhYDK6k="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachineMonoBehaviour.TempFixedTimeState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachineMonoBehaviour.TempFixedTimeState.html",
+          "hash": "4xvGSGIKjvsKwDT75HpvTB3rClISgY1VitAoFHVzZ44="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachineMonoBehaviour.TimeoutFixedState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachineMonoBehaviour.TimeoutFixedState.html",
+          "hash": "NHDSfO7KJSTN+7DmR5cY683FqbgGshJ9YeOaCjHlDdU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachineMonoBehaviour.TimeoutState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachineMonoBehaviour.TimeoutState.html",
+          "hash": "DE7nD2W1bJEzmZTvkjluG4DYYVRpsL0d4p63qHIjnAQ="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachineMonoBehaviour.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.DemoFixedStateMachineMonoBehaviour.html",
+          "hash": "/8aIp5m4ZBN+ihslDwDCPMTPCx3gop6zVWAVmtxzx1M="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.StateMachineAnimTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.StateMachineAnimTests.html",
+          "hash": "MyXO9OCYjqpQCTQM7/VP0m27sCoIQczTga0kBTxmPJo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.StateMachineBehaviourTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.StateMachineBehaviourTests.html",
+          "hash": "iPdYrlvWv4yWI4rEUk17WfTuigOvtB3GsCBZU8nnyuc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.StateMachineTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.StateMachineTests.html",
+          "hash": "5wsUvreSLKCVas3g/slpQI8Fm3kStEZPk2PlC4ICIz8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed.html",
+          "hash": "v+142KN0t6B7bX6cfJMRleFT1kNCWbX7Xy0jqaHxwb4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Utils.FSMUtils.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Utils.FSMUtils.html",
+          "hash": "UF4fk3/SQZgb+jRLWvUO5sVixe3vzBZoffwgRFbHY6U="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.Utils.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.Utils.html",
+          "hash": "CmAYK3aJgdW0cWaTICwRLrcBqHORy7raVZJGzz9RRXI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/nickmaltbie.StateMachineUnity.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/nickmaltbie.StateMachineUnity.html",
+          "hash": "/FOdfr7P11gcdbh/5/86Qx+AwIJv5iWF3jAiUqaPe7U="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "8jQLyPz4eIKGAx5osmLaRcvbaS//NoMCF4GZ2mlt5Ps="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "changelog/CHANGELOG.md",
+      "output": {
+        ".html": {
+          "relative_path": "changelog/CHANGELOG.html",
+          "hash": "3CY0nsxjtHh5ERb+JOtAF1+QteLgSLtOYz/O9kiLNak="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "changelog/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "changelog/toc.html",
+          "hash": "1q1fO7/YyPEGJ89UlRVsP2/QXB8oQ3/9CvSsb1tfrWg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "qhBLB68HiXb8E9ULtU1PENZ4cO+5QqUVl1HxoHiPasw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "manual/example-fsm.md",
+      "output": {
+        ".html": {
+          "relative_path": "manual/example-fsm.html",
+          "hash": "Eam16Bv/xg7j1Ma10wl3Oe/f3GYOb4c5ZwHVScBvmS0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "manual/fsm-design.md",
+      "output": {
+        ".html": {
+          "relative_path": "manual/fsm-design.html",
+          "hash": "KgDYyWTtPKGi3ArEw5orjW0TwsMMvLEeMdmmtrlz+DY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "manual/introduction.md",
+      "output": {
+        ".html": {
+          "relative_path": "manual/introduction.html",
+          "hash": "DubqssOklmkkK/U3FOEteeOqp2IOT+CUC//plpNasdM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "manual/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "manual/toc.html",
+          "hash": "8cxhoCZylRz0EgHD65UH0uHPc2Q82bgwcF5QVI0iC8c="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "manual/usage.md",
+      "output": {
+        ".html": {
+          "relative_path": "manual/usage.html",
+          "hash": "x8dPKfL/A8K7wnTmizPzK3KNncxr8bEiML87JOixEHk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "resources/RenamePanel.png",
+      "output": {
+        "resource": {
+          "relative_path": "resources/RenamePanel.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "Pu4o66l/J5S3B1rXTtJr4DRM8Sh9VA4V4BIDzdvHiQk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot build incrementally because last build info is missing.",
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0,
+        "full_build_reason_code": "NoAvailableBuildCache"
+      },
+      "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 6,
+          "skipped_file_count": 0
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 84,
+          "skipped_file_count": 0
+        },
+        "ResourceDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot support incremental post processing, the reason is: should not trace intermediate info.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

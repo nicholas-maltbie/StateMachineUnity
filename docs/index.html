@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>State Machine Unity | State Machine Unity Documentation </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="State Machine Unity | State Machine Unity Documentation ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles/docfx.vendor.css">
+    <link rel="stylesheet" href="styles/docfx.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <meta property="docfx:navrel" content="toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="index.html">
+                <img id="logo" class="svg" src="logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="state-machine-unity">State Machine Unity</h1>
+
+<p>Nick Maltbie&#39;s State Machine Unity for
+State Machine management in unity projects..</p>
+<p>State Machine Unity is an open source project hosted at
+<a href="https://github.com/nicholas-maltbie/StateMachineUnity">https://github.com/nicholas-maltbie/StateMachineUnity</a></p>
+<p>This is an open source project licensed under a <a href="LICENSE.txt">MIT License</a>.</p>
+<h2 id="installation">Installation</h2>
+<p>Install the latest version of the project by importing a project via git
+at this URL:
+<code>https://github.com/nicholas-maltbie/StateMachineUnity.git#release/latest</code></p>
+<p>If you want to reference a specific tag of the project such as version <code>v1.0.0</code>,
+add a <code>release/#v1.0.0</code> to the end of the git URL to download the package
+from th auto-generated branch for that release. An example of importing <code>v1.0.0</code>
+would look like this:</p>
+<pre><code class="lang-text">https://github.com/nicholas-maltbie/StateMachineUnity.git#release/v0.1.0
+</code></pre><p>To use the latest release, simply reference:</p>
+<pre><code class="lang-text">https://github.com/nicholas-maltbie/StateMachineUnity.git#release/latest
+</code></pre><p>For a full list of all tags, check the <a href="https://github.com/nicholas-maltbie/StateMachineUnity/tags">StateMachineUnity Tags</a>
+list on github. I will usually associated a tag with each release of the project.</p>
+<p>You can also import the project via a tarball if you download the source
+code and extract it on your local machine. Make sure to import
+via the package manifest defined at <code>Packages\com.nickmaltbie.StateMachineUnity\package.json</code>
+within the project.</p>
+<p>For more details about installing a project via git, see unity&#39;s documentation
+on <a href="https://docs.unity3d.com/Manual/upm-ui-giturl.html#:~:text=%20Select%20Add%20package%20from%20git%20URL%20from,repository%20directly%20rather%20than%20from%20a%20package%20registry.">Installing form a Git URL</a>.</p>
+<h3 id="scoped-registry-install">Scoped Registry Install</h3>
+<p>If you wish to install the project via a
+<a href="https://docs.unity3d.com/Manual/upm-scoped.html">Scoped Registry</a>
+and npm, you can add a scoped registry to your project from all of the
+<code>com.nickmaltbie</code> packages like this:</p>
+<pre><code class="lang-json">&quot;scopedRegistries&quot;: [
+  {
+    &quot;name&quot;: &quot;nickmaltbie&quot;,
+    &quot;url&quot;: &quot;https://registry.npmjs.org&quot;,
+    &quot;scopes&quot;: [
+      &quot;com.nickmaltbie&quot;
+    ]
+  }
+]
+</code></pre><p>Then, if you want to reference a version of the project, you simply
+need to include the dependency with a version string and the unity package
+manager will be able to download it from the registry at
+<code>https://registry.npmjs.org</code></p>
+<pre><code class="lang-json">&quot;dependencies&quot;: {
+  &quot;com.nickmaltbie.StateMachineUnity&quot;: &quot;1.0.0&quot;,
+}
+</code></pre><h3 id="tests">Tests</h3>
+<p>If you wish to include the testing code for this project, make sure to add
+the <code>com.nickmaltbie.StateMachineUnity</code> to the testables
+of the project manifest.</p>
+<pre><code class="lang-json">&quot;testables&quot;: [
+  &quot;com.nickmaltbie.StateMachineUnity&quot;
+]
+</code></pre><h2 id="demo">Demo</h2>
+<p>You can see a demo of the project running here:
+<a href="https://nickmaltbie.com/StateMachineUnity/">https://nickmaltbie.com/StateMachineUnity/</a>.
+The project hosted on the website is up to date with the most recent
+version on the <code>main</code> branch of this github repo
+and is automatically deployed with each update to the codebase.</p>
+<h2 id="samples">Samples</h2>
+<p>The samples in the project include:</p>
+<ul>
+<li>ExampleFSM - Example Finite State Machine.</li>
+</ul>
+<h2 id="documentation">Documentation</h2>
+<p>Documentation on the project and scripting API is found at
+<a href="https://nickmaltbie.com/StateMachineUnity/docs/">https://nickmaltbie.com/StateMachineUnity/docs/</a>
+for the latest version of the codebase.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/nicholas-maltbie/StateMachineUnity/blob/main/Documentation/index.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            State Machine Unity Documentation
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script type="text/javascript" src="styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+    
+    <!-- Derived from https://blog.christian-schou.dk/how-to-produce-static-documentation-using-docfx/#including-diagrams-in-your-documentation-mermaid-with-docfx !-->
+    <!-- mermaid support -->
+    <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+        startOnLoad: false
+    });
+    mermaid.init(undefined, ".lang-mermaid");
+    </script>  </body>
+</html>

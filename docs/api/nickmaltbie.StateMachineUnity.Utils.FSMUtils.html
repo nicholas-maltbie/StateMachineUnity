@@ -1,0 +1,565 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class FSMUtils
+   | State Machine Unity Documentation </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class FSMUtils
+   | State Machine Unity Documentation ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="nickmaltbie.StateMachineUnity.Utils.FSMUtils">
+  
+  
+  <h1 id="nickmaltbie_StateMachineUnity_Utils_FSMUtils" data-uid="nickmaltbie.StateMachineUnity.Utils.FSMUtils" class="text-break">Class FSMUtils
+  </h1>
+  <div class="markdown level0 summary"><p>Class with utility functions for state machine.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">FSMUtils</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="nickmaltbie.StateMachineUnity.Utils.html">nickmaltbie.StateMachineUnity.Utils</a></h6>
+  <h6><strong>Assembly</strong>: cs.temp.dll.dll</h6>
+  <h5 id="nickmaltbie_StateMachineUnity_Utils_FSMUtils_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class FSMUtils</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  
+  
+  <a id="nickmaltbie_StateMachineUnity_Utils_FSMUtils_CreateActionAttributeCache_" data-uid="nickmaltbie.StateMachineUnity.Utils.FSMUtils.CreateActionAttributeCache*"></a>
+  <h4 id="nickmaltbie_StateMachineUnity_Utils_FSMUtils_CreateActionAttributeCache_System_Type_" data-uid="nickmaltbie.StateMachineUnity.Utils.FSMUtils.CreateActionAttributeCache(System.Type)">CreateActionAttributeCache(Type)</h4>
+  <div class="markdown level1 summary"><p>Sets up an action lookup by enumerating the <a class="xref" href="nickmaltbie.StateMachineUnity.State.html">State</a> classes
+defined within a state machine type and getting all <a class="xref" href="nickmaltbie.StateMachineUnity.Attributes.ActionAttribute.html">ActionAttribute</a>
+decorators defined for each <a class="xref" href="nickmaltbie.StateMachineUnity.State.html">State</a> within the class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Dictionary&lt;(Type, Type), MethodInfo&gt; CreateActionAttributeCache(Type stateMachine)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><span class="parametername">stateMachine</span></td>
+        <td><p>State machine to lookup <a class="xref" href="nickmaltbie.StateMachineUnity.State.html">State</a> and <a class="xref" href="nickmaltbie.StateMachineUnity.Attributes.ActionAttribute.html">ActionAttribute</a> for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Dictionary</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-2">(T1, T2)</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a>&gt;, <span class="xref">MethodInfo</span>&gt;</td>
+        <td><p>A lookup table mapped as (state, actionType) -&gt; Method</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="nickmaltbie_StateMachineUnity_Utils_FSMUtils_CreateEventActionCache_" data-uid="nickmaltbie.StateMachineUnity.Utils.FSMUtils.CreateEventActionCache*"></a>
+  <h4 id="nickmaltbie_StateMachineUnity_Utils_FSMUtils_CreateEventActionCache_System_Type_" data-uid="nickmaltbie.StateMachineUnity.Utils.FSMUtils.CreateEventActionCache(System.Type)">CreateEventActionCache(Type)</h4>
+  <div class="markdown level1 summary"><p>Sets up an event lookup by enumerating the <a class="xref" href="nickmaltbie.StateMachineUnity.State.html">State</a> classes
+defined within a state machine type and getting all <a class="xref" href="nickmaltbie.StateMachineUnity.Attributes.OnEventDoActionAttribute.html">OnEventDoActionAttribute</a>
+decorators defined for each <a class="xref" href="nickmaltbie.StateMachineUnity.State.html">State</a> within the class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Dictionary&lt;(Type, Type), List&lt;MethodInfo&gt;&gt; CreateEventActionCache(Type stateMachine)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><span class="parametername">stateMachine</span></td>
+        <td><p>State machine to lookup <a class="xref" href="nickmaltbie.StateMachineUnity.State.html">State</a> and <a class="xref" href="nickmaltbie.StateMachineUnity.Attributes.OnEventDoActionAttribute.html">OnEventDoActionAttribute</a> for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Dictionary</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-2">(T1, T2)</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a>&gt;, <span class="xref">List</span>&lt;<span class="xref">MethodInfo</span>&gt;&gt;</td>
+        <td><p>A lookup table mapped as (state, event) -&gt; [ methods ]</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="nickmaltbie_StateMachineUnity_Utils_FSMUtils_CreateTransitionAttributeCache_" data-uid="nickmaltbie.StateMachineUnity.Utils.FSMUtils.CreateTransitionAttributeCache*"></a>
+  <h4 id="nickmaltbie_StateMachineUnity_Utils_FSMUtils_CreateTransitionAttributeCache_System_Type_" data-uid="nickmaltbie.StateMachineUnity.Utils.FSMUtils.CreateTransitionAttributeCache(System.Type)">CreateTransitionAttributeCache(Type)</h4>
+  <div class="markdown level1 summary"><p>Sets up an transition lookup by enumerating the <a class="xref" href="nickmaltbie.StateMachineUnity.State.html">State</a> classes
+defined within a state machine type and getting all <a class="xref" href="nickmaltbie.StateMachineUnity.Attributes.TransitionAttribute.html">TransitionAttribute</a>
+decorators defined for each <a class="xref" href="nickmaltbie.StateMachineUnity.State.html">State</a> within the class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Dictionary&lt;(Type, Type), TransitionAttribute&gt; CreateTransitionAttributeCache(Type stateMachine)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><span class="parametername">stateMachine</span></td>
+        <td><p>State machine to lookup <a class="xref" href="nickmaltbie.StateMachineUnity.State.html">State</a> and <a class="xref" href="nickmaltbie.StateMachineUnity.Attributes.TransitionAttribute.html">TransitionAttribute</a> for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Dictionary</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-2">(T1, T2)</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a>&gt;, <span class="xref">TransitionAttribute</span>&gt;</td>
+        <td><p>A lookup table mapped as (state, event) -&gt; state</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="nickmaltbie_StateMachineUnity_Utils_FSMUtils_GetActionWithName_" data-uid="nickmaltbie.StateMachineUnity.Utils.FSMUtils.GetActionWithName*"></a>
+  <h4 id="nickmaltbie_StateMachineUnity_Utils_FSMUtils_GetActionWithName_System_Type_System_String_" data-uid="nickmaltbie.StateMachineUnity.Utils.FSMUtils.GetActionWithName(System.Type,System.String)">GetActionWithName(Type, String)</h4>
+  <div class="markdown level1 summary"><p>Returns the action with the specified name.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static MethodInfo GetActionWithName(Type type, string actionName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><span class="parametername">type</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">actionName</span></td>
+        <td><p>Name of action to search for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">MethodInfo</span></td>
+        <td><p>Method info for the given action.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="nickmaltbie_StateMachineUnity_Utils_FSMUtils_InitializeStateMachine_" data-uid="nickmaltbie.StateMachineUnity.Utils.FSMUtils.InitializeStateMachine*"></a>
+  <h4 id="nickmaltbie_StateMachineUnity_Utils_FSMUtils_InitializeStateMachine_nickmaltbie_StateMachineUnity_IStateMachine_System_Type__" data-uid="nickmaltbie.StateMachineUnity.Utils.FSMUtils.InitializeStateMachine(nickmaltbie.StateMachineUnity.IStateMachine{System.Type})">InitializeStateMachine(IStateMachine&lt;Type&gt;)</h4>
+  <div class="markdown level1 summary"><p>Initialize a state machine with the initialization state and ensure
+all the events, transitions, and actions are cached.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void InitializeStateMachine(IStateMachine&lt;Type&gt; stateMachine)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="nickmaltbie.StateMachineUnity.IStateMachine-1.html">IStateMachine</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a>&gt;</td>
+        <td><span class="parametername">stateMachine</span></td>
+        <td><p>state machine to setup.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="nickmaltbie_StateMachineUnity_Utils_FSMUtils_InvokeAction_" data-uid="nickmaltbie.StateMachineUnity.Utils.FSMUtils.InvokeAction*"></a>
+  <h4 id="nickmaltbie_StateMachineUnity_Utils_FSMUtils_InvokeAction_nickmaltbie_StateMachineUnity_IStateMachine_System_Type__System_Type_System_Type_" data-uid="nickmaltbie.StateMachineUnity.Utils.FSMUtils.InvokeAction(nickmaltbie.StateMachineUnity.IStateMachine{System.Type},System.Type,System.Type)">InvokeAction(IStateMachine&lt;Type&gt;, Type, Type)</h4>
+  <div class="markdown level1 summary"><p>Synchronously invokes an action of a given name.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool InvokeAction(IStateMachine&lt;Type&gt; stateMachine, Type actionType, Type state)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="nickmaltbie.StateMachineUnity.IStateMachine-1.html">IStateMachine</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a>&gt;</td>
+        <td><span class="parametername">stateMachine</span></td>
+        <td><p>state machine to invoke method of.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><span class="parametername">actionType</span></td>
+        <td><p>Type of action to invoke.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><span class="parametername">state</span></td>
+        <td><p>State to invoke action for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if an action was found and invoked, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="nickmaltbie_StateMachineUnity_Utils_FSMUtils_InvokeAction_" data-uid="nickmaltbie.StateMachineUnity.Utils.FSMUtils.InvokeAction*"></a>
+  <h4 id="nickmaltbie_StateMachineUnity_Utils_FSMUtils_InvokeAction__1_nickmaltbie_StateMachineUnity_IStateMachine_System_Type__System_Type_" data-uid="nickmaltbie.StateMachineUnity.Utils.FSMUtils.InvokeAction``1(nickmaltbie.StateMachineUnity.IStateMachine{System.Type},System.Type)">InvokeAction&lt;E&gt;(IStateMachine&lt;Type&gt;, Type)</h4>
+  <div class="markdown level1 summary"><p>Synchronously invokes an action of a given name.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool InvokeAction&lt;E&gt;(IStateMachine&lt;Type&gt; stateMachine, Type state = null)
+    where E : ActionAttribute</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="nickmaltbie.StateMachineUnity.IStateMachine-1.html">IStateMachine</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a>&gt;</td>
+        <td><span class="parametername">stateMachine</span></td>
+        <td><p>state machine to invoke method of.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><span class="parametername">state</span></td>
+        <td><p>State to invoke action for, if unspecified or null, will use the CurrentState.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if an action was found and invoked, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">E</span></td>
+        <td><p>Type of action to invoke.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="nickmaltbie_StateMachineUnity_Utils_FSMUtils_RaiseCachedEvent_" data-uid="nickmaltbie.StateMachineUnity.Utils.FSMUtils.RaiseCachedEvent*"></a>
+  <h4 id="nickmaltbie_StateMachineUnity_Utils_FSMUtils_RaiseCachedEvent_nickmaltbie_StateMachineUnity_IStateMachine_System_Type__IEvent_" data-uid="nickmaltbie.StateMachineUnity.Utils.FSMUtils.RaiseCachedEvent(nickmaltbie.StateMachineUnity.IStateMachine{System.Type},IEvent)">RaiseCachedEvent(IStateMachine&lt;Type&gt;, IEvent)</h4>
+  <div class="markdown level1 summary"><p>Raise a synchronous event for a given state machine.
+<br>
+First checks if this state machine expects any events of this type
+for the state machine&apos;s CurrentState. These
+would follow an attribute of type <a class="xref" href="nickmaltbie.StateMachineUnity.Attributes.OnEventDoActionAttribute.html">OnEventDoActionAttribute</a>.
+<br>
+If the state machine&apos;s CurrentState expects a transition
+based on the event, then this will trigger the <a class="xref" href="nickmaltbie.StateMachineUnity.Attributes.OnExitStateAttribute.html">OnExitStateAttribute</a>
+of the nickmaltbie.StateMachineUnity.IStateMachine, change to the next state defined in
+the <a class="xref" href="nickmaltbie.StateMachineUnity.Attributes.TransitionAttribute.html">TransitionAttribute</a>, then trigger the
+<a class="xref" href="nickmaltbie.StateMachineUnity.Attributes.OnEnterStateAttribute.html">OnEnterStateAttribute</a>
+of the next state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void RaiseCachedEvent(IStateMachine&lt;Type&gt; stateMachine, IEvent evt)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="nickmaltbie.StateMachineUnity.IStateMachine-1.html">IStateMachine</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a>&gt;</td>
+        <td><span class="parametername">stateMachine</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">IEvent</span></td>
+        <td><span class="parametername">evt</span></td>
+        <td><p>Event to send to this state machine.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="nickmaltbie_StateMachineUnity_Utils_FSMUtils_SetupCache_" data-uid="nickmaltbie.StateMachineUnity.Utils.FSMUtils.SetupCache*"></a>
+  <h4 id="nickmaltbie_StateMachineUnity_Utils_FSMUtils_SetupCache_System_Type_" data-uid="nickmaltbie.StateMachineUnity.Utils.FSMUtils.SetupCache(System.Type)">SetupCache(Type)</h4>
+  <div class="markdown level1 summary"><p>Setup the cache for the state machine if it hasn&apos;t been done already.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void SetupCache(Type stateMachine)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><span class="parametername">stateMachine</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            State Machine Unity Documentation
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    
+    <!-- Derived from https://blog.christian-schou.dk/how-to-produce-static-documentation-using-docfx/#including-diagrams-in-your-documentation-mermaid-with-docfx !-->
+    <!-- mermaid support -->
+    <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+        startOnLoad: false
+    });
+    mermaid.init(undefined, ".lang-mermaid");
+    </script>  </body>
+</html>
