@@ -1,36 +1,30 @@
 name: Build and Deploy WebGL and Documentation
 
-concurrency: production-${{ github.ref }}
-
 on:
+  # Runs on pushes targeting the default branch
   push:
-    branches:
-      - 'main'
+    branches: ['main']
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: production-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
 
 jobs:
-  create-package:
-    name: Create release/latest branch
-    runs-on: ubuntu-latest
-    steps:
-      - uses: nschloe/action-cached-lfs-checkout@v1
-      - uses: ./.github/actions/setvars
-
-      - name: Setup Package
-        run: sh ./setup-package.sh ${{ env.PACKAGE_PATH }}
-
-      # Deploy build to release branch
-      - name: Push package
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: release/latest
-          force: true
-
-  build-and-deploy-app:
-    name: Build and Deploy for Production WebGL
+  build-webgl-app:
+    name: Build WebGL App
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -49,18 +43,17 @@ jobs:
           targetPlatform: WebGL
           buildMethod: ScriptBatch.OfficialBuild_WebGL
 
-      # Deploy build to gh-pages branch
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+      # save build to temp_build_webgl
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
         with:
-          force_orphan: true
-          publish_dir: Builds/${{ env.PROJECT_NAME }}-WebGL
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          name: temp_build_webgl
+          path: Builds/${{ env.PROJECT_NAME }}-WebGL
 
   # Build the documentation
-  build-and-deploy-docs:
+  build-docs:
+    name: DocFX build for website
     runs-on: windows-latest # Required by DocFX
-    needs: build-and-deploy-app
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setvars
@@ -72,10 +65,72 @@ jobs:
       - name: Build Website
         run: .\Documentation\build.cmd
 
-      # Checkout to the previously created gh-pages branch
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+      # Upload build to temp_build_docs
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
         with:
-          publish_dir:  _site
-          destination_dir: docs
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          name: temp_build_docs
+          path: _site
+
+  # Combine artifacts for website
+  combine-and-deploy-artifact:
+    name: Combine and Deploy Artifact
+    runs-on: ubuntu-latest
+    needs: [build-webgl-app, build-docs]
+    steps:
+      # Download previous builds
+      - name: Download WebGL Build
+        uses: actions/download-artifact@v3
+        with:
+          name: temp_build_webgl
+          path: _site
+
+      - name: Download Docs Build
+        uses: actions/download-artifact@v3
+        with:
+          name: temp_build_docs
+          path: _site/docs
+
+      - name: Upload Site Artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          name: github-pages
+
+  # Deploy job
+  deploy-combined-webgl:
+    # Add a dependency to the build job
+    needs: combine-and-deploy-artifact
+
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    # Specify runner + deployment step
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
+
+  # Cleanup the build artifacts
+  cleanup-build-artifacts:
+    name: Cleanup the build artifacts after deploying site.
+    runs-on: ubuntu-latest
+    if: always()
+    needs: [deploy-combined-webgl]
+
+    steps:
+      - name: Cleanup temp build artifacts
+        uses: joutvhu/delete-artifact@v1
+        with:
+          name: |
+            temp_build_webgl
+            temp_build_docs
+            github-pages
+
