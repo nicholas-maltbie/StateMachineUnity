@@ -157,7 +157,7 @@ git lfs install
 for sample in "${samples_array[@]}"
 do
   sample_name=${sample#"$sample_path"}
-  dest="$package_path/Samples/$sample_name"
+  dest="$package_path/Samples~/$sample_name"
   echo "Moving sample at path \"$sample\" to \"$dest\""
 
   # Setup sample directory
@@ -165,8 +165,8 @@ do
   git mv "$sample.meta" "$dest.meta"
   git mv "$sample/" "$dest/"
 done
-echo "git commit -m \"Moved $sample_path to $package_path/Samples\""
-git commit -m "Moved $sample_path to $package_path/Samples"
+echo "git commit -m \"Moved $sample_path to $package_path/Samples~\""
+git commit -m "Moved $sample_path to $package_path/Samples~"
 
 # Reset all other changes
 git rm -rf .
