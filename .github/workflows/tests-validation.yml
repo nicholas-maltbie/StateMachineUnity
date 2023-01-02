@@ -74,6 +74,7 @@ jobs:
       
       - name: Add PR Comment
         uses: mshick/add-pr-comment@v1
+        if: ${{ github.event_name == 'pull_request' }}
         with:
           message: |
             Test Coverage Results for ${{ matrix.testMode }}:
