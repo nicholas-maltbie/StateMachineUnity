@@ -34,17 +34,20 @@ namespace nickmaltbie.StateMachineUnity.Utils
         /// <summary>
         /// Map of actions of state machine -> state, attribute) -> action.
         /// </summary>
-        internal static ConcurrentDictionary<Type, Dictionary<(Type, Type), MethodInfo>> ActionCache = new();
+        internal static ConcurrentDictionary<Type, Dictionary<Tuple<Type, Type>, MethodInfo>> ActionCache =
+            new ConcurrentDictionary<Type, Dictionary<Tuple<Type, Type>, MethodInfo>>();
 
         /// <summary>
         /// Map of transitions of state machine -> (state, event) -> state.
         /// </summary>
-        internal static ConcurrentDictionary<Type, Dictionary<(Type, Type), TransitionAttribute>> TransitionCache = new();
+        internal static ConcurrentDictionary<Type, Dictionary<Tuple<Type, Type>, TransitionAttribute>> TransitionCache =
+            new ConcurrentDictionary<Type, Dictionary<Tuple<Type, Type>, TransitionAttribute>>();
 
         /// <summary>
         /// Map of actions of state machine -> (state, event) -> [ actions ]
         /// </summary>
-        internal static ConcurrentDictionary<Type, Dictionary<(Type, Type), List<MethodInfo>>> EventCache = new();
+        internal static ConcurrentDictionary<Type, Dictionary<Tuple<Type, Type>, List<MethodInfo>>> EventCache =
+            new ConcurrentDictionary<Type, Dictionary<Tuple<Type, Type>, List<MethodInfo>>>();
 
         /// <summary>
         /// Returns the action with the specified name.
@@ -74,9 +77,9 @@ namespace nickmaltbie.StateMachineUnity.Utils
         /// </summary>
         /// <param name="stateMachine">State machine to lookup <see cref="State"/> and <see cref="nickmaltbie.StateMachineUnity.Attributes.ActionAttribute"/> for.</param>
         /// <returns>A lookup table mapped as (state, actionType) -> Method</returns>
-        public static Dictionary<(Type, Type), MethodInfo> CreateActionAttributeCache(Type stateMachine)
+        public static Dictionary<Tuple<Type, Type>, MethodInfo> CreateActionAttributeCache(Type stateMachine)
         {
-            var actionLookup = new Dictionary<(Type, Type), MethodInfo>();
+            var actionLookup = new Dictionary<Tuple<Type, Type>, MethodInfo>();
 
             // Find all the supported states for the state machine.
             foreach (Type state in stateMachine.GetNestedTypes()
@@ -86,7 +89,7 @@ namespace nickmaltbie.StateMachineUnity.Utils
                 foreach (ActionAttribute attr in Attribute.GetCustomAttributes(state, typeof(ActionAttribute)))
                 {
                     Type actionType = attr.GetType();
-                    actionLookup[(state, actionType)] = GetActionWithName(stateMachine, attr.Action);
+                    actionLookup[new Tuple<Type, Type>(state, actionType)] = GetActionWithName(stateMachine, attr.Action);
                 }
             }
 
@@ -100,9 +103,9 @@ namespace nickmaltbie.StateMachineUnity.Utils
         /// </summary>
         /// <param name="stateMachine">State machine to lookup <see cref="State"/> and <see cref="nickmaltbie.StateMachineUnity.Attributes.TransitionAttribute"/> for.</param>
         /// <returns>A lookup table mapped as (state, event) -> state</returns>
-        public static Dictionary<(Type, Type), TransitionAttribute> CreateTransitionAttributeCache(Type stateMachine)
+        public static Dictionary<Tuple<Type, Type>, TransitionAttribute> CreateTransitionAttributeCache(Type stateMachine)
         {
-            var transitionLookup = new Dictionary<(Type, Type), TransitionAttribute>();
+            var transitionLookup = new Dictionary<Tuple<Type, Type>, TransitionAttribute>();
 
             // Find all the supported states for the state machine.
             foreach (Type state in stateMachine.GetNestedTypes()
@@ -111,7 +114,7 @@ namespace nickmaltbie.StateMachineUnity.Utils
                 // Find all transition attributes of given state
                 foreach (TransitionAttribute attr in Attribute.GetCustomAttributes(state, typeof(TransitionAttribute)))
                 {
-                    transitionLookup[(state, attr.TriggerEvent)] = attr;
+                    transitionLookup[new Tuple<Type, Type>(state, attr.TriggerEvent)] = attr;
                 }
             }
 
@@ -125,9 +128,9 @@ namespace nickmaltbie.StateMachineUnity.Utils
         /// </summary>
         /// <param name="stateMachine">State machine to lookup <see cref="State"/> and <see cref="nickmaltbie.StateMachineUnity.Attributes.OnEventDoActionAttribute"/> for.</param>
         /// <returns>A lookup table mapped as (state, event) -> [ methods ]</returns>
-        public static Dictionary<(Type, Type), List<MethodInfo>> CreateEventActionCache(Type stateMachine)
+        public static Dictionary<Tuple<Type, Type>, List<MethodInfo>> CreateEventActionCache(Type stateMachine)
         {
-            var eventLookup = new Dictionary<(Type, Type), List<MethodInfo>>();
+            var eventLookup = new Dictionary<Tuple<Type, Type>, List<MethodInfo>>();
 
             // Find all the supported states for the state machine.
             foreach (Type state in stateMachine.GetNestedTypes()
@@ -138,14 +141,15 @@ namespace nickmaltbie.StateMachineUnity.Utils
                 {
                     Type evt = attr.Event;
                     MethodInfo action = FSMUtils.GetActionWithName(stateMachine, attr.Action);
+                    var tupleKey = new Tuple<Type, Type>(state, evt);
 
-                    if (eventLookup.ContainsKey((state, evt)))
+                    if (eventLookup.ContainsKey(tupleKey))
                     {
-                        eventLookup[(state, evt)].Add(action);
+                        eventLookup[tupleKey].Add(action);
                     }
                     else
                     {
-                        eventLookup[(state, evt)] = new List<MethodInfo>(new MethodInfo[] { action });
+                        eventLookup[tupleKey] = new List<MethodInfo>(new MethodInfo[] { action });
                     }
                 }
             }
@@ -171,7 +175,8 @@ namespace nickmaltbie.StateMachineUnity.Utils
         /// <param name="evt">Event to send to this state machine.</param>
         public static void RaiseCachedEvent(IStateMachine<Type> stateMachine, IEvent evt)
         {
-            if (EventCache[stateMachine.GetType()].TryGetValue((stateMachine.CurrentState, evt.GetType()), out List<MethodInfo> actions))
+            var tupleKey = new Tuple<Type, Type>(stateMachine.CurrentState, evt.GetType());
+            if (EventCache[stateMachine.GetType()].TryGetValue(tupleKey, out List<MethodInfo> actions))
             {
                 foreach (MethodInfo action in actions)
                 {
@@ -179,7 +184,7 @@ namespace nickmaltbie.StateMachineUnity.Utils
                 }
             }
 
-            if (TransitionCache[stateMachine.GetType()].TryGetValue((stateMachine.CurrentState, evt.GetType()), out TransitionAttribute transition))
+            if (TransitionCache[stateMachine.GetType()].TryGetValue(tupleKey, out TransitionAttribute transition))
             {
                 InvokeAction<OnExitStateAttribute>(stateMachine, stateMachine.CurrentState);
                 transition.OnTransition(stateMachine);
@@ -209,7 +214,8 @@ namespace nickmaltbie.StateMachineUnity.Utils
         /// <returns>True if an action was found and invoked, false otherwise.</returns>
         public static bool InvokeAction(IStateMachine<Type> stateMachine, Type actionType, Type state)
         {
-            if (ActionCache[stateMachine.GetType()].TryGetValue((state ?? stateMachine.CurrentState, actionType), out MethodInfo method))
+            var tupleKey = new Tuple<Type, Type>(state ?? stateMachine.CurrentState, actionType);
+            if (ActionCache[stateMachine.GetType()].TryGetValue(tupleKey, out MethodInfo method))
             {
                 method.Invoke(stateMachine, new object[0]);
                 return method != null;
