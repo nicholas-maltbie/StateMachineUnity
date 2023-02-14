@@ -7,8 +7,8 @@ on:
     branches: ['main']
 
 jobs:
-  create-openkcc-package:
-    name: Create OpenKCC package ${{ matrix.name }}
+  create-statemachineunity-package:
+    name: Create StateMachineUnity package ${{ matrix.name }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
