@@ -1,0 +1,21 @@
+{
+    "name": "nickmaltbie.StateMachineUnity.netcode.Example",
+    "rootNamespace": "nickmaltbie.StateMachineUnity.netcode.Example",
+    "references": [
+        "Unity.Netcode.Runtime",
+        "nickmaltbie.StateMachineUnity.netcode",
+        "nickmaltbie.StateMachineUnity",
+        "nickmaltbie.ScreenManager.TestCommon",
+        "Unity.InputSystem",
+        "Unity.TextMeshPro"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -30,7 +30,8 @@ jobs:
           unityVersion: ${{ env.UNITY_VERSION }}
           testMode: All
           checkName: All Test Results
-          coverageOptions: 'generateAdditionalMetrics;generateHtmlReport;generateBadgeReport;assemblyFilters:+nickmaltbie.StateMachineUnity'
+          customParameters: -testFilter "nickmaltbie.OpenKCC.Tests.*" -nographics
+          coverageOptions: 'generateHtmlReport;assemblyFilters:+nickmaltbie.OpenKCC,+nickmaltbie.OpenKCC.netcode,+nickmaltbie.OpenKCC.cinemachine,-nickmaltbie.OpenKCC.Tests.*;dontClear'
 
       - name: Copy Coverage Results
         run: |
@@ -44,7 +45,7 @@ jobs:
           name: Test & Coverage Results
           path: allResults
           retention-days: 7
-      
+
       - name: Find Coverage
         id: coverage
         run: |
@@ -52,26 +53,26 @@ jobs:
           find ${{ steps.tests.outputs.coveragePath }} -name "*.xml"
           ls -lah .
           ls -lah ${{ steps.tests.outputs.coveragePath }}
-      
+
       - name: Line Coverage
         id: LineCoverage
         uses: QwerMike/xpath-action@v1
         with:
           filename: "${{ steps.coverage.outputs.COVERAGE_FILE }}"
           expression: '//CoverageReport/Summary/Linecoverage/text()'
-      
+
       # - name: Branch Coverage
       #   id: branchCoverage
       #   uses: QwerMike/xpath-action@v1
       #   with:
       #     filename: "${{ env.COVERAGE_FILE }}"
       #     expression: '//CoverageSession/Summary/@branchCoverage'
-      
+
       - name: Parse Coverage
         id: ParseCoverage
         run: |
           echo ::set-output name=LINE_COVERAGE::$(cut -d "=" -f2- <<< ${{ steps.LineCoverage.outputs.result }})
-      
+
       - name: Add PR Comment
         uses: mshick/add-pr-comment@v1
         if: ${{ github.event_name == 'pull_request' }}

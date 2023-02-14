@@ -1,0 +1,38 @@
+{
+  "name": "com.nickmaltbie.statemachineunity.netcode",
+  "displayName": "State Machine Unity for Netcode",
+  "version": "1.2.0",
+  "unity": "2021.3",
+  "unityRelease": "11f1",
+  "description": "Network State Machine Unity for creating and sharing assets.",
+  "author": {
+    "name": "Nick Maltbie",
+    "email": "nick.dmalt@gmail.com",
+    "url": "https://nickmaltbie.com"
+  },
+  "documentationUrl": "https://nickmaltbie.com/StateMachineUnity/docs",
+  "keywords": [
+    "template",
+    "package"
+  ],
+  "samples": [
+    {
+      "displayName": "Example Sample",
+      "description": "Example Sample folder for networking project with an example network state machine.",
+      "path": "Samples~/ExampleSample"
+    },
+    {
+      "displayName": "Example CLI",
+      "description": "Example Sample folder for networking project with a simple network state machine.",
+      "path": "Samples~/ExampleCLI"
+    }
+  ],
+  "dependencies": {
+    "com.nickmaltbie.testutilsunity" : "0.0.2",
+    "com.nickmaltbie.statemachineunity" : "1.2.0",
+    "com.unity.inputsystem": "1.0.0",
+    "com.unity.netcode.gameobjects": "1.1.0"
+  },
+  "license": "MIT",
+  "type": "template"
+}

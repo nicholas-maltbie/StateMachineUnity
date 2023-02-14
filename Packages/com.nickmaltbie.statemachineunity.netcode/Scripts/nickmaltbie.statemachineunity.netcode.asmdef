@@ -1,0 +1,19 @@
+{
+    "name": "nickmaltbie.StateMachineUnity.netcode",
+    "rootNamespace": "nickmaltbie.StateMachineUnity.netcode",
+    "references": [
+        "nickmaltbie.StateMachineUnity",
+        "nickmaltbie.TestUtilsUnity",
+        "Unity.Netcode.Components",
+        "Unity.Netcode.Runtime"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
