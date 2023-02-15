@@ -20,7 +20,6 @@ using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using Moq;
-using nickmaltbie.StateMachineUnity;
 using nickmaltbie.StateMachineUnity.Attributes;
 using nickmaltbie.StateMachineUnity.Event;
 using nickmaltbie.TestUtilsUnity;

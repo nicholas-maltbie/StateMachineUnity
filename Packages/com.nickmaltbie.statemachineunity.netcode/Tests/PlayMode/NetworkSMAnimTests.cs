@@ -19,7 +19,6 @@
 using System;
 using System.Collections;
 using Moq;
-using nickmaltbie.StateMachineUnity;
 using nickmaltbie.StateMachineUnity.Attributes;
 using nickmaltbie.TestUtilsUnity;
 using NUnit.Framework;

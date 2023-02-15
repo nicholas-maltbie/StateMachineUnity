@@ -16,9 +16,8 @@
 // ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using nickmaltbie.StateMachineUnity.netcode.Utils;
-using nickmaltbie.StateMachineUnity;
 using nickmaltbie.StateMachineUnity.Attributes;
+using nickmaltbie.StateMachineUnity.netcode.Utils;
 using nickmaltbie.TestUtilsUnity.Tests.TestCommon;
 using NUnit.Framework;
 

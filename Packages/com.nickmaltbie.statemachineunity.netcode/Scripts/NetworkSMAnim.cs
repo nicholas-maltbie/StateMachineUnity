@@ -18,7 +18,6 @@
 
 using System;
 using System.Threading;
-using nickmaltbie.StateMachineUnity;
 using nickmaltbie.StateMachineUnity.Attributes;
 using nickmaltbie.StateMachineUnity.Event;
 using Unity.Netcode;

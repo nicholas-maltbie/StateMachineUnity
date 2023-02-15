@@ -17,10 +17,9 @@
 // SOFTWARE.
 
 using System;
-using nickmaltbie.StateMachineUnity.netcode.Utils;
-using nickmaltbie.StateMachineUnity;
 using nickmaltbie.StateMachineUnity.Attributes;
 using nickmaltbie.StateMachineUnity.Event;
+using nickmaltbie.StateMachineUnity.netcode.Utils;
 using nickmaltbie.StateMachineUnity.Utils;
 using nickmaltbie.TestUtilsUnity;
 using Unity.Netcode;
