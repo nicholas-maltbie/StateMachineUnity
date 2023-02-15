@@ -53,7 +53,7 @@ foreach ($tag in $versions)
     # Reset any changes and checkout tag
     git reset . > $null
     git checkout . > $null
-    git clean -xdf
+    git clean -xdf --exclude "_site"
     git checkout $tag > $null
 
     # ensure docfx is installed
