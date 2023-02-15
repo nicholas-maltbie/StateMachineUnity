@@ -53,6 +53,7 @@ foreach ($tag in $versions)
     # Reset any changes and checkout tag
     git reset . > $null
     git checkout . > $null
+    git clean -xdf
     git checkout $tag > $null
 
     # ensure docfx is installed
@@ -103,6 +104,10 @@ foreach ($tag in $versions)
         {
             (Get-Content $filePath).Replace("latest/api","api") | Set-Content $filePath
         }
+
+        # Generate website with docfx
+        Write-Host "Building code metadata"
+        dotnet docfx metadata "$dir\docfx.json" --force
     
         # Copy tempalte from main branch to here
         if (!(Test-Path "$dir\templates\custom"))
