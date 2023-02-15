@@ -42,7 +42,7 @@ $paramFile.build.globalMetadata | Add-Member -name "_versionList" -value "$([Sys
 $paramFile | ConvertTo-Json -Depth 16 | Set-Content "$dir\docfx.json"
 
 Write-Host "Building code metadata"
-dotnet docfx metadata "$dir\docfx.json" --force
+dotnet docfx metadata "$dir\docfx.json"
 
 Write-Host "Generating website"
 dotnet docfx build "$dir\docfx.json" -t "default,$dir\templates\custom"
@@ -106,7 +106,7 @@ foreach ($tag in $versions)
 
         # Generate website with docfx
         Write-Host "Building code metadata"
-        dotnet docfx metadata "$dir\docfx.json" --force
+        dotnet docfx metadata "$dir\docfx.json"
     
         # Copy tempalte from main branch to here
         if (!(Test-Path "$dir\templates\custom"))
