@@ -20,7 +20,7 @@ jobs:
           - name: "netcode"
             branch_prefix: "release/netcode"
             package_path: "./Packages/com.nickmaltbie.statemachineunity.netcode"
-            samples: "ExampleSample,ExampleCLI"
+            samples: "ExampleNetcode"
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/git-lfs-cache

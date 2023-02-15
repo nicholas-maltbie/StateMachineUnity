@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.community.netcode.transport.websocket": {
+      "version": "git+https://github.com/Unity-Technologies/multiplayer-community-contributions?path=/Transports/com.community.netcode.transport.websocket#c7246c713392424c1388fd516f2c6a1debaea14d",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "c7246c713392424c1388fd516f2c6a1debaea14d"
+    },
     "com.nickmaltbie.screenmanager": {
       "version": "3.1.0",
       "depth": 0,
@@ -339,6 +346,13 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
+    },
+    "com.veriorpies.parrelsync": {
+      "version": "https://github.com/VeriorPies/ParrelSync.git?path=/ParrelSync",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "f45424822189ebd875d864a17d7f03b72eafbff7"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",

@@ -163,9 +163,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   screenPrefabs:
   - {fileID: 486149923664253863, guid: 7e049cbb3534c824eaa8e415a809e228, type: 3}
-  - {fileID: 486149923664253863, guid: 944cd82f530beab4781bcfd2fd1013e4, type: 3}
-  - {fileID: 3127225395034414389, guid: 65addf4e16a61aa4e80d6740bb4069a4, type: 3}
-  - {fileID: -1115252214597416267, guid: ba1ceebb93970fb49bd441f68a371c68, type: 3}
+  - {fileID: 486149923664253863, guid: af060f91c02b5804eb2af18dc4095037, type: 3}
+  - {fileID: 3127225395034414389, guid: 69d777563c5f4b449926324d2134d598, type: 3}
+  - {fileID: -1115252214597416267, guid: 535de49a9a4545242bcc3b1eda978f05, type: 3}
   initialScreen: 0
   inputActions: {fileID: -944628639613478452, guid: 5d9258b1dd6e4ee4d8bfd2794bc2fbec, type: 3}
   maxScreenHistory: 100

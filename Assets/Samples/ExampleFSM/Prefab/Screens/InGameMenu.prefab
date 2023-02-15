@@ -816,7 +816,7 @@ MonoBehaviour:
         m_MethodName: SetScreen
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 6637053135914170328, guid: ba1ceebb93970fb49bd441f68a371c68, type: 3}
+          m_ObjectArgument: {fileID: 6637053135914170328, guid: 1f3cabab16b3ad344bcca57ac8386042, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -1030,7 +1030,7 @@ MonoBehaviour:
         m_MethodName: SetScreen
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 6101108449083475876, guid: 944cd82f530beab4781bcfd2fd1013e4, type: 3}
+          m_ObjectArgument: {fileID: 6101108449083475876, guid: a93111e0283e42e498d68ee3ab5ce94a, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -1044,14 +1044,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3816567771485690120}
     m_Modifications:
-    - target: {fileID: 3733915148585717349, guid: d21da5bce5b51264fac55fc4d777888d, type: 3}
+    - target: {fileID: 3733915148585717349, guid: e3549c024ce06dd4da6569c4e672bf80, type: 3}
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d21da5bce5b51264fac55fc4d777888d, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: e3549c024ce06dd4da6569c4e672bf80, type: 3}
 --- !u!224 &4767079529828849869 stripped
 RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3733915148585717349, guid: d21da5bce5b51264fac55fc4d777888d, type: 3}
+  m_CorrespondingSourceObject: {fileID: 3733915148585717349, guid: e3549c024ce06dd4da6569c4e672bf80, type: 3}
   m_PrefabInstance: {fileID: 8212764274198238888}
   m_PrefabAsset: {fileID: 0}
