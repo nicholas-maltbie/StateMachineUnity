@@ -56,7 +56,7 @@ foreach ($tag in $versions)
     git checkout $tag > $null
 
     # ensure docfx is installed
-    dotnet tool install docfx > $null
+    dotnet tool install docfx --version 2.60.2 > $null
 
     Write-Host "Setting up website and copying files"
     
@@ -106,7 +106,7 @@ foreach ($tag in $versions)
 
         # Generate website with docfx
         Write-Host "Building code metadata"
-        dotnet docfx metadata "$dir\docfx.json"
+        dotnet docfx metadata "$dir\docfx.json" --force
     
         # Copy tempalte from main branch to here
         if (!(Test-Path "$dir\templates\custom"))
