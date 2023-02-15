@@ -103,10 +103,6 @@ foreach ($tag in $versions)
         {
             (Get-Content $filePath).Replace("latest/api","api") | Set-Content $filePath
         }
-
-        # Generate website with docfx
-        Write-Host "Building code metadata"
-        dotnet docfx metadata "$dir\docfx.json" --force
     
         # Copy tempalte from main branch to here
         if (!(Test-Path "$dir\templates\custom"))
