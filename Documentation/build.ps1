@@ -42,7 +42,7 @@ $paramFile.build.globalMetadata | Add-Member -name "_versionList" -value "$([Sys
 $paramFile | ConvertTo-Json -Depth 16 | Set-Content "$dir\docfx.json"
 
 Write-Host "Building code metadata"
-dotnet docfx metadata "$dir\docfx.json"
+dotnet docfx metadata "$dir\docfx.json" --force
 
 Write-Host "Generating website"
 dotnet docfx build "$dir\docfx.json" -t "default,$dir\templates\custom"
