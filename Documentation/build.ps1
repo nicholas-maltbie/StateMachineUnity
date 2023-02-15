@@ -53,7 +53,6 @@ foreach ($tag in $versions)
     # Reset any changes and checkout tag
     git reset . > $null
     git checkout . > $null
-    git clean -xdf --exclude "_site"
     git checkout $tag > $null
 
     # ensure docfx is installed
@@ -126,9 +125,10 @@ foreach ($tag in $versions)
     }
 
     # Undo any changes made in previous iteration
-    git reset .
-    git checkout .
-    git clean -xdf Documentation Assets Packages
+    git reset . > $null
+    git checkout . > $null
+    git clean -xdf --exclude "_site" > $null
+    git clean -xdf Documentation Assets Packages > $null
 }
 
 # Do some work to cleanup duplicate files in exported _site folder to
