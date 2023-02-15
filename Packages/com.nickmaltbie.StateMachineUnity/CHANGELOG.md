@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ## In Progress
 
+* Combined the NetworkStateMachine and StateMachine project
+    into one repo.
+
 ## [1.1.2] - 2022-11-20
 
 * Updated AnimSMRequest to be Serializable.
