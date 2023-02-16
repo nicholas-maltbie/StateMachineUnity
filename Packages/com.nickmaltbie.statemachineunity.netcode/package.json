@@ -1,7 +1,7 @@
 {
   "name": "com.nickmaltbie.statemachineunity.netcode",
   "displayName": "State Machine Unity for Netcode",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "unity": "2021.3",
   "unityRelease": "11f1",
   "description": "Network State Machine Unity for creating and sharing assets.",
@@ -24,7 +24,7 @@
   ],
   "dependencies": {
     "com.nickmaltbie.testutilsunity" : "0.0.2",
-    "com.nickmaltbie.statemachineunity" : "1.2.0",
+    "com.nickmaltbie.statemachineunity" : "1.2.1",
     "com.unity.inputsystem": "1.0.0",
     "com.unity.netcode.gameobjects": "1.1.0"
   },
