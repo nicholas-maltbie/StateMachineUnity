@@ -128,7 +128,6 @@ foreach ($tag in $versions)
     git reset . > $null
     git checkout . > $null
     git clean -xdf --exclude "_site" > $null
-    git clean -xdf Documentation Assets Packages > $null
 }
 
 # Do some work to cleanup duplicate files in exported _site folder to

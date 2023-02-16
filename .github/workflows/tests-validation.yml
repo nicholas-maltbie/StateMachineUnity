@@ -30,7 +30,7 @@ jobs:
           unityVersion: ${{ env.UNITY_VERSION }}
           testMode: All
           checkName: All Test Results
-          customParameters: -testFilter "nickmaltbie.StateMachineUnity.Tests.*" -nographics
+          customParameters: -testFilter "nickmaltbie.StateMachineUnity.*Tests.*" -nographics
           coverageOptions: 'generateHtmlReport;assemblyFilters:+nickmaltbie.StateMachineUnity,+nickmaltbie.StateMachineUnity.netcode,-nickmaltbie.StateMachineUnity.Tests.*;dontClear'
 
       - name: Copy Coverage Results

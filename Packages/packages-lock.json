@@ -18,7 +18,7 @@
       "url": "https://registry.npmjs.org"
     },
     "com.nickmaltbie.statemachineunity": {
-      "version": "file:com.nickmaltbie.statemachineunity",
+      "version": "file:com.nickmaltbie.StateMachineUnity",
       "depth": 0,
       "source": "embedded",
       "dependencies": {
