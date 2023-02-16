@@ -17,32 +17,20 @@
 // SOFTWARE.
 
 using System;
-using nickmaltbie.StateMachineUnity.Attributes;
 
-namespace nickmaltbie.StateMachineUnity
+namespace nickmaltbie.StateMachineUnity.Attributes
 {
     /// <summary>
-    /// Basic state to represent the current configuration of a state machine.
+    /// Transition attribute to manage transitions between states for a state machine.
     /// </summary>
-    public abstract class State
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
+    public class TransitionFromAttribute : TransitionAttribute
     {
         /// <summary>
-        /// Checks if a given state is labeled with the initial state type.
+        /// Transition from a given state to another state.
         /// </summary>
-        /// <param name="type">Type of state to check.</param>
-        /// <returns>True if this is the initial state, flase otherwise.</returns>
-        public static bool IsInitialState(Type type)
-        {
-            return Attribute.GetCustomAttribute(type, typeof(InitialStateAttribute)) != null;
-        }
-    }
-
-    /// <summary>
-    /// Static class to represent a transition
-    /// from any state to a given state. 
-    /// /// </summary>
-    public class AnyState : State
-    {
-
+        /// <param name="triggerEvent">Trigger event to cause transition.</param>
+        /// <param name="fromState">New state to transition to upon trigger.</param>
+        public TransitionFromAttribute(Type triggerEvent, Type fromState) : base(triggerEvent, fromState) { }
     }
 }

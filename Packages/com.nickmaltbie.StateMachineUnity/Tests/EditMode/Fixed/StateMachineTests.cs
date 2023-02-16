@@ -153,32 +153,7 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed
         /// to send to the state machine and expect changes.</param>
         public void SendAndVerifyEventSequence(params (IEvent, Type)[] transitions)
         {
-            SendAndVerifyEventSequence(transitions, false);
-        }
-
-        /// <summary>
-        /// Send an event sequence to a state machine and verify the given transitions.
-        /// </summary>
-        /// <param name="transitions">Sequence of events and transitions
-        /// to send to the state machine and expect changes.</param>
-        public void SendAndVerifyEventSequence(IEnumerable<(IEvent, Type)> transitions, bool log = true)
-        {
-            foreach ((IEvent, Type) tuple in transitions)
-            {
-                if (log)
-                {
-                    UnityEngine.Debug.Log($"Sending event {tuple.Item1.GetType()} to state machine");
-                }
-
-                demoStateMachine.RaiseEvent(tuple.Item1);
-
-                if (log)
-                {
-                    UnityEngine.Debug.Log($"State machine is now in state {demoStateMachine.CurrentState}");
-                }
-
-                Assert.AreEqual(demoStateMachine.CurrentState, tuple.Item2);
-            }
+            StateMachineTestUtils.SendAndVerifyEventSequence(demoStateMachine, transitions, false);
         }
     }
 }

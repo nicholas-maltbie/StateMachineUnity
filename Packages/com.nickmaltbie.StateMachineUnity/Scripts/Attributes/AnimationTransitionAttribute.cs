@@ -63,9 +63,9 @@ namespace nickmaltbie.StateMachineUnity.Attributes
         }
 
         /// <inheritdoc/>
-        public override void OnTransition<E>(IStateMachine<E> sm)
+        public override void OnTransition(IStateMachine<Type> sm)
         {
-            var animStateMachine = sm as IAnimStateMachine<E>;
+            var animStateMachine = sm as IAnimStateMachine<Type>;
             int? nextState = AnimationAttribute.GetStateAnimation(TargetState);
             if (nextState.HasValue)
             {

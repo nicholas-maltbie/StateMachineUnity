@@ -21,36 +21,37 @@ using System;
 namespace nickmaltbie.StateMachineUnity.Attributes
 {
     /// <summary>
-    /// Transition attribute to manage transitions between states for a state machine.
+    /// Transition wrapper for creating reversed transitions.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
-    public class TransitionAttribute : Attribute, ITransition<Type>
+    public class TransitionWrapper<E> : ITransition<E>
     {
-        /// <summary>
-        /// Type of event to listen for.
-        /// </summary>
         public Type TriggerEvent { get; private set; }
 
-        /// <summary>
-        /// Target state upon event trigger.
-        /// </summary>
-        public Type TargetState { get; private set; }
+        public E TargetState { get; private set; }
+
+        private ITransition<E> transitionBase;
 
         /// <summary>
         /// Transition to another state on a given event.
         /// </summary>
         /// <param name="triggerEvent">Trigger event to cause transition.</param>
         /// <param name="targetState">New state to transition to upon trigger.</param>
-        public TransitionAttribute(Type triggerEvent, Type targetState)
+        /// <param name="transitionBase">Transition base to trigger OnTransition event from.</param>
+        public TransitionWrapper(Type triggerEvent, E targetState, ITransition<E> transitionBase)
         {
-            TriggerEvent = triggerEvent;
-            TargetState = targetState;
+            this.TriggerEvent = triggerEvent;
+            this.TargetState = targetState;
+            this.transitionBase = transitionBase;
         }
 
         /// <summary>
         /// Behaviour to invoke when this transition is triggered.
         /// </summary>
         /// <param name="sm">State machine being transitioned.</param>
-        public virtual void OnTransition(IStateMachine<Type> sm) { }
+        /// <typeparam name="E">Type of the state machine.</typeparam>
+        public void OnTransition(IStateMachine<E> sm)
+        {
+            transitionBase.OnTransition(sm);
+        }
     }
 }

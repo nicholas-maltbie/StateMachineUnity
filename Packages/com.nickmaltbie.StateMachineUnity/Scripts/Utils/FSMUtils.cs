@@ -40,14 +40,14 @@ namespace nickmaltbie.StateMachineUnity.Utils
         /// <summary>
         /// Map of transitions of state machine -> (state, event) -> state.
         /// </summary>
-        internal static ConcurrentDictionary<Type, Dictionary<Tuple<Type, Type>, TransitionAttribute>> TransitionCache =
-            new ConcurrentDictionary<Type, Dictionary<Tuple<Type, Type>, TransitionAttribute>>();
+        internal static ConcurrentDictionary<Type, Dictionary<Tuple<Type, Type>, ITransition<Type>>> TransitionCache =
+            new ConcurrentDictionary<Type, Dictionary<Tuple<Type, Type>, ITransition<Type>>>();
 
         /// <summary>
         /// Map of actions of state machine -> (state, event) -> [ actions ]
         /// </summary>
-        internal static ConcurrentDictionary<Type, Dictionary<Tuple<Type, Type>, List<MethodInfo>>> EventCache =
-            new ConcurrentDictionary<Type, Dictionary<Tuple<Type, Type>, List<MethodInfo>>>();
+        internal static ConcurrentDictionary<Type, Dictionary<Tuple<Type, Type>, IEnumerable<MethodInfo>>> EventCache =
+            new ConcurrentDictionary<Type, Dictionary<Tuple<Type, Type>, IEnumerable<MethodInfo>>>();
 
         /// <summary>
         /// Returns the action with the specified name.
@@ -83,17 +83,55 @@ namespace nickmaltbie.StateMachineUnity.Utils
 
             // Find all the supported states for the state machine.
             foreach (Type state in stateMachine.GetNestedTypes()
-                .Where(type => type.IsClass && type.IsAssignableFrom(typeof(State))))
+                .Where(type => type.IsClass && type.IsSubclassOf(typeof(State))))
             {
                 // Find all action attributes of given state
                 foreach (ActionAttribute attr in Attribute.GetCustomAttributes(state, typeof(ActionAttribute)))
                 {
                     Type actionType = attr.GetType();
-                    actionLookup[new Tuple<Type, Type>(state, actionType)] = GetActionWithName(stateMachine, attr.Action);
+                    Type targetState = state;
+
+                    if (targetState.IsSubclassOf(typeof(AnyState)))
+                    {
+                        targetState = typeof(AnyState);
+                    }
+                    
+                    actionLookup[new Tuple<Type, Type>(targetState, actionType)] = GetActionWithName(stateMachine, attr.Action);
                 }
             }
 
             return actionLookup;
+        }
+
+        /// <summary>
+        /// Sets up a transition within a transition lookup.
+        /// </summary>
+        /// <param name="state">Source state for saving transition.</param>
+        /// <param name="transition">Transition to add to lookup table.</param>
+        /// <param name="transitionLookup">Lookup to add transition to.</param>
+        public static void SetupTransition(Type state, ITransition<Type> transition, Dictionary<Tuple<Type, Type>, ITransition<Type>> transitionLookup)
+        {
+            Type sourceState = state;
+            Type targetState = transition.TargetState;
+
+            if (transition.GetType() == typeof(TransitionFromAttribute) || transition.GetType().IsSubclassOf(typeof(TransitionFromAttribute)))
+            {
+                sourceState = transition.TargetState;
+                targetState = state;
+                transition = new TransitionWrapper<Type>(transition.TriggerEvent, state, transition);
+            }
+
+            if (sourceState.IsSubclassOf(typeof(AnyState)) || sourceState == typeof(AnyState))
+            {
+                sourceState = typeof(AnyState);
+            }
+
+            if (targetState.IsSubclassOf(typeof(AnyState)) || targetState == typeof(AnyState))
+            {
+                throw new InvalidOperationException($"Cannot transition to {nameof(AnyState)} as part of a TransitionAttribute for TransitionAttribute:{transition} from state:{state} to state:{transition.TargetState} on event:{transition.TriggerEvent}");
+            }
+
+            transitionLookup[new Tuple<Type, Type>(sourceState, transition.TriggerEvent)] = transition;
         }
 
         /// <summary>
@@ -103,29 +141,18 @@ namespace nickmaltbie.StateMachineUnity.Utils
         /// </summary>
         /// <param name="stateMachine">State machine to lookup <see cref="State"/> and <see cref="nickmaltbie.StateMachineUnity.Attributes.TransitionAttribute"/> for.</param>
         /// <returns>A lookup table mapped as (state, event) -> state</returns>
-        public static Dictionary<Tuple<Type, Type>, TransitionAttribute> CreateTransitionAttributeCache(Type stateMachine)
+        public static Dictionary<Tuple<Type, Type>, ITransition<Type>> CreateTransitionAttributeCache(Type stateMachine)
         {
-            var transitionLookup = new Dictionary<Tuple<Type, Type>, TransitionAttribute>();
+            var transitionLookup = new Dictionary<Tuple<Type, Type>, ITransition<Type>>();
 
             // Find all the supported states for the state machine.
             foreach (Type state in stateMachine.GetNestedTypes()
-                .Where(type => type.IsClass && type.IsAssignableFrom(typeof(State))))
+                .Where(type => type.IsClass && type.IsSubclassOf(typeof(State))))
             {
                 // Find all transition attributes of given state
-                foreach (TransitionAttribute attr in Attribute.GetCustomAttributes(state, typeof(TransitionAttribute)))
+                foreach (ITransition<Type> transition in Attribute.GetCustomAttributes(state, typeof(TransitionAttribute)))
                 {
-                    if (attr.TargetState.IsAssignableFrom(typeof(FromAnyState)))
-                    {
-                        transitionLookup[new Tuple<Type, Type>(typeof(AnyState), attr.TriggerEvent)] = attr;
-                    }
-                    else if (attr.TargetState.IsAssignableFrom(typeof(AnyState)))
-                    {
-                        throw new InvalidOperationException($"Cannot transition to {nameof(AnyState)} as part of a TransitionAttribute for TransitionAttribute:{attr} from state:{state} to state:{attr.TargetState} on event:{attr.TriggerEvent}");
-                    }
-                    else
-                    {
-                        transitionLookup[new Tuple<Type, Type>(state, attr.TriggerEvent)] = attr;
-                    }
+                    SetupTransition(state, transition, transitionLookup);
                 }
             }
 
@@ -139,24 +166,31 @@ namespace nickmaltbie.StateMachineUnity.Utils
         /// </summary>
         /// <param name="stateMachine">State machine to lookup <see cref="State"/> and <see cref="nickmaltbie.StateMachineUnity.Attributes.OnEventDoActionAttribute"/> for.</param>
         /// <returns>A lookup table mapped as (state, event) -> [ methods ]</returns>
-        public static Dictionary<Tuple<Type, Type>, List<MethodInfo>> CreateEventActionCache(Type stateMachine)
+        public static Dictionary<Tuple<Type, Type>, IEnumerable<MethodInfo>> CreateEventActionCache(Type stateMachine)
         {
-            var eventLookup = new Dictionary<Tuple<Type, Type>, List<MethodInfo>>();
+            var eventLookup = new Dictionary<Tuple<Type, Type>, IEnumerable<MethodInfo>>();
 
             // Find all the supported states for the state machine.
             foreach (Type state in stateMachine.GetNestedTypes()
-                .Where(type => type.IsClass && type.IsAssignableFrom(typeof(State))))
+                .Where(type => type.IsClass && type.IsSubclassOf(typeof(State))))
             {
                 // Find all OnEventDoAction attributes of given state
                 foreach (OnEventDoActionAttribute attr in Attribute.GetCustomAttributes(state, typeof(OnEventDoActionAttribute)))
                 {
                     Type evt = attr.Event;
                     MethodInfo action = FSMUtils.GetActionWithName(stateMachine, attr.Action);
-                    var tupleKey = new Tuple<Type, Type>(state, evt);
+                    Type targetState = state;
+
+                    if (state.IsSubclassOf(typeof(AnyState)))
+                    {
+                        targetState = typeof(AnyState);
+                    }
+
+                    var tupleKey = new Tuple<Type, Type>(targetState, evt);
 
                     if (eventLookup.ContainsKey(tupleKey))
                     {
-                        eventLookup[tupleKey].Add(action);
+                        (eventLookup[tupleKey] as List<MethodInfo>).Add(action);
                     }
                     else
                     {
@@ -187,18 +221,20 @@ namespace nickmaltbie.StateMachineUnity.Utils
         public static void RaiseCachedEvent(IStateMachine<Type> stateMachine, IEvent evt)
         {
             var tupleKey = new Tuple<Type, Type>(stateMachine.CurrentState, evt.GetType());
-            if (EventCache[stateMachine.GetType()].TryGetValue(tupleKey, out List<MethodInfo> actions))
+            var anyStateTupleKey = new Tuple<Type, Type>(typeof(AnyState), evt.GetType());
+
+            EventCache[stateMachine.GetType()].TryGetValue(tupleKey, out IEnumerable<MethodInfo> baseActions);
+            EventCache[stateMachine.GetType()].TryGetValue(anyStateTupleKey, out IEnumerable<MethodInfo> anyActions);
+
+            foreach (MethodInfo action in Enumerable.Concat(baseActions ?? Enumerable.Empty<MethodInfo>(), anyActions ?? Enumerable.Empty<MethodInfo>()))
             {
-                foreach (MethodInfo action in actions)
-                {
-                    action?.Invoke(stateMachine, new object[0]);
-                }
+                action?.Invoke(stateMachine, new object[0]);
             }
 
-            TransitionAttribute transition;
-            var anyStateTransitionKey = new Tuple<Type, Type>(typeof(AnyState), evt.GetType());
-            bool hasTransition = TransitionCache[stateMachine.GetType()].TryGetValue(tupleKey, out transition) ||
-                TransitionCache[stateMachine.GetType()].TryGetValue(anyStateTransitionKey, out transition);
+            // Use short circuit operations to select from target class
+            // before an AnyState transition.
+            bool hasTransition = TransitionCache[stateMachine.GetType()].TryGetValue(tupleKey, out ITransition<Type> transition) ||
+                TransitionCache[stateMachine.GetType()].TryGetValue(anyStateTupleKey, out transition);
 
             if (hasTransition)
             {
@@ -231,7 +267,9 @@ namespace nickmaltbie.StateMachineUnity.Utils
         public static bool InvokeAction(IStateMachine<Type> stateMachine, Type actionType, Type state)
         {
             var tupleKey = new Tuple<Type, Type>(state ?? stateMachine.CurrentState, actionType);
-            if (ActionCache[stateMachine.GetType()].TryGetValue(tupleKey, out MethodInfo method))
+            var anyStateTupleKey = new Tuple<Type, Type>(typeof(AnyState), actionType);
+            if (ActionCache[stateMachine.GetType()].TryGetValue(tupleKey, out MethodInfo method) ||
+                ActionCache[stateMachine.GetType()].TryGetValue(anyStateTupleKey, out method))
             {
                 method.Invoke(stateMachine, new object[0]);
                 return method != null;
@@ -253,7 +291,7 @@ namespace nickmaltbie.StateMachineUnity.Utils
             SetupCache(stateMachine.GetType());
 
             stateMachine.SetStateQuiet(stateMachine.GetType().GetNestedTypes()
-                .Where(type => type.IsClass && type.IsAssignableFrom(typeof(State)))
+                .Where(type => type.IsClass && type.IsSubclassOf(typeof(State)))
                 .First(type => State.IsInitialState(type)));
 
             InvokeAction<OnEnterStateAttribute>(stateMachine, stateMachine.CurrentState);

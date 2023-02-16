@@ -17,19 +17,30 @@
 // SOFTWARE.
 
 using System;
+using nickmaltbie.StateMachineUnity.Attributes;
 
-namespace nickmaltbie.StateMachineUnity.Attributes
+namespace nickmaltbie.StateMachineUnity
 {
     /// <summary>
-    /// Transition to this state from any other state given an event.
+    /// Transition that can be triggered by an event.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
-    public class TransitionFromAnyState : TransitionAttribute
+    /// <typeparam name="TState">Type of the state machine.</typeparam>
+    public interface ITransition<TState>
     {
         /// <summary>
-        /// Transition to this state from any other state given an event.
+        /// Type of event to listen for.
         /// </summary>
-        /// <param name="triggerEvent">Trigger event to cause transition.</param>
-        public TransitionFromAnyState(Type triggerEvent) : base(triggerEvent, typeof(FromAnyState)) { }
+        public Type TriggerEvent { get; }
+
+        /// <summary>
+        /// Target state upon event trigger.
+        /// </summary>
+        public TState TargetState { get; }
+
+        /// <summary>
+        /// Behaviour to invoke when this transition is triggered.
+        /// </summary>
+        /// <param name="sm">State machine being transitioned.</param>
+        public void OnTransition(IStateMachine<TState> sm);
     }
 }
