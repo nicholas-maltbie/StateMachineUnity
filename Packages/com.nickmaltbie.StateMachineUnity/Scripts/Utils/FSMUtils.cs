@@ -95,7 +95,7 @@ namespace nickmaltbie.StateMachineUnity.Utils
                     {
                         targetState = typeof(AnyState);
                     }
-                    
+
                     actionLookup[new Tuple<Type, Type>(targetState, actionType)] = GetActionWithName(stateMachine, attr.Action);
                 }
             }

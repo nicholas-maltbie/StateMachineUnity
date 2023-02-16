@@ -39,8 +39,8 @@ namespace nickmaltbie.StateMachineUnity.Attributes
         /// <param name="transitionBase">Transition base to trigger OnTransition event from.</param>
         public TransitionWrapper(Type triggerEvent, E targetState, ITransition<E> transitionBase)
         {
-            this.TriggerEvent = triggerEvent;
-            this.TargetState = targetState;
+            TriggerEvent = triggerEvent;
+            TargetState = targetState;
             this.transitionBase = transitionBase;
         }
 

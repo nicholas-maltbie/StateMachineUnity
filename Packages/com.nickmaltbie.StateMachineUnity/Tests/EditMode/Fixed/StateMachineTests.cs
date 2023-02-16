@@ -17,7 +17,6 @@
 // SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using nickmaltbie.StateMachineUnity.Event;
 using nickmaltbie.StateMachineUnity.Tests.EditMode.Event;
 using nickmaltbie.StateMachineUnity.Utils;

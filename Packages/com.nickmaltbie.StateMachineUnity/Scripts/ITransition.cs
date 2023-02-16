@@ -17,7 +17,6 @@
 // SOFTWARE.
 
 using System;
-using nickmaltbie.StateMachineUnity.Attributes;
 
 namespace nickmaltbie.StateMachineUnity
 {

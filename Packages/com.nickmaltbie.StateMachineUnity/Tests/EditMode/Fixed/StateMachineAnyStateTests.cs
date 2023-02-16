@@ -91,7 +91,7 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed
     [TestFixture]
     public class StateMachineAnyStateTests : TestBase
     {
-        AnyStateTransitionDemo demo;
+        private AnyStateTransitionDemo demo;
 
         [SetUp]
         public override void Setup()
