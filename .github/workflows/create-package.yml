@@ -5,40 +5,50 @@ on:
     tags:
       - '*'
     branches: ['main']
-  release:
-    types: [published]
 
 jobs:
-  create-package:
+  create-statemachineunity-package:
+    name: Create StateMachineUnity package ${{ matrix.name }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - name: "main"
+            branch_prefix: "release"
+            package_path: "./Packages/com.nickmaltbie.statemachineunity"
+            samples: "ExampleFSM"
+          - name: "netcode"
+            branch_prefix: "release/netcode"
+            package_path: "./Packages/com.nickmaltbie.statemachineunity.netcode"
+            samples: "ExampleNetcode"
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/git-lfs-cache
       - uses: ./.github/actions/setvars
 
       - name: Setup Package
-        run: ./setup-package.sh -p ${{ env.PACKAGE_PATH }}
+        run: ./setup-package.sh -p ${{ matrix.package_path }} -s ${{ matrix.samples }}
 
       - name: Get tag name
         uses: olegtarasov/get-tag@v2.1.1
         id: releaseTagName
 
       # Deploy build to release branch
-      - name: Push package via Release Tag
+      - name: Push package to git branch ${{ matrix.branch_prefix }}/${{ steps.releaseTagName.outputs.tag }}
         if: "${{ steps.releaseTagName.outputs.tag != '' }}"
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: release/${{ steps.releaseTagName.outputs.tag }}
+          branch: ${{ matrix.branch_prefix }}/${{ steps.releaseTagName.outputs.tag }}
           force: true
-      
-      # Deploy build to latest release branch
-      - name: Push package via Release Tag
+
+      # Deploy build to release branch
+      - name: Push package to git branch ${{ matrix.branch_prefix }}/latest
         if: github.ref == 'refs/heads/main'
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: release/latest
+          branch: ${{ matrix.branch_prefix }}/latest
           force: true
 
       - name: Git lfs Pull
@@ -47,7 +57,6 @@ jobs:
 
       # Publish to 
       - name: Use Node.js 14
-        if: "${{ steps.releaseTagName.outputs.tag != '' }}"
         uses: actions/setup-node@v3
         with:
           node-version: 14

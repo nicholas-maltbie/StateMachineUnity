@@ -59,11 +59,15 @@ jobs:
       - uses: ./.github/actions/setvars
       - uses: ./.github/actions/git-lfs-cache
 
-      - name: Install DocFX
-        run: choco install -y docfx
+      - name: Fetch all git tags
+        run: git fetch --prune --unshallow --tags
 
+      # Restore dotnet tools. This handles cache implicitly.
+      - run: dotnet tool restore
+
+      # build full website
       - name: Build Website
-        run: .\Documentation\build.cmd
+        run: .\Documentation\build.ps1
 
       # Upload build to temp_build_docs
       - name: Upload build artifact
@@ -98,6 +102,8 @@ jobs:
 
   # Deploy job
   deploy-combined-webgl:
+    name: Deploy Combined Artifacts
+    
     # Add a dependency to the build job
     needs: combine-and-deploy-artifact
 
@@ -123,14 +129,14 @@ jobs:
     name: Cleanup the build artifacts after deploying site.
     runs-on: ubuntu-latest
     if: always()
-    needs: [deploy-combined-webgl]
+    needs: deploy-combined-webgl
 
     steps:
       - name: Cleanup temp build artifacts
         uses: joutvhu/delete-artifact@v1
+        continue-on-error: true
         with:
           name: |
             temp_build_webgl
             temp_build_docs
             github-pages
-

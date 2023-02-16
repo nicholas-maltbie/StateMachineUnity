@@ -3,3 +3,5 @@
 
 - name: Changelog
   href: CHANGELOG.md
+- name: Changelog Netcode
+  href: CHANGELOG.netcode.md
