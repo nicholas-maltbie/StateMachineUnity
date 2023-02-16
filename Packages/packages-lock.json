@@ -18,7 +18,7 @@
       "url": "https://registry.npmjs.org"
     },
     "com.nickmaltbie.statemachineunity": {
-      "version": "file:com.nickmaltbie.StateMachineUnity",
+      "version": "file:com.nickmaltbie.statemachineunity",
       "depth": 0,
       "source": "embedded",
       "dependencies": {
@@ -32,7 +32,7 @@
       "source": "embedded",
       "dependencies": {
         "com.nickmaltbie.testutilsunity": "0.0.2",
-        "com.nickmaltbie.statemachineunity": "1.2.0",
+        "com.nickmaltbie.statemachineunity": "1.2.1",
         "com.unity.inputsystem": "1.0.0",
         "com.unity.netcode.gameobjects": "1.1.0"
       }
