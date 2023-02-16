@@ -17,32 +17,29 @@
 // SOFTWARE.
 
 using System;
-using nickmaltbie.StateMachineUnity.Attributes;
 
 namespace nickmaltbie.StateMachineUnity
 {
     /// <summary>
-    /// Basic state to represent the current configuration of a state machine.
+    /// Transition that can be triggered by an event.
     /// </summary>
-    public abstract class State
+    /// <typeparam name="TState">Type of the state machine.</typeparam>
+    public interface ITransition<TState>
     {
         /// <summary>
-        /// Checks if a given state is labeled with the initial state type.
+        /// Type of event to listen for.
         /// </summary>
-        /// <param name="type">Type of state to check.</param>
-        /// <returns>True if this is the initial state, flase otherwise.</returns>
-        public static bool IsInitialState(Type type)
-        {
-            return Attribute.GetCustomAttribute(type, typeof(InitialStateAttribute)) != null;
-        }
-    }
+        public Type TriggerEvent { get; }
 
-    /// <summary>
-    /// Static class to represent a transition
-    /// from any state to a given state. 
-    /// /// </summary>
-    public class AnyState : State
-    {
+        /// <summary>
+        /// Target state upon event trigger.
+        /// </summary>
+        public TState TargetState { get; }
 
+        /// <summary>
+        /// Behaviour to invoke when this transition is triggered.
+        /// </summary>
+        /// <param name="sm">State machine being transitioned.</param>
+        public void OnTransition(IStateMachine<TState> sm);
     }
 }
