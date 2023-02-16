@@ -6,6 +6,21 @@ All notable changes to this project will be documented in this file.
 
 * Combined the NetworkStateMachine and StateMachine project
     into one repo.
+* Added support for `AnyState` and `TransitionFrom` and all
+    required support for such events.
+* Can create a new `State` that inherits from `AnyState`. This state can then
+    be used as a way to add `TransitionAttribute` to transition to a given
+    state from any other state on a given event.
+  * This `Anystate` also supports events, on entry, on exit, etc... that are
+    used by any other state for the `FixedSM` and `FixedSMBehaviou` by using
+    adjustments made to the `FSMUtils` class.
+* Created a new state called `AnyState` to handle this internally.
+* Added a new attribute `TransitionFromAttribute` to allow transition from a
+    target state to the labeled state.
+* Added a new attribute `TransitionFromAnyAttribute` to allow to transition
+    from any state to a given state
+* Also, cannot transition to `AnyState` or to any state which inherits
+    `AnyState`, this will throw an exception.
 
 ## [1.1.2] - 2022-11-20
 
