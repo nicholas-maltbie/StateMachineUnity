@@ -83,7 +83,7 @@ namespace nickmaltbie.StateMachineUnity.Utils
 
             // Find all the supported states for the state machine.
             foreach (Type state in stateMachine.GetNestedTypes()
-                .Where(type => type.IsClass && type.IsSubclassOf(typeof(State))))
+                .Where(type => type.IsClass && type.IsAssignableFrom(typeof(State))))
             {
                 // Find all action attributes of given state
                 foreach (ActionAttribute attr in Attribute.GetCustomAttributes(state, typeof(ActionAttribute)))
@@ -109,12 +109,23 @@ namespace nickmaltbie.StateMachineUnity.Utils
 
             // Find all the supported states for the state machine.
             foreach (Type state in stateMachine.GetNestedTypes()
-                .Where(type => type.IsClass && type.IsSubclassOf(typeof(State))))
+                .Where(type => type.IsClass && type.IsAssignableFrom(typeof(State))))
             {
                 // Find all transition attributes of given state
                 foreach (TransitionAttribute attr in Attribute.GetCustomAttributes(state, typeof(TransitionAttribute)))
                 {
-                    transitionLookup[new Tuple<Type, Type>(state, attr.TriggerEvent)] = attr;
+                    if (attr.TargetState.IsAssignableFrom(typeof(FromAnyState)))
+                    {
+                        transitionLookup[new Tuple<Type, Type>(typeof(AnyState), attr.TriggerEvent)] = attr;
+                    }
+                    else if (attr.TargetState.IsAssignableFrom(typeof(AnyState)))
+                    {
+                        throw new InvalidOperationException($"Cannot transition to {nameof(AnyState)} as part of a TransitionAttribute for TransitionAttribute:{attr} from state:{state} to state:{attr.TargetState} on event:{attr.TriggerEvent}");
+                    }
+                    else
+                    {
+                        transitionLookup[new Tuple<Type, Type>(state, attr.TriggerEvent)] = attr;
+                    }
                 }
             }
 
@@ -134,7 +145,7 @@ namespace nickmaltbie.StateMachineUnity.Utils
 
             // Find all the supported states for the state machine.
             foreach (Type state in stateMachine.GetNestedTypes()
-                .Where(type => type.IsClass && type.IsSubclassOf(typeof(State))))
+                .Where(type => type.IsClass && type.IsAssignableFrom(typeof(State))))
             {
                 // Find all OnEventDoAction attributes of given state
                 foreach (OnEventDoActionAttribute attr in Attribute.GetCustomAttributes(state, typeof(OnEventDoActionAttribute)))
@@ -184,7 +195,12 @@ namespace nickmaltbie.StateMachineUnity.Utils
                 }
             }
 
-            if (TransitionCache[stateMachine.GetType()].TryGetValue(tupleKey, out TransitionAttribute transition))
+            TransitionAttribute transition;
+            var anyStateTransitionKey = new Tuple<Type, Type>(typeof(AnyState), evt.GetType());
+            bool hasTransition = TransitionCache[stateMachine.GetType()].TryGetValue(tupleKey, out transition) ||
+                TransitionCache[stateMachine.GetType()].TryGetValue(anyStateTransitionKey, out transition);
+
+            if (hasTransition)
             {
                 InvokeAction<OnExitStateAttribute>(stateMachine, stateMachine.CurrentState);
                 transition.OnTransition(stateMachine);
@@ -237,7 +253,7 @@ namespace nickmaltbie.StateMachineUnity.Utils
             SetupCache(stateMachine.GetType());
 
             stateMachine.SetStateQuiet(stateMachine.GetType().GetNestedTypes()
-                .Where(type => type.IsClass && type.IsSubclassOf(typeof(State)))
+                .Where(type => type.IsClass && type.IsAssignableFrom(typeof(State)))
                 .First(type => State.IsInitialState(type)));
 
             InvokeAction<OnEnterStateAttribute>(stateMachine, stateMachine.CurrentState);
