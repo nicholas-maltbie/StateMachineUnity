@@ -11,6 +11,8 @@ if ("$(git status --porcelain)" -ne "")
     throw "Found unstanged git changes, exiting"
 }
 
+dotnet tool install docfx --version 2.60.2 > $null
+
 # Cleanup any previous documentation
 if (Test-Path "_site")
 {
@@ -37,6 +39,7 @@ Copy-Item -Force "$project_dir\Packages\com.nickmaltbie.statemachineunity\CHANGE
 Copy-Item -Force "$project_dir\Packages\com.nickmaltbie.statemachineunity.netcode\CHANGELOG.md" "$dir\changelog\CHANGELOG.netcode.md"
 
 $paramFile = Get-Content "$dir\docfx.json" | ConvertFrom-Json
+$paramFile.build | Add-Member -name "dest" -value "$project_dir/_site" -MemberType NoteProperty -Force
 $paramFile.build.globalMetadata | Add-Member -name "_version" -value "latest" -MemberType NoteProperty -Force
 $paramFile.build.globalMetadata | Add-Member -name "_versionList" -value "$([System.string]::Join(",", $versions))" -MemberType NoteProperty -Force
 $paramFile | ConvertTo-Json -Depth 16 | Set-Content "$dir\docfx.json"
@@ -45,7 +48,7 @@ Write-Host "Building code metadata"
 dotnet docfx metadata "$dir\docfx.json" --force
 
 Write-Host "Generating website"
-dotnet docfx build "$dir\docfx.json" -t "default,$dir\templates\custom"
+dotnet docfx build "$dir\docfx.json" -t "default,$dir\templates\custom" -o "_site"
 
 # Setup documentation for each version of the api
 foreach ($tag in $versions)
