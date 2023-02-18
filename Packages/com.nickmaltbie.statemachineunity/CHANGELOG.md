@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 
 ## In Progress
 
+## [1.2.0] - 2023-02-16
+
 * Combined the NetworkStateMachine and StateMachine project
     into one repo.
 * Added support for `AnyState` and `TransitionFrom` and all
