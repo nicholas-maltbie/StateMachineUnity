@@ -93,7 +93,7 @@ namespace nickmaltbie.StateMachineUnity.netcode
             initialized = true;
 
             bool serverInitialize = IsServer && IsOwnedByServer;
-            if (isOwner || serverInitialize)
+            if (IsOwner || serverInitialize)
             {
                 FSMUtils.InitializeStateMachine(this);
             }
