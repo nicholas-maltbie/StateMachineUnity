@@ -33,6 +33,11 @@ namespace nickmaltbie.StateMachineUnity.Attributes
         public int AnimationHash { get; private set; }
 
         /// <summary>
+        /// state name for the current animation being played.
+        /// </summary>
+        public string StateName { get; private set; }
+
+        /// <summary>
         /// Default transition time when transitioning to this animation.
         /// </summary>
         public float DefaultTransitionTime { get; private set; }
@@ -59,22 +64,9 @@ namespace nickmaltbie.StateMachineUnity.Attributes
             float defaultTransitionTime = 0.0f,
             bool fixedTimeTransition = false,
             float animationLockTime = 0.0f)
-            : this(Animator.StringToHash(stateName), defaultTransitionTime, fixedTimeTransition, animationLockTime) { }
-
-        /// <summary>
-        /// Associate an animation with a given state.
-        /// </summary>
-        /// <param name="animationHash">Hash of the animation state</param>
-        /// <param name="defaultTransitionTime">Default transition time when transitioning to this animation.</param>
-        /// <param name="fixedTimeTransition">Is this transition in fixed time (true) or normalized time (false).</param>
-        /// <param name="animationLockTime">Time to lock animation during transition.</param>
-        public AnimationAttribute(
-            int animationHash,
-            float defaultTransitionTime = 0.0f,
-            bool fixedTimeTransition = false,
-            float animationLockTime = 0.0f)
         {
-            AnimationHash = animationHash;
+            StateName = stateName;
+            AnimationHash = Animator.StringToHash(stateName);
             DefaultTransitionTime = defaultTransitionTime;
             FixedTimeTransition = fixedTimeTransition;
             AnimationLockTime = animationLockTime;

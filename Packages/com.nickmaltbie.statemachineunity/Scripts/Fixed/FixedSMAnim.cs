@@ -17,9 +17,10 @@
 // SOFTWARE.
 
 using System;
-using System.Threading;
+using System.Linq;
 using nickmaltbie.StateMachineUnity.Attributes;
 using nickmaltbie.StateMachineUnity.Event;
+using nickmaltbie.StateMachineUnity.Utils;
 using UnityEngine;
 
 namespace nickmaltbie.StateMachineUnity.Fixed
@@ -31,11 +32,6 @@ namespace nickmaltbie.StateMachineUnity.Fixed
     /// </summary>
     public abstract class FixedSMAnim : FixedSMBehaviour, IAnimStateMachine<Type>
     {
-        /// <summary>
-        /// Has the completed event been raised for the current state yet.
-        /// </summary>
-        private int raisedCompletedEvent;
-
         /// <summary>
         /// Pending request for the animator.
         /// </summary>
@@ -70,7 +66,27 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         public virtual void Awake()
         {
             AttachedAnimator ??= gameObject.GetComponent<Animator>();
+
+            if (AttachedAnimator != null)
+            {
+                AnimationCompleteListener listener = AttachedAnimator.gameObject.AddComponent<AnimationCompleteListener>();
+                listener.OnAnimationCompleted += OnAnimationComplete;
+            }
+
             UpdateAnimationState();
+        }
+
+        public void OnAnimationComplete(object source, string clipName)
+        {
+            if (Attribute.GetCustomAttribute(CurrentState, typeof(AnimationAttribute)) is AnimationAttribute animAttr)
+            {
+                AnimatorStateInfo currentState = AttachedAnimator.GetCurrentAnimatorStateInfo(0);
+                AnimatorClipInfo[] animClips = AttachedAnimator.GetCurrentAnimatorClipInfo(0);
+                if (currentState.IsName(animAttr.StateName) && animClips.Any(animClip => animClip.clip.name == clipName))
+                {
+                    RaiseEvent(AnimationCompleteEvent.Instance);
+                }
+            }
         }
 
         /// <inheritdoc/>
@@ -83,7 +99,6 @@ namespace nickmaltbie.StateMachineUnity.Fixed
                 return;
             }
 
-            raisedCompletedEvent = 0;
             CurrentAnimationState = req.targetStateHash;
 
             if (req.lockAnimationTime > 0)
@@ -133,13 +148,7 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         {
             if (Attribute.GetCustomAttribute(CurrentState, typeof(AnimationAttribute)) is AnimationAttribute animAttr)
             {
-                if (AttachedAnimator.GetCurrentAnimatorStateInfo(0).shortNameHash == animAttr.AnimationHash &&
-                    AttachedAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 &&
-                    Interlocked.CompareExchange(ref raisedCompletedEvent, 1, 0) == 0)
-                {
-                    RaiseEvent(AnimationCompleteEvent.Instance);
-                }
-                else if (lockUntilTime >= unityService.time)
+                if (lockUntilTime >= unityService.time)
                 {
                     // We are locked, do not cross fade into new animation.
                 }

@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections;
+using System.Linq;
 using Moq;
 using nickmaltbie.StateMachineUnity.Attributes;
 using nickmaltbie.TestUtilsUnity;
@@ -201,6 +202,7 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
                 anim.Play(AnimA, 0, 1.0f);
                 anim.Update(1.0f);
                 sm.Update();
+                sm.OnAnimationComplete(null, anim.GetCurrentAnimatorClipInfo(0).First().clip.name);
                 Assert.AreEqual(typeof(TimeoutState), sm.CurrentState);
             });
         }
@@ -295,6 +297,7 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
                 anim.Play(AnimA, 0, 1.0f);
                 anim.Update(1.0f);
                 sm.Update();
+                sm.OnAnimationComplete(null, anim.GetCurrentAnimatorClipInfo(0).First().clip.name);
                 Assert.AreEqual(typeof(TimeoutState), sm.CurrentState);
             });
         }
