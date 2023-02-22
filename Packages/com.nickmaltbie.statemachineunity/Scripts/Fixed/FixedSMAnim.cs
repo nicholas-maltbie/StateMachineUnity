@@ -32,11 +32,6 @@ namespace nickmaltbie.StateMachineUnity.Fixed
     public abstract class FixedSMAnim : FixedSMBehaviour, IAnimStateMachine<Type>
     {
         /// <summary>
-        /// Has the completed event been raised for the current state yet.
-        /// </summary>
-        private int raisedCompletedEvent;
-
-        /// <summary>
         /// Pending request for the animator.
         /// </summary>
         public Nullable<AnimSMRequest> PendingReq { get; private set; }
@@ -83,7 +78,6 @@ namespace nickmaltbie.StateMachineUnity.Fixed
                 return;
             }
 
-            raisedCompletedEvent = 0;
             CurrentAnimationState = req.targetStateHash;
 
             if (req.lockAnimationTime > 0)
@@ -133,9 +127,9 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         {
             if (Attribute.GetCustomAttribute(CurrentState, typeof(AnimationAttribute)) is AnimationAttribute animAttr)
             {
-                if (AttachedAnimator.GetCurrentAnimatorStateInfo(0).shortNameHash == animAttr.AnimationHash &&
-                    AttachedAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 &&
-                    Interlocked.CompareExchange(ref raisedCompletedEvent, 1, 0) == 0)
+                if (AttachedAnimator.GetCurrentAnimatorStateInfo(0).IsName(animAttr.StateName) &&
+                    !AttachedAnimator.IsInTransition(0) &&
+                    AttachedAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
                 {
                     RaiseEvent(AnimationCompleteEvent.Instance);
                 }
