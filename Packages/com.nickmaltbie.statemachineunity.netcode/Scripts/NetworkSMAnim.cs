@@ -17,9 +17,10 @@
 // SOFTWARE.
 
 using System;
-using System.Threading;
+using System.Linq;
 using nickmaltbie.StateMachineUnity.Attributes;
 using nickmaltbie.StateMachineUnity.Event;
+using nickmaltbie.StateMachineUnity.Utils;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -101,6 +102,12 @@ namespace nickmaltbie.StateMachineUnity.netcode
 
             AttachedAnimator ??= gameObject.GetComponent<Animator>();
 
+            if (AttachedAnimator != null)
+            {
+                var listener = AttachedAnimator.gameObject.AddComponent<AnimationCompleteListener>();
+                listener.OnAnimationCompleted += OnAnimationComplete;
+            }
+
             if (IsOwner)
             {
                 UpdateAnimationState();
@@ -179,6 +186,19 @@ namespace nickmaltbie.StateMachineUnity.netcode
             base.Update();
         }
 
+        public void OnAnimationComplete(object source, string clipName)
+        {            
+            if (Attribute.GetCustomAttribute(CurrentState, typeof(AnimationAttribute)) is AnimationAttribute animAttr)
+            {
+                var currentState = AttachedAnimator.GetCurrentAnimatorStateInfo(0);
+                var animClips = AttachedAnimator.GetCurrentAnimatorClipInfo(0);
+                if (currentState.IsName(animAttr.StateName) && animClips.Any(animClip => animClip.clip.name == clipName))
+                {
+                    RaiseEvent(AnimationCompleteEvent.Instance);
+                }
+            }
+        }
+
         /// <summary>
         /// Update the animation state of this fixed sm animator
         /// based on the current animation tag of the current state of
@@ -188,13 +208,7 @@ namespace nickmaltbie.StateMachineUnity.netcode
         {
             if (Attribute.GetCustomAttribute(CurrentState, typeof(AnimationAttribute)) is AnimationAttribute animAttr)
             {
-                if (AttachedAnimator.GetCurrentAnimatorStateInfo(0).IsName(animAttr.StateName) &&
-                    !AttachedAnimator.IsInTransition(0) &&
-                    AttachedAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
-                {
-                    RaiseEvent(AnimationCompleteEvent.Instance);
-                }
-                else if (lockUntilTime >= unityService.time)
+                if (lockUntilTime >= unityService.time)
                 {
                     // We are locked, do not cross fade into new animation.
                 }
