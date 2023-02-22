@@ -104,7 +104,7 @@ namespace nickmaltbie.StateMachineUnity.netcode
 
             if (AttachedAnimator != null)
             {
-                var listener = AttachedAnimator.gameObject.AddComponent<AnimationCompleteListener>();
+                AnimationCompleteListener listener = AttachedAnimator.gameObject.AddComponent<AnimationCompleteListener>();
                 listener.OnAnimationCompleted += OnAnimationComplete;
             }
 
@@ -187,11 +187,11 @@ namespace nickmaltbie.StateMachineUnity.netcode
         }
 
         public void OnAnimationComplete(object source, string clipName)
-        {            
+        {
             if (Attribute.GetCustomAttribute(CurrentState, typeof(AnimationAttribute)) is AnimationAttribute animAttr)
             {
-                var currentState = AttachedAnimator.GetCurrentAnimatorStateInfo(0);
-                var animClips = AttachedAnimator.GetCurrentAnimatorClipInfo(0);
+                AnimatorStateInfo currentState = AttachedAnimator.GetCurrentAnimatorStateInfo(0);
+                AnimatorClipInfo[] animClips = AttachedAnimator.GetCurrentAnimatorClipInfo(0);
                 if (currentState.IsName(animAttr.StateName) && animClips.Any(animClip => animClip.clip.name == clipName))
                 {
                     RaiseEvent(AnimationCompleteEvent.Instance);
