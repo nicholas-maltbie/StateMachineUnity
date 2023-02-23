@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## In Progress
 
+## [1.2.4] - 2023-02-22
+
+* Small patch to network sm initialization for server owned objects.
+
 ## [1.2.3] - 2023-02-22
 
 * Patched how OnAnimationComplete events are handled by using events within

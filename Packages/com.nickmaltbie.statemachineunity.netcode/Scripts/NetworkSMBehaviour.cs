@@ -68,7 +68,13 @@ namespace nickmaltbie.StateMachineUnity.netcode
         public Type CurrentState
         {
             get => NetworkSMUtils.LookupIndexState(GetType(), networkedState.Value);
-            private set => networkedState.Value = NetworkSMUtils.LookupStateIndex(GetType(), value);
+            private set
+            {
+                if (IsOwner)
+                {
+                    networkedState.Value = NetworkSMUtils.LookupStateIndex(GetType(), value);
+                }
+            }
         }
 
         /// <summary>
@@ -91,9 +97,12 @@ namespace nickmaltbie.StateMachineUnity.netcode
         public virtual void Start()
         {
             initialized = true;
+            FSMUtils.InitializeStateMachine(this);
+        }
 
-            bool serverInitialize = IsServer && IsOwnedByServer;
-            if (IsOwner || serverInitialize)
+        public override void OnNetworkSpawn()
+        {
+            if ((IsOwner || IsServer) && CurrentState == typeof(UninitializedState))
             {
                 FSMUtils.InitializeStateMachine(this);
             }
