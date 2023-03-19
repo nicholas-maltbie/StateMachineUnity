@@ -141,7 +141,10 @@ namespace nickmaltbie.StateMachineUnity.netcode
                 return;
             }
 
-            _currentAnimationState.Value = new AnimSMRequestNetwork(req);
+            if (IsSpawned)
+            {
+                _currentAnimationState.Value = new AnimSMRequestNetwork(req);
+            }
 
             if (req.lockAnimationTime > 0)
             {
