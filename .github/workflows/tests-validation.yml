@@ -25,7 +25,7 @@ jobs:
 
       - name: Run All Tests for Unity ${{ env.UNITY_VERSION }}
         id: tests
-        uses: game-ci/unity-test-runner@v2.0.2
+        uses: game-ci/unity-test-runner@v2
         with:
           unityVersion: ${{ env.UNITY_VERSION }}
           testMode: All
