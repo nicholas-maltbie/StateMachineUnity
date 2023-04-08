@@ -18,6 +18,7 @@
 
 using nickmaltbie.StateMachineUnity.Attributes;
 using nickmaltbie.StateMachineUnity.Event;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
