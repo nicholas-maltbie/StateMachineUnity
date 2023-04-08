@@ -56,6 +56,7 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed
         public class DataState : State { }
 
         [OnEnterState(nameof(ClearData))]
+        [OnEventDoAction(typeof(DataEvent), nameof(PersistData))]
         [Transition(typeof(ResetEvent), typeof(StartState))]
         public class NoDataState : State { }
 
@@ -108,6 +109,10 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed
             sm.RaiseEvent(evt2);
             Assert.AreEqual(sm.CurrentState, typeof(NoDataState));
             Assert.AreEqual(sm.PassedData, string.Empty);
+
+            sm.RaiseEvent(evt1);
+            Assert.AreEqual(sm.CurrentState, typeof(NoDataState));
+            Assert.AreEqual(sm.PassedData, evt1.data);
 
             sm.RaiseEvent(new ResetEvent());
             Assert.AreEqual(sm.CurrentState, typeof(StartState));
