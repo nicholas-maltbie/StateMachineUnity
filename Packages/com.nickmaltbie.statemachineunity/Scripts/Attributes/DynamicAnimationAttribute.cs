@@ -52,7 +52,7 @@ namespace nickmaltbie.StateMachineUnity.Attributes
                 {
                     return cachedValue;
                 }
-                
+
                 previousState = StateName;
                 return cachedValue = Animator.StringToHash(StateName);
             }

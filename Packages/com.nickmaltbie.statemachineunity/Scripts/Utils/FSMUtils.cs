@@ -237,7 +237,7 @@ namespace nickmaltbie.StateMachineUnity.Utils
                 }
                 else
                 {
-                    action?.Invoke(stateMachine, new object[]{evt});
+                    action?.Invoke(stateMachine, new object[] { evt });
                 }
             }
 
@@ -289,8 +289,9 @@ namespace nickmaltbie.StateMachineUnity.Utils
                 }
                 else
                 {
-                    method?.Invoke(stateMachine, new object[]{evt});
+                    method?.Invoke(stateMachine, new object[] { evt });
                 }
+
                 return method != null;
             }
             else

@@ -95,9 +95,9 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed
             Assert.AreEqual(sm.CurrentState, typeof(StartState));
             Assert.AreEqual(sm.PassedData, string.Empty);
 
-            DataEvent evt1 = new DataEvent { data = "helloworld" };
+            var evt1 = new DataEvent { data = "helloworld" };
             sm.RaiseEvent(evt1);
-            
+
             Assert.AreEqual(sm.CurrentState, typeof(DataState));
             Assert.AreEqual(sm.PassedData, evt1.data);
 
@@ -105,7 +105,7 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed
             Assert.AreEqual(sm.CurrentState, typeof(StartState));
             Assert.AreEqual(sm.PassedData, string.Empty);
 
-            DataEvent2 evt2 = new DataEvent2 { data = "notHelloworld" };
+            var evt2 = new DataEvent2 { data = "notHelloworld" };
             sm.RaiseEvent(evt2);
             Assert.AreEqual(sm.CurrentState, typeof(NoDataState));
             Assert.AreEqual(sm.PassedData, string.Empty);

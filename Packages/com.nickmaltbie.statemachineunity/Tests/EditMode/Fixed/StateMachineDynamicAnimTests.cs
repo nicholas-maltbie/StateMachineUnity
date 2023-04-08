@@ -16,12 +16,8 @@
 // ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-using System.Linq;
-using Moq;
 using nickmaltbie.StateMachineUnity.Attributes;
 using nickmaltbie.StateMachineUnity.Fixed;
-using nickmaltbie.StateMachineUnity.Tests.EditMode.Event;
-using nickmaltbie.TestUtilsUnity;
 using nickmaltbie.TestUtilsUnity.Tests.TestCommon;
 using NUnit.Framework;
 using UnityEditor.Animations;
@@ -74,8 +70,8 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed
 
             // Add States
             AnimatorState stateA = rootStateMachine.AddState(AnimA);
-            AnimatorState stateB = rootStateMachine.AddState(AnimB);
-            AnimatorState stateC = rootStateMachine.AddState(AnimC);
+            _ = rootStateMachine.AddState(AnimB);
+            _ = rootStateMachine.AddState(AnimC);
 
             // Add animation
             var clipA = new AnimationClip();

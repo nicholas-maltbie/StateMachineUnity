@@ -19,7 +19,6 @@
 using System.Linq;
 using System.Text;
 using TMPro;
-using Unity.Netcode;
 using UnityEngine;
 
 namespace nickmaltbie.StateMachineUnity.netcode.ExampleAnim

@@ -17,7 +17,6 @@
 // SOFTWARE.
 
 using nickmaltbie.ScreenManager;
-using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
