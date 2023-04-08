@@ -37,7 +37,7 @@ jobs:
           target_platform: WebGL
 
       # Build the game deployment at build
-      - uses: game-ci/unity-builder@v2.0.4
+      - uses: game-ci/unity-builder@v2
         with:
           unityVersion: ${{ env.UNITY_VERSION }}
           targetPlatform: WebGL

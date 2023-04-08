@@ -26,7 +26,7 @@ jobs:
           target_platform: WebGL
 
       - name: Ensure .sln file is generated
-        uses: game-ci/unity-builder@v2.0.4
+        uses: game-ci/unity-builder@v2
         with:
           unityVersion: ${{ env.UNITY_VERSION }}
           buildMethod: Packages.Rider.Editor.RiderScriptEditor.SyncSolution

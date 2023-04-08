@@ -22,71 +22,71 @@ using UnityEngine;
 namespace nickmaltbie.StateMachineUnity.Attributes
 {
     /// <summary>
-    /// Animation attribute to control animations for a state machine.
+    /// Dynamic animation attribute to control animations for a state machine
+    /// via a function instead of a simple value.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-    public class AnimationAttribute : Attribute
+    public class DynamicAnimationAttribute : AnimationAttribute
     {
         /// <summary>
-        /// Animation hash associated with the state this is attached to.
+        /// Evaluation function for the animation state.
         /// </summary>
-        public virtual int AnimationHash { get; protected set; }
+        protected string AnimationStateFn { get; set; }
 
         /// <summary>
-        /// state name for the current animation being played.
+        /// Cached previous state name.
         /// </summary>
-        public string StateName { get; protected set; }
+        private string previousState = null;
 
         /// <summary>
-        /// Default transition time when transitioning to this animation.
+        /// Cached previous state hash value.
         /// </summary>
-        public float DefaultTransitionTime { get; protected set; }
+        private int cachedValue = -1;
 
-        /// <summary>
-        /// Is this transition in fixed time or normalized time.
-        /// </summary>
-        public bool FixedTimeTransition { get; protected set; }
-
-        /// <summary>
-        /// Time to lock animation during transition.
-        /// </summary>
-        public float AnimationLockTime { get; protected set; }
-
-        /// <summary>
-        /// Associate an animation with a given state.
-        /// </summary>
-        /// <param name="stateName">String name of the state.</param>
-        /// <param name="defaultTransitionTime">Default transition time when transitioning to this animation.</param>
-        /// <param name="fixedTimeTransition">Is this transition in fixed time (true) or normalized time (false).</param>
-        /// <param name="animationLockTime">Time to lock animation during transition.</param>
-        public AnimationAttribute(
-            string stateName,
-            float defaultTransitionTime = 0.0f,
-            bool fixedTimeTransition = false,
-            float animationLockTime = 0.0f)
+        /// <inheritdoc/>
+        public override int AnimationHash
         {
-            StateName = stateName;
-            AnimationHash = Animator.StringToHash(stateName);
-            DefaultTransitionTime = defaultTransitionTime;
-            FixedTimeTransition = fixedTimeTransition;
-            AnimationLockTime = animationLockTime;
+            get
+            {
+                if (previousState == StateName)
+                {
+                    return cachedValue;
+                }
+
+                previousState = StateName;
+                return cachedValue = Animator.StringToHash(StateName);
+            }
         }
 
         /// <summary>
-        /// Gets the animation associated with a given state.
+        /// Update the state of this animation attribute based on the current
+        /// instance configuration.
         /// </summary>
-        /// <param name="state">State to search attribute for.</param>
-        /// <returns></returns>
-        public static int? GetStateAnimation(Type state, object instance)
+        /// <param name="instance">Instance to modify</param>
+        public void UpdateState(object instance)
         {
-            var animAttribute = GetCustomAttribute(state, typeof(AnimationAttribute)) as AnimationAttribute;
+            Type type = instance.GetType();
+            StateName = type.GetMethod(AnimationStateFn)?.Invoke(instance, new object[0]) as string
+                ?? type.GetField(AnimationStateFn)?.GetValue(instance) as string
+                ?? type.GetProperty(AnimationStateFn)?.GetValue(instance) as string;
+        }
 
-            if (animAttribute is DynamicAnimationAttribute dynamicAnim)
-            {
-                dynamicAnim.UpdateState(instance);
-            }
-
-            return animAttribute?.AnimationHash;
+        /// <summary>
+        /// Initializes an instance of Dynamic animation attribute.
+        /// </summary>
+        /// <param name="animationStateFn">Animation state function for evaluating current animation state.</param>
+        /// <param name="defaultTransitionTime">Default transition time when transitioning to this animation.</param>
+        /// <param name="fixedTimeTransition">Is this transition in fixed time (true) or normalized time (false).</param>
+        /// <param name="animationLockTime">Time to lock animation during transition.</param>
+        public DynamicAnimationAttribute(
+            string animationStateFn,
+            float defaultTransitionTime = 0.0f,
+            bool fixedTimeTransition = false,
+            float animationLockTime = 0.0f)
+            : base(string.Empty, defaultTransitionTime, fixedTimeTransition, animationLockTime)
+        {
+            AnimationStateFn = animationStateFn;
+            DefaultTransitionTime = defaultTransitionTime;
         }
     }
 }

@@ -226,9 +226,19 @@ namespace nickmaltbie.StateMachineUnity.Utils
             EventCache[stateMachine.GetType()].TryGetValue(tupleKey, out IEnumerable<MethodInfo> baseActions);
             EventCache[stateMachine.GetType()].TryGetValue(anyStateTupleKey, out IEnumerable<MethodInfo> anyActions);
 
-            foreach (MethodInfo action in Enumerable.Concat(baseActions ?? Enumerable.Empty<MethodInfo>(), anyActions ?? Enumerable.Empty<MethodInfo>()))
+            foreach (MethodInfo action in Enumerable.Concat(
+                baseActions ?? Enumerable.Empty<MethodInfo>(),
+                anyActions ?? Enumerable.Empty<MethodInfo>()))
             {
-                action?.Invoke(stateMachine, new object[0]);
+                ParameterInfo[] actionParams = action.GetParameters();
+                if (actionParams.Length == 0)
+                {
+                    action?.Invoke(stateMachine, new object[0]);
+                }
+                else
+                {
+                    action?.Invoke(stateMachine, new object[] { evt });
+                }
             }
 
             // Use short circuit operations to select from target class
@@ -238,10 +248,10 @@ namespace nickmaltbie.StateMachineUnity.Utils
 
             if (hasTransition)
             {
-                InvokeAction<OnExitStateAttribute>(stateMachine, stateMachine.CurrentState);
+                InvokeAction<OnExitStateAttribute>(stateMachine, stateMachine.CurrentState, evt);
                 transition.OnTransition(stateMachine);
                 stateMachine.SetStateQuiet(transition.TargetState);
-                InvokeAction<OnEnterStateAttribute>(stateMachine, stateMachine.CurrentState);
+                InvokeAction<OnEnterStateAttribute>(stateMachine, stateMachine.CurrentState, evt);
             }
         }
 
@@ -252,9 +262,9 @@ namespace nickmaltbie.StateMachineUnity.Utils
         /// <param name="stateMachine">state machine to invoke method of.</param>
         /// <param name="state">State to invoke action for, if unspecified or null, will use the CurrentState.</param>
         /// <returns>True if an action was found and invoked, false otherwise.</returns>
-        public static bool InvokeAction<E>(IStateMachine<Type> stateMachine, Type state = null) where E : ActionAttribute
+        public static bool InvokeAction<E>(IStateMachine<Type> stateMachine, Type state = null, IEvent evt = null) where E : ActionAttribute
         {
-            return InvokeAction(stateMachine, typeof(E), state);
+            return InvokeAction(stateMachine, typeof(E), state, evt);
         }
 
         /// <summary>
@@ -263,15 +273,25 @@ namespace nickmaltbie.StateMachineUnity.Utils
         /// <param name="stateMachine">state machine to invoke method of.</param>
         /// <param name="actionType">Type of action to invoke.</param>
         /// <param name="state">State to invoke action for.</param>
+        /// <param name="evt">Event that triggered state (if any).</param>
         /// <returns>True if an action was found and invoked, false otherwise.</returns>
-        public static bool InvokeAction(IStateMachine<Type> stateMachine, Type actionType, Type state)
+        public static bool InvokeAction(IStateMachine<Type> stateMachine, Type actionType, Type state, IEvent evt)
         {
             var tupleKey = new Tuple<Type, Type>(state ?? stateMachine.CurrentState, actionType);
             var anyStateTupleKey = new Tuple<Type, Type>(typeof(AnyState), actionType);
             if (ActionCache[stateMachine.GetType()].TryGetValue(tupleKey, out MethodInfo method) ||
                 ActionCache[stateMachine.GetType()].TryGetValue(anyStateTupleKey, out method))
             {
-                method.Invoke(stateMachine, new object[0]);
+                ParameterInfo[] actionParams = method.GetParameters();
+                if (actionParams.Length == 0)
+                {
+                    method?.Invoke(stateMachine, new object[0]);
+                }
+                else
+                {
+                    method?.Invoke(stateMachine, new object[] { evt });
+                }
+
                 return method != null;
             }
             else
