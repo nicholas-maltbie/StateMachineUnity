@@ -66,7 +66,7 @@ namespace nickmaltbie.StateMachineUnity.Attributes
         public override void OnTransition(IStateMachine<Type> sm)
         {
             var animStateMachine = sm as IAnimStateMachine<Type>;
-            int? nextState = AnimationAttribute.GetStateAnimation(TargetState);
+            int? nextState = AnimationAttribute.GetStateAnimation(TargetState, sm);
             if (nextState.HasValue)
             {
                 animStateMachine.CrossFade(new AnimSMRequest(nextState.Value, TransitionTime, FixedTimeTransition, AnimationLockTime));

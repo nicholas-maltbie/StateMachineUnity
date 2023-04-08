@@ -148,6 +148,8 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         {
             if (Attribute.GetCustomAttribute(CurrentState, typeof(AnimationAttribute)) is AnimationAttribute animAttr)
             {
+                (animAttr as DynamicAnimationAttribute)?.UpdateState(this);
+
                 if (lockUntilTime >= unityService.time)
                 {
                     // We are locked, do not cross fade into new animation.

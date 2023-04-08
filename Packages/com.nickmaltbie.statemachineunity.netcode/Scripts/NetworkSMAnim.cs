@@ -193,6 +193,8 @@ namespace nickmaltbie.StateMachineUnity.netcode
         {
             if (Attribute.GetCustomAttribute(CurrentState, typeof(AnimationAttribute)) is AnimationAttribute animAttr)
             {
+                (animAttr as DynamicAnimationAttribute)?.UpdateState(this);
+
                 AnimatorStateInfo currentState = AttachedAnimator.GetCurrentAnimatorStateInfo(0);
                 AnimatorClipInfo[] animClips = AttachedAnimator.GetCurrentAnimatorClipInfo(0);
                 if (currentState.IsName(animAttr.StateName) && animClips.Any(animClip => animClip.clip.name == clipName))
