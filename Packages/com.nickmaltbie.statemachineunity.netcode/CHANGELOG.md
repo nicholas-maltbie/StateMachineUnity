@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## In Progress
 
+## [1.3.0] - 2023-04-09
+
+* Added support for `DynamicAnimationAttribute` to `NetworkSMAnim`
+
 ## [1.2.5] - 2023-03-18
 
 * Small patch to ensure animation cross fades aren't triggered

@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ## In Progress
 
+## [1.3.0] - 2023-04-09
+
+* Added `DynamicAnimationAttribute` to select an animation based on
+    a function. And added support for this attribute to the
+    `FixedSMAnim` behaviour.
+* Added capability to pass the `IEvent` data when invoking an action
+    or transition for a state machine to parse additional
+    data.
+
 ## [1.2.3] - 2023-02-22
 
 * Patched how OnAnimationComplete events are handled by using events within
