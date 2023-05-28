@@ -159,7 +159,7 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed
         {
             ITransition<Type> invalidTransitionTo = new TransitionAttribute(typeof(AEvent), typeof(AnyState));
             ITransition<Type> invalidTransitionFrom = new TransitionFromAttribute(typeof(AEvent), typeof(StateA));
-            Dictionary<Tuple<Type, Type>, ITransition<Type>> lookup = new();
+            var lookup = new Dictionary<Tuple<Type, Type>, ITransition<Type>>();
 
             Assert.Throws<InvalidOperationException>(() => FSMUtils.SetupTransition(typeof(StateA), invalidTransitionTo, lookup));
             Assert.Throws<InvalidOperationException>(() => FSMUtils.SetupTransition(typeof(AnyState), invalidTransitionFrom, lookup));

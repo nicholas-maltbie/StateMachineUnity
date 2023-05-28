@@ -19,7 +19,6 @@
 using System;
 using System.Collections;
 using System.Linq;
-using Moq;
 using nickmaltbie.StateMachineUnity.Attributes;
 using nickmaltbie.TestUtilsUnity;
 using NUnit.Framework;
@@ -48,7 +47,7 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
 
         public int CrossFadeCount = 0;
 
-        public Mock<IUnityService> unityServiceMock;
+        public MockUnityService unityServiceMock;
 
         [InitialState]
         [Animation(AnimA)]
@@ -77,9 +76,9 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
 
         public void Awake()
         {
-            unityServiceMock = new Mock<IUnityService>();
-            unityServiceMock.Setup(e => e.deltaTime).Returns(0.1f);
-            unityServiceMock.Setup(e => e.fixedDeltaTime).Returns(0.1f);
+            unityServiceMock = new MockUnityService();
+            unityServiceMock.deltaTime = 0.1f;
+            unityServiceMock.fixedDeltaTime = 0.1f;
 
             var controller = new AnimatorController();
 
@@ -98,11 +97,12 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
 
             Animator anim = GetComponent<Animator>();
             anim.runtimeAnimatorController = controller;
-            unityService = unityServiceMock.Object;
+            unityService = unityServiceMock;
         }
 
         public override void OnNetworkSpawn()
         {
+            base.OnNetworkSpawn();
             Objects[CurrentlySpawning, NetworkManager.LocalClientId] = GetComponent<DemoNetworkSMAnim>();
             Debug.Log($"Object index ({CurrentlySpawning}) spawned on client {NetworkManager.LocalClientId}");
         }
@@ -131,7 +131,7 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
 
         private GameObject m_PrefabToSpawn;
 
-        private Mock<IUnityService> unityServiceMock;
+        private MockUnityService unityServiceMock;
 
         protected override void OnServerAndClientsCreated()
         {
@@ -143,7 +143,8 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
         [UnitySetUp]
         public IEnumerator SetupTest()
         {
-            unityServiceMock = new Mock<IUnityService>();
+            unityServiceMock = new MockUnityService();
+            unityServiceMock.deltaTime = 0.1f;
 
             // create 3 objects
             for (int objectIndex = 0; objectIndex < 3; objectIndex++)
@@ -157,7 +158,7 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
                 }
 
                 DemoNetworkSMAnim demoBehaviour = SpawnObject(m_PrefabToSpawn, ownerManager).GetComponent<DemoNetworkSMAnim>();
-                demoBehaviour.unityService = unityServiceMock.Object;
+                demoBehaviour.unityService = unityServiceMock;
 
                 // wait for each object to spawn on each client
                 for (int clientIndex = 0; clientIndex < 3; clientIndex++)
@@ -174,11 +175,11 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
         {
             for (int i = 0; i < 3; i++)
             {
-                unityServiceMock.Setup(e => e.deltaTime).Returns(1.0f);
+                unityServiceMock.deltaTime = 1.0f;
                 DemoNetworkSMAnim sm = DemoNetworkSMAnim.Objects[i, i];
                 sm.SetStateQuiet(typeof(StateA));
                 sm.Start();
-                sm.unityService = unityServiceMock.Object;
+                sm.unityService = unityServiceMock;
                 Animator anim = sm.GetComponent<Animator>();
                 testAction(sm, anim);
             }
@@ -193,7 +194,7 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
                 Assert.AreEqual(Animator.StringToHash(AnimA), sm.CurrentAnimationState);
                 Assert.AreEqual(Animator.StringToHash(AnimA), anim.GetCurrentAnimatorStateInfo(0).shortNameHash);
 
-                unityServiceMock.Setup(e => e.deltaTime).Returns(10.0f);
+                unityServiceMock.deltaTime = 10.0f;
                 anim.Play(AnimA, 0, 0.0f);
                 anim.Update(1.0f);
                 sm.Update();
@@ -217,7 +218,7 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
                 Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimA));
 
                 // Manually cross fade with a lock to anim C for 5 seconds
-                unityServiceMock.Setup(e => e.time).Returns(0.0f);
+                unityServiceMock.time = 0.0f;
                 sm.CrossFade(new AnimSMRequest(AnimC, lockAnimationTime: 5.0f));
 
                 // Assert that we are now in the AnimC animation.
@@ -243,7 +244,7 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
                 Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimA));
 
                 // Manually cross fade with a lock to anim C for 5 seconds
-                unityServiceMock.Setup(e => e.time).Returns(0.0f);
+                unityServiceMock.time = 0.0f;
                 sm.CrossFade(new AnimSMRequest(AnimC, lockAnimationTime: 5.0f));
 
                 // Assert that we are now in the AnimC animation.
@@ -262,7 +263,7 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
 
                 // If we wait for time to expire, assert that we read the pending
                 // animation instead of the current state
-                unityServiceMock.Setup(e => e.time).Returns(10);
+                unityServiceMock.time = 10;
                 sm.Update();
                 anim.Update(1.0f);
                 Assert.AreEqual(sm.CurrentAnimationState, Animator.StringToHash(AnimB));
@@ -288,7 +289,7 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
                 Assert.AreEqual(sm.CurrentAnimationState, Animator.StringToHash(AnimA));
                 Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimA));
 
-                unityServiceMock.Setup(e => e.deltaTime).Returns(10.0f);
+                unityServiceMock.deltaTime = 10.0f;
                 anim.Play(AnimA, 0, 0.0f);
                 anim.Update(1.0f);
                 sm.Update();
@@ -396,11 +397,11 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
         {
             for (int i = 0; i < 3; i++)
             {
-                unityServiceMock.Setup(e => e.deltaTime).Returns(1.0f);
+                unityServiceMock.deltaTime = 1.0f;
                 DemoNetworkSMAnim sm = DemoNetworkSMAnim.Objects[i, i];
                 sm.SetStateQuiet(typeof(StateA));
                 sm.Start();
-                sm.unityService = unityServiceMock.Object;
+                sm.unityService = unityServiceMock;
                 Animator anim = sm.GetComponent<Animator>();
 
                 Assert.AreEqual(sm.CurrentState, typeof(StateA));
@@ -451,21 +452,24 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
                         continue;
                     }
 
-                    unityServiceMock.Setup(e => e.deltaTime).Returns(1.0f);
+                    unityServiceMock.deltaTime = 1.0f;
                     DemoNetworkSMAnim sm = DemoNetworkSMAnim.Objects[i, j];
-                    sm.Start();
-                    sm.unityService = unityServiceMock.Object;
+                    sm.unityService = unityServiceMock;
                     Animator anim = sm.GetComponent<Animator>();
 
                     while (sm.CurrentState != typeof(StateA))
                     {
-                        yield return null;
+                        yield return new WaitForSeconds(0.0f);
                     }
+
+                    Assert.AreEqual(typeof(StateA), sm.CurrentState);
+                    Assert.AreEqual(Animator.StringToHash(AnimA), sm.CurrentAnimationState);
+                    Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimA));
 
                     sm.CrossFade(new AnimSMRequest(AnimB));
 
-                    Assert.AreEqual(sm.CurrentState, typeof(StateA));
-                    Assert.AreEqual(sm.CurrentAnimationState, Animator.StringToHash(AnimA));
+                    Assert.AreEqual(typeof(StateA), sm.CurrentState);
+                    Assert.AreEqual(Animator.StringToHash(AnimA), sm.CurrentAnimationState);
                     Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimA));
                 }
             }

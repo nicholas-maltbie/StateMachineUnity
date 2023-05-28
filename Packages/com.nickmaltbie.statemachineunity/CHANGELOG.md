@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## In Progress
 
+* Added backwards compatibility to version 2019.4.40f1 of unity.
 ## [1.3.0] - 2023-04-09
 
 * Added `DynamicAnimationAttribute` to select an animation based on

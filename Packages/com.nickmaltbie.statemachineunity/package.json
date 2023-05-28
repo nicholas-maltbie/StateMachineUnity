@@ -1,9 +1,9 @@
 {
   "name": "com.nickmaltbie.statemachineunity",
   "displayName": "State Machine Unity",
-  "version": "1.3.0",
-  "unity": "2021.3",
-  "unityRelease": "11f1",
+  "version": "1.4.0",
+  "unity": "2019.4",
+  "unityRelease": "40f1",
   "description": "State Machine Utility Package for Unity Projects.",
   "author": {
     "name": "Nick Maltbie",
@@ -23,7 +23,7 @@
     }
   ],
   "dependencies": {
-    "com.nickmaltbie.testutilsunity" : "0.0.2",
+    "com.nickmaltbie.testutilsunity" : "1.1.0",
     "com.unity.inputsystem": "1.0.0"
   },
   "license": "MIT",

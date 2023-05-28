@@ -17,7 +17,6 @@
 // SOFTWARE.
 
 using System.Linq;
-using Moq;
 using nickmaltbie.StateMachineUnity.Attributes;
 using nickmaltbie.StateMachineUnity.Fixed;
 using nickmaltbie.StateMachineUnity.Tests.EditMode.Event;
@@ -82,7 +81,7 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed
     [TestFixture]
     public class StateMachineAnimTests : TestBase
     {
-        public Mock<IUnityService> unityServiceMock;
+        public MockUnityService unityServiceMock;
         public DemoFixedSMAim sm;
         public Animator anim;
 
@@ -91,9 +90,9 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed
         {
             base.Setup();
             GameObject go = CreateGameObject();
-            unityServiceMock = new Mock<IUnityService>();
-            unityServiceMock.Setup(e => e.deltaTime).Returns(0.1f);
-            unityServiceMock.Setup(e => e.fixedDeltaTime).Returns(0.1f);
+            unityServiceMock = new MockUnityService();
+            unityServiceMock.deltaTime = 1.0f;
+            unityServiceMock.fixedDeltaTime = 0.1f;
 
             var controller = new AnimatorController();
 
@@ -103,8 +102,8 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed
 
             // Add States
             AnimatorState stateA = rootStateMachine.AddState(AnimA);
-            AnimatorState stateB = rootStateMachine.AddState(AnimB);
-            AnimatorState stateC = rootStateMachine.AddState(AnimC);
+            rootStateMachine.AddState(AnimB);
+            rootStateMachine.AddState(AnimC);
 
             // Add animation
             var clipA = new AnimationClip();
@@ -113,7 +112,7 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed
             anim = go.AddComponent<Animator>();
             anim.runtimeAnimatorController = controller;
             sm = go.AddComponent<DemoFixedSMAim>();
-            sm.unityService = unityServiceMock.Object;
+            sm.unityService = unityServiceMock;
             sm.Awake();
         }
 
@@ -125,7 +124,7 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed
             Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimA));
 
             // Manually cross fade with a lock to anim C for 5 seconds
-            unityServiceMock.Setup(e => e.time).Returns(0.0f);
+            unityServiceMock.time = 0;
             sm.CrossFade(new AnimSMRequest(AnimC, lockAnimationTime: 5.0f));
 
             // Assert that we are now in the AnimC animation.
@@ -148,7 +147,7 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed
             Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimA));
 
             // Manually cross fade with a lock to anim C for 5 seconds
-            unityServiceMock.Setup(e => e.time).Returns(0.0f);
+            unityServiceMock.time = 0;
             sm.CrossFade(new AnimSMRequest(AnimC, lockAnimationTime: 5.0f));
 
             // Assert that we are now in the AnimC animation.
@@ -167,7 +166,7 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed
 
             // If we wait for time to expire, assert that we read the pending
             // animation instead of the current state
-            unityServiceMock.Setup(e => e.time).Returns(10);
+            unityServiceMock.time = 10;
             sm.Update();
             anim.Update(1.0f);
             Assert.AreEqual(sm.CurrentAnimationState, Animator.StringToHash(AnimB));
@@ -190,7 +189,7 @@ namespace nickmaltbie.StateMachineUnity.Tests.EditMode.Fixed
             Assert.AreEqual(sm.CurrentAnimationState, Animator.StringToHash(AnimA));
             Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimA));
 
-            unityServiceMock.Setup(e => e.deltaTime).Returns(10.0f);
+            unityServiceMock.time = 10;
             anim.Play(AnimA, 0, 0.0f);
             anim.Update(1.0f);
             sm.Update();

@@ -65,7 +65,10 @@ namespace nickmaltbie.StateMachineUnity.Fixed
         /// </summary>
         public virtual void Awake()
         {
-            AttachedAnimator ??= gameObject.GetComponent<Animator>();
+            if (AttachedAnimator == null)
+            {
+                AttachedAnimator = gameObject.GetComponent<Animator>();
+            }
 
             if (AttachedAnimator != null)
             {

@@ -30,13 +30,13 @@ namespace nickmaltbie.StateMachineUnity
         /// <summary>
         /// Current state of the state machine.
         /// </summary>
-        public E CurrentState { get; }
+        E CurrentState { get; }
 
         /// <summary>
         /// Raise an event to the current state machine.
         /// </summary>
         /// <param name="evt">Event to send to the state machine.</param>
-        public void RaiseEvent(IEvent evt);
+        void RaiseEvent(IEvent evt);
 
         /// <summary>
         /// Internal method to set the current state of the state machine without
@@ -44,6 +44,6 @@ namespace nickmaltbie.StateMachineUnity
         /// or <see cref="Attributes.OnExitStateAttribute"/>
         /// </summary>
         /// <param name="newState">New state to set for the state machine.</param>
-        public void SetStateQuiet(Type newState);
+        void SetStateQuiet(Type newState);
     }
 }
