@@ -21,6 +21,7 @@ using System.Collections;
 using System.Collections.Concurrent;
 using nickmaltbie.StateMachineUnity.Attributes;
 using nickmaltbie.StateMachineUnity.Event;
+using nickmaltbie.StateMachineUnity.Utils;
 using nickmaltbie.TestUtilsUnity;
 using NUnit.Framework;
 using Unity.Netcode;
@@ -225,6 +226,8 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
                     }
                 }
             }
+
+            FSMUtils.InitializeStateMachine(DemoNetworkSMBehaviour.Objects[0, 0]);
         }
 
         [Test]
