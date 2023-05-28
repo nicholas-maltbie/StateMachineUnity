@@ -10,7 +10,7 @@ on:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -23,8 +23,27 @@ env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
 
 jobs:
+  create-package:
+    name: Setup package for project
+    uses: ./.github/workflows/create-package.yml
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
+
+  # Verify build will perform as expected
+  tests-validation:
+    uses: ./.github/workflows/tests-validation.yml
+    secrets:
+      UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+  
+  project-linting:
+    uses: ./.github/workflows/format.yml
+    secrets:
+      UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+
+  # Build the WebGL Unity application.
   build-webgl-app:
     name: Build WebGL App
+    needs: [project-linting, tests-validation]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -42,6 +61,8 @@ jobs:
           unityVersion: ${{ env.UNITY_VERSION }}
           targetPlatform: WebGL
           buildMethod: ScriptBatch.OfficialBuild_WebGL
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
 
       # save build to temp_build_webgl
       - name: Upload build artifact
