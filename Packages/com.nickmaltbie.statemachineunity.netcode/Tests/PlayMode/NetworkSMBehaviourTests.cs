@@ -37,10 +37,6 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
     /// </summary>
     public class DemoNetworkSMBehaviour : NetworkSMBehaviour
     {
-        // indexed by [object, machine]
-        public static DemoNetworkSMBehaviour[,] Objects = new DemoNetworkSMBehaviour[3, 3];
-        public static int CurrentlySpawning = 0;
-
         /// <summary>
         /// Counts of actions for each combination of (Action, State).
         /// </summary>
@@ -105,12 +101,6 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
         [Transition(typeof(ResetEvent), typeof(StartingState))]
         [OnEnterState(nameof(IncrementStateEntryCount))]
         public class TimeoutFixedState : State { }
-
-        public override void OnNetworkSpawn()
-        {
-            Objects[CurrentlySpawning, NetworkManager.LocalClientId] = GetComponent<DemoNetworkSMBehaviour>();
-            Debug.Log($"Object index ({CurrentlySpawning}) spawned on client {NetworkManager.LocalClientId}");
-        }
 
         public void OnUpdateStateA()
         {
@@ -184,50 +174,22 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
     /// Simple tests meant to be run in PlayMode
     /// </summary>
     [TestFixture]
-    public class NetworkSMBehaviourTests : NetcodeIntegrationTest
+    public class NetworkSMBehaviourTests : NetcodeRuntimeTest<DemoNetworkSMBehaviour>
     {
         protected override int NumberOfClients => 2;
 
-        private GameObject m_PrefabToSpawn;
-
         private MockUnityService unityServiceMock;
 
-        protected override void OnServerAndClientsCreated()
+        public override void SetupPrefab(GameObject go)
         {
-            m_PrefabToSpawn = CreateNetworkObjectPrefab("DemoNetworkSMBehaviour");
-            m_PrefabToSpawn.AddComponent<DemoNetworkSMBehaviour>();
+            go.GetComponent<DemoNetworkSMBehaviour>().unityService = unityServiceMock;
         }
 
         [UnitySetUp]
-        public IEnumerator SetupTest()
+        public override IEnumerator UnitySetUp()
         {
             unityServiceMock = new MockUnityService();
-
-            // create 3 objects
-            for (int objectIndex = 0; objectIndex < 3; objectIndex++)
-            {
-                DemoNetworkSMBehaviour.CurrentlySpawning = objectIndex;
-
-                NetworkManager ownerManager = m_ServerNetworkManager;
-                if (objectIndex != 0)
-                {
-                    ownerManager = m_ClientNetworkManagers[objectIndex - 1];
-                }
-
-                DemoNetworkSMBehaviour demoBehaviour = SpawnObject(m_PrefabToSpawn, ownerManager).GetComponent<DemoNetworkSMBehaviour>();
-                demoBehaviour.unityService = unityServiceMock;
-
-                // wait for each object to spawn on each client
-                for (int clientIndex = 0; clientIndex < 3; clientIndex++)
-                {
-                    while (DemoNetworkSMBehaviour.Objects[objectIndex, clientIndex] == null)
-                    {
-                        yield return new WaitForSeconds(0.0f);
-                    }
-                }
-            }
-
-            FSMUtils.InitializeStateMachine(DemoNetworkSMBehaviour.Objects[0, 0]);
+            yield return base.UnitySetUp();
         }
 
         [Test]
@@ -236,7 +198,7 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
             for (int i = 0; i < 3; i++)
             {
                 unityServiceMock.deltaTime = 1.0f;
-                DemoNetworkSMBehaviour sm = DemoNetworkSMBehaviour.Objects[i, i];
+                DemoNetworkSMBehaviour sm = GetAttachedNetworkBehaviour(i, i);
                 sm.SetStateQuiet(typeof(StartingState));
                 sm.unityService = unityServiceMock;
 
@@ -261,7 +223,7 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
             for (int i = 0; i < 3; i++)
             {
                 unityServiceMock.fixedDeltaTime = 1.0f;
-                DemoNetworkSMBehaviour sm = DemoNetworkSMBehaviour.Objects[i, i];
+                DemoNetworkSMBehaviour sm = GetAttachedNetworkBehaviour(i, i);
                 sm.SetStateQuiet(typeof(StartingState));
 
                 sm.unityService = unityServiceMock;
@@ -288,7 +250,7 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
             for (int i = 0; i < 3; i++)
             {
                 unityServiceMock.fixedDeltaTime = 1.0f;
-                DemoNetworkSMBehaviour sm = DemoNetworkSMBehaviour.Objects[i, i];
+                DemoNetworkSMBehaviour sm = GetAttachedNetworkBehaviour(i, i);
                 sm.unityService = unityServiceMock;
                 sm.SetStateQuiet(typeof(StartingState));
 

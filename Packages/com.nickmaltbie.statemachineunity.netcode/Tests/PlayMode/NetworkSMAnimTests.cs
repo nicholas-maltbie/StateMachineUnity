@@ -23,7 +23,6 @@ using nickmaltbie.StateMachineUnity.Attributes;
 using nickmaltbie.TestUtilsUnity;
 using NUnit.Framework;
 using Unity.Netcode;
-using Unity.Netcode.TestHelpers.Runtime;
 using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -36,10 +35,6 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
     /// </summary>
     public class DemoNetworkSMAnim : NetworkSMAnim
     {
-        // indexed by [object, machine]
-        public static DemoNetworkSMAnim[,] Objects = new DemoNetworkSMAnim[3, 3];
-        public static int CurrentlySpawning = 0;
-
         public const string AnimA = "animA";
         public const string AnimB = "animB";
         public const string AnimC = "animC";
@@ -74,8 +69,10 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
 
         public class TimeoutState : State { }
 
-        public void Awake()
+        public override void Awake()
         {
+            base.Awake();
+
             unityServiceMock = new MockUnityService();
             unityServiceMock.deltaTime = 0.1f;
             unityServiceMock.fixedDeltaTime = 0.1f;
@@ -100,13 +97,6 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
             unityService = unityServiceMock;
         }
 
-        public override void OnNetworkSpawn()
-        {
-            base.OnNetworkSpawn();
-            Objects[CurrentlySpawning, NetworkManager.LocalClientId] = GetComponent<DemoNetworkSMAnim>();
-            Debug.Log($"Object index ({CurrentlySpawning}) spawned on client {NetworkManager.LocalClientId}");
-        }
-
         public override void CrossFade(AnimSMRequest req, int layerIdx = 0)
         {
             base.CrossFade(req, layerIdx);
@@ -125,12 +115,9 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
     /// Simple tests meant to be run in PlayMode
     /// </summary>
     [TestFixture]
-    public class NetworkSMAnimTests : NetcodeIntegrationTest
+    public class NetworkSMAnimTests : NetcodeRuntimeTest<DemoNetworkSMAnim>
     {
         protected override int NumberOfClients => 2;
-
-        private GameObject m_PrefabToSpawn;
-
         private MockUnityService unityServiceMock;
 
         protected override void OnServerAndClientsCreated()
@@ -140,35 +127,18 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
             m_PrefabToSpawn.AddComponent<DemoNetworkSMAnim>();
         }
 
+        public override void SetupPrefab(GameObject go)
+        {
+            go.GetComponent<DemoNetworkSMAnim>().unityService = unityServiceMock;
+        }
+
         [UnitySetUp]
-        public IEnumerator SetupTest()
+        public override IEnumerator UnitySetUp()
         {
             unityServiceMock = new MockUnityService();
             unityServiceMock.deltaTime = 0.1f;
 
-            // create 3 objects
-            for (int objectIndex = 0; objectIndex < 3; objectIndex++)
-            {
-                DemoNetworkSMAnim.CurrentlySpawning = objectIndex;
-
-                NetworkManager ownerManager = m_ServerNetworkManager;
-                if (objectIndex != 0)
-                {
-                    ownerManager = m_ClientNetworkManagers[objectIndex - 1];
-                }
-
-                DemoNetworkSMAnim demoBehaviour = SpawnObject(m_PrefabToSpawn, ownerManager).GetComponent<DemoNetworkSMAnim>();
-                demoBehaviour.unityService = unityServiceMock;
-
-                // wait for each object to spawn on each client
-                for (int clientIndex = 0; clientIndex < 3; clientIndex++)
-                {
-                    while (DemoNetworkSMAnim.Objects[objectIndex, clientIndex] == null)
-                    {
-                        yield return new WaitForSeconds(0.0f);
-                    }
-                }
-            }
+            yield return base.UnitySetUp();
         }
 
         private void InternalTestHelper(Action<DemoNetworkSMAnim, Animator> testAction)
@@ -176,7 +146,7 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
             for (int i = 0; i < 3; i++)
             {
                 unityServiceMock.deltaTime = 1.0f;
-                DemoNetworkSMAnim sm = DemoNetworkSMAnim.Objects[i, i];
+                DemoNetworkSMAnim sm = GetAttachedNetworkBehaviour(i, i);
                 sm.SetStateQuiet(typeof(StateA));
                 sm.Start();
                 sm.unityService = unityServiceMock;
@@ -398,7 +368,7 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
             for (int i = 0; i < 3; i++)
             {
                 unityServiceMock.deltaTime = 1.0f;
-                DemoNetworkSMAnim sm = DemoNetworkSMAnim.Objects[i, i];
+                DemoNetworkSMAnim sm = GetAttachedNetworkBehaviour(i, i);
                 sm.SetStateQuiet(typeof(StateA));
                 sm.Start();
                 sm.unityService = unityServiceMock;
@@ -409,7 +379,7 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
 
                 for (int clientIdx = 0; clientIdx < 3; clientIdx++)
                 {
-                    DemoNetworkSMAnim sm2 = DemoNetworkSMAnim.Objects[i, clientIdx];
+                    DemoNetworkSMAnim sm2 = GetAttachedNetworkBehaviour(i, clientIdx);
                     while (!(sm2.CurrentState == typeof(StateA) &&
                         sm2.CurrentAnimationState == Animator.StringToHash(AnimA)))
                     {
@@ -427,7 +397,7 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
 
                 for (int clientIdx = 0; clientIdx < 3; clientIdx++)
                 {
-                    DemoNetworkSMAnim sm2 = DemoNetworkSMAnim.Objects[i, clientIdx];
+                    DemoNetworkSMAnim sm2 = GetAttachedNetworkBehaviour(i, clientIdx);
                     UnityEngine.Debug.Log($"Query: clientIdx:{clientIdx}, sm2.CurrentAnimationState:{sm2.CurrentAnimationState}");
                     while (sm2.CurrentAnimationState != Animator.StringToHash(AnimB))
                     {
@@ -453,7 +423,7 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
                     }
 
                     unityServiceMock.deltaTime = 1.0f;
-                    DemoNetworkSMAnim sm = DemoNetworkSMAnim.Objects[i, j];
+                    DemoNetworkSMAnim sm = GetAttachedNetworkBehaviour(i, j);
                     sm.unityService = unityServiceMock;
                     Animator anim = sm.GetComponent<Animator>();
 

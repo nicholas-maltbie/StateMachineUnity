@@ -91,6 +91,11 @@ namespace nickmaltbie.StateMachineUnity.netcode
             fixedDeltaTimeInCurrentState = 0.0f;
         }
 
+        public virtual void Awake()
+        {
+            FSMUtils.InitializeStateMachine(this);
+        }
+
         /// <summary>
         /// Initialize the network SM Behaviour.
         /// </summary>
