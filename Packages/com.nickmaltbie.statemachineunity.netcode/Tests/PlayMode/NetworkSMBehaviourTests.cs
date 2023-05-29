@@ -196,10 +196,9 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
         public IEnumerator TimeoutAfterUpdate()
         {
             yield return WaitForSMReady();
-            for (int i = 0; i < 3; i++)
+            base.ForEachOwner((sm, idx) =>
             {
                 unityServiceMock.deltaTime = 1.0f;
-                DemoNetworkSMBehaviour sm = GetAttachedNetworkBehaviour(i, i);
                 sm.SetStateQuiet(typeof(StartingState));
                 sm.unityService = unityServiceMock;
 
@@ -215,45 +214,41 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
 
                 sm.RaiseEvent(new ResetEvent());
                 Assert.AreEqual(typeof(StartingState), sm.CurrentState);
-            }
+            });
         }
 
         [UnityTest]
         public IEnumerator FixedTimeoutAfterUpdate()
         {
             yield return WaitForSMReady();
-            for (int i = 0; i < 3; i++)
+            base.ForEachOwner((sm, idx) =>
             {
                 unityServiceMock.fixedDeltaTime = 1.0f;
-                DemoNetworkSMBehaviour sm = GetAttachedNetworkBehaviour(i, i);
                 sm.SetStateQuiet(typeof(StartingState));
 
-                sm.unityService = unityServiceMock;
-
                 sm.RaiseEvent(new TestEvent());
-                Assert.AreEqual(sm.CurrentState, typeof(TempFixedTimeState));
+                Assert.AreEqual(typeof(TempFixedTimeState), sm.CurrentState);
                 sm.FixedUpdate();
-                Assert.AreEqual(sm.CurrentState, typeof(TempFixedTimeState));
+                Assert.AreEqual(typeof(TempFixedTimeState), sm.CurrentState);
 
                 unityServiceMock.fixedDeltaTime = 1000.0f;
                 sm.FixedUpdate();
-                Assert.AreEqual(sm.CurrentState, typeof(TimeoutFixedState));
+                Assert.AreEqual(typeof(TimeoutFixedState), sm.CurrentState);
 
                 Assert.AreEqual(sm.eventCounts[typeof(StateTimeoutEvent)], 1);
 
                 sm.RaiseEvent(new ResetEvent());
-                Assert.AreEqual(sm.CurrentState, typeof(StartingState));
-            }
+                Assert.AreEqual(typeof(StartingState), sm.CurrentState);
+            });
         }
 
         [UnityTest]
         public IEnumerator VerifyUpdateActionCounts()
         {
             yield return WaitForSMReady();
-            for (int i = 0; i < 3; i++)
+            base.ForEachOwner((sm, idx) =>
             {
                 unityServiceMock.fixedDeltaTime = 1.0f;
-                DemoNetworkSMBehaviour sm = GetAttachedNetworkBehaviour(i, i);
                 sm.unityService = unityServiceMock;
                 sm.SetStateQuiet(typeof(StartingState));
 
@@ -283,7 +278,7 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
 
                 sm.Update();
                 Assert.GreaterOrEqual(sm.actionStateCounts.GetOrAdd((typeof(OnUpdateAttribute), typeof(StateA)), t => 0), 1);
-            }
+            });
         }
 
         protected IEnumerator WaitForSMReady()
@@ -293,6 +288,8 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
                 for (int j = 0; j < 3; j++)
                 {
                     DemoNetworkSMBehaviour sm = GetAttachedNetworkBehaviour(i, j);
+                    sm.Start();
+                    sm.OnNetworkSpawn();
                     int k = 0;
                     while (k < 1000 && sm.CurrentState != typeof(StartingState))
                     {
