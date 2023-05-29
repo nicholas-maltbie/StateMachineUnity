@@ -138,6 +138,7 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
             unityServiceMock.deltaTime = 0.1f;
 
             yield return base.UnitySetUp();
+            yield return WaitForSMReady();
         }
 
         private void InternalTestHelper(Action<DemoNetworkSMAnim, Animator> testAction)
@@ -252,17 +253,7 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
         [UnityTest]
         public IEnumerator VerifyTransitionOnTimeout()
         {
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    while (GetAttachedNetworkBehaviour(i, j).CurrentState != typeof(StateA))
-                    {
-                        yield return new WaitForSeconds(0.0f);
-                    }
-                }
-            }
-
+            yield return WaitForSMReady();
             InternalTestHelper((DemoNetworkSMAnim sm, Animator anim) =>
             {
                 Assert.AreEqual(typeof(StateA), sm.CurrentState);
@@ -474,6 +465,20 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
                 Assert.AreEqual(sm.CurrentAnimationState, Animator.StringToHash(AnimD));
                 Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimA));
             });
+        }
+
+        protected IEnumerator WaitForSMReady()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    while (GetAttachedNetworkBehaviour(i, j).CurrentState != typeof(StateA))
+                    {
+                        yield return new WaitForSeconds(0.0f);
+                    }
+                }
+            }
         }
     }
 }
