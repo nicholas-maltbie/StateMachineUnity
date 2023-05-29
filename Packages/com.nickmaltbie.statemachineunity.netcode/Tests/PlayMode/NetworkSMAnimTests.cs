@@ -22,7 +22,6 @@ using System.Linq;
 using nickmaltbie.StateMachineUnity.Attributes;
 using nickmaltbie.TestUtilsUnity;
 using NUnit.Framework;
-using Unity.Netcode;
 using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -85,8 +84,8 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
 
             // Add States
             AnimatorState stateA = rootStateMachine.AddState(AnimA);
-            AnimatorState stateB = rootStateMachine.AddState(AnimB);
-            AnimatorState stateC = rootStateMachine.AddState(AnimC);
+            _ = rootStateMachine.AddState(AnimB);
+            _ = rootStateMachine.AddState(AnimC);
 
             // Add animation
             var clipA = new AnimationClip();
@@ -250,14 +249,25 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
             });
         }
 
-        [Test]
-        public void VerifyTransitionOnTimeout()
+        [UnityTest]
+        public IEnumerator VerifyTransitionOnTimeout()
         {
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    while (GetAttachedNetworkBehaviour(i, j).CurrentState != typeof(StateA))
+                    {
+                        yield return new WaitForSeconds(0.0f);
+                    }
+                }
+            }
+
             InternalTestHelper((DemoNetworkSMAnim sm, Animator anim) =>
             {
-                Assert.AreEqual(sm.CurrentState, typeof(StateA));
-                Assert.AreEqual(sm.CurrentAnimationState, Animator.StringToHash(AnimA));
-                Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimA));
+                Assert.AreEqual(typeof(StateA), sm.CurrentState);
+                Assert.AreEqual(Animator.StringToHash(AnimA), sm.CurrentAnimationState);
+                Assert.AreEqual(Animator.StringToHash(AnimA), anim.GetCurrentAnimatorStateInfo(0).shortNameHash);
 
                 unityServiceMock.deltaTime = 10.0f;
                 anim.Play(AnimA, 0, 0.0f);
