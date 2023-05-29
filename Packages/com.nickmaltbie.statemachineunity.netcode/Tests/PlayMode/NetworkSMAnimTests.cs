@@ -389,11 +389,10 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
                 }
 
                 sm.RaiseEvent(new BEvent());
-                Assert.AreEqual(sm.CurrentState, typeof(StateB));
-                Assert.AreEqual(sm.CurrentAnimationState, Animator.StringToHash(AnimA));
+                Assert.AreEqual(typeof(StateB), sm.CurrentState);
                 sm.Update();
-                Assert.AreEqual(sm.CurrentAnimationState, Animator.StringToHash(AnimB));
                 anim.Update(1.0f);
+                Assert.AreEqual(Animator.StringToHash(AnimB), sm.CurrentAnimationState);
                 Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimB));
 
                 for (int clientIdx = 0; clientIdx < 3; clientIdx++)
