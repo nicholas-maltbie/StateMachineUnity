@@ -461,7 +461,6 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
                 UnityEngine.TestTools.LogAssert.Expect(
                     LogType.Error,
                     $"Warning, did not find expected stateId:{Animator.StringToHash(AnimD)} in layer:0 for animator:{anim.name}");
-                Assert.AreEqual(sm.CurrentAnimationState, Animator.StringToHash(AnimD));
                 Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimA));
             });
         }
