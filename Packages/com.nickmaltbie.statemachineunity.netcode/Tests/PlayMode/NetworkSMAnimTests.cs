@@ -41,8 +41,6 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
 
         public int CrossFadeCount = 0;
 
-        public MockUnityService unityServiceMock;
-
         [InitialState]
         [Animation(AnimA)]
         [Transition(typeof(BEvent), typeof(StateB))]
@@ -72,10 +70,6 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
         {
             base.Awake();
 
-            unityServiceMock = new MockUnityService();
-            unityServiceMock.deltaTime = 0.1f;
-            unityServiceMock.fixedDeltaTime = 0.1f;
-
             var controller = new AnimatorController();
 
             // Add State Machines
@@ -93,7 +87,6 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
 
             Animator anim = GetComponent<Animator>();
             anim.runtimeAnimatorController = controller;
-            unityService = unityServiceMock;
         }
 
         public override void CrossFade(AnimSMRequest req, int layerIdx = 0)
@@ -141,25 +134,13 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
             yield return WaitForSMReady();
         }
 
-        private void InternalTestHelper(Action<DemoNetworkSMAnim, Animator> testAction)
+        [UnityTest]
+        public IEnumerator TimeoutAfterUpdate()
         {
-            for (int i = 0; i < 3; i++)
+            yield return WaitForSMReady();
+            base.ForEachOwner((sm, idx) =>
             {
-                unityServiceMock.deltaTime = 1.0f;
-                DemoNetworkSMAnim sm = GetAttachedNetworkBehaviour(i, i);
-                sm.SetStateQuiet(typeof(StateA));
-                sm.Start();
-                sm.unityService = unityServiceMock;
                 Animator anim = sm.GetComponent<Animator>();
-                testAction(sm, anim);
-            }
-        }
-
-        [Test]
-        public void TimeoutAfterUpdate()
-        {
-            InternalTestHelper((DemoNetworkSMAnim sm, Animator anim) =>
-            {
                 Assert.AreEqual(typeof(StateA), sm.CurrentState);
                 Assert.AreEqual(Animator.StringToHash(AnimA), sm.CurrentAnimationState);
                 Assert.AreEqual(Animator.StringToHash(AnimA), anim.GetCurrentAnimatorStateInfo(0).shortNameHash);
@@ -178,11 +159,13 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
             });
         }
 
-        [Test]
-        public void TestAnimationLockPending()
+        [UnityTest]
+        public IEnumerator TestAnimationLockPending()
         {
-            InternalTestHelper((DemoNetworkSMAnim sm, Animator anim) =>
+            yield return WaitForSMReady();
+            base.ForEachOwner((sm, idx) =>
             {
+                Animator anim = sm.GetComponent<Animator>();
                 Assert.AreEqual(sm.CurrentState, typeof(StateA));
                 Assert.AreEqual(sm.CurrentAnimationState, Animator.StringToHash(AnimA));
                 Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimA));
@@ -204,11 +187,13 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
             });
         }
 
-        [Test]
-        public void TestAnimationTransitionWithLocks()
+        [UnityTest]
+        public IEnumerator TestAnimationTransitionWithLocks()
         {
-            InternalTestHelper((DemoNetworkSMAnim sm, Animator anim) =>
+            yield return WaitForSMReady();
+            base.ForEachOwner((sm, idx) =>
             {
+                Animator anim = sm.GetComponent<Animator>();
                 Assert.AreEqual(sm.CurrentState, typeof(StateA));
                 Assert.AreEqual(sm.CurrentAnimationState, Animator.StringToHash(AnimA));
                 Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimA));
@@ -233,20 +218,14 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
 
                 // If we wait for time to expire, assert that we read the pending
                 // animation instead of the current state
-                unityServiceMock.time = 10;
-                sm.Update();
-                anim.Update(1.0f);
-                Assert.AreEqual(sm.CurrentAnimationState, Animator.StringToHash(AnimB));
-                Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimB));
-                Assert.AreEqual(null, sm.PendingReq);
+                unityServiceMock.time = 10.0f;
+                unityServiceMock.deltaTime = 10.0f;
 
                 // If we update again, it should read the animation from state A
                 // Since there is no longer any pending animation.
                 sm.Update();
                 anim.Update(1.0f);
                 Assert.AreEqual(sm.CurrentState, typeof(StateA));
-                Assert.AreEqual(sm.CurrentAnimationState, Animator.StringToHash(AnimA));
-                Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimA));
             });
         }
 
@@ -254,8 +233,9 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
         public IEnumerator VerifyTransitionOnTimeout()
         {
             yield return WaitForSMReady();
-            InternalTestHelper((DemoNetworkSMAnim sm, Animator anim) =>
+            base.ForEachOwner((sm, idx) =>
             {
+                Animator anim = sm.GetComponent<Animator>();
                 Assert.AreEqual(typeof(StateA), sm.CurrentState);
                 Assert.AreEqual(Animator.StringToHash(AnimA), sm.CurrentAnimationState);
                 Assert.AreEqual(Animator.StringToHash(AnimA), anim.GetCurrentAnimatorStateInfo(0).shortNameHash);
@@ -274,20 +254,24 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
             });
         }
 
-        [Test]
-        public void VerifyAnimationGetAnimator()
+        [UnityTest]
+        public IEnumerator VerifyAnimationGetAnimator()
         {
-            InternalTestHelper((DemoNetworkSMAnim sm, Animator anim) =>
+            yield return WaitForSMReady();
+            base.ForEachOwner((sm, idx) =>
             {
+                Animator anim = sm.GetComponent<Animator>();
                 Assert.AreEqual(sm.GetAnimator(), anim);
             });
         }
 
-        [Test]
-        public void VerifyAnimationTransitions()
+        [UnityTest]
+        public IEnumerator VerifyAnimationTransitions()
         {
-            InternalTestHelper((DemoNetworkSMAnim sm, Animator anim) =>
+            yield return WaitForSMReady();
+            base.ForEachOwner((sm, idx) =>
             {
+                Animator anim = sm.GetComponent<Animator>();
                 Assert.AreEqual(sm.CurrentState, typeof(StateA));
                 Assert.AreEqual(sm.CurrentAnimationState, Animator.StringToHash(AnimA));
                 Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimA));
@@ -316,11 +300,13 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
             });
         }
 
-        [Test]
-        public void VerifyAnimationTransitionStateCrossFade()
+        [UnityTest]
+        public IEnumerator VerifyAnimationTransitionStateCrossFade()
         {
-            InternalTestHelper((DemoNetworkSMAnim sm, Animator anim) =>
+            yield return WaitForSMReady();
+            base.ForEachOwner((sm, idx) =>
             {
+                Animator anim = sm.GetComponent<Animator>();
                 sm.RaiseEvent(new BEvent());
                 sm.CrossFadeCount = 0;
                 sm.RaiseEvent(new AEvent());
@@ -331,9 +317,10 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
         [UnityTest]
         public IEnumerator VerifyAnimationTransitionStateCrossFadeFixed()
         {
-            yield return null;
-            InternalTestHelper((DemoNetworkSMAnim sm, Animator anim) =>
+            yield return WaitForSMReady();
+            base.ForEachOwner((sm, idx) =>
             {
+                Animator anim = sm.GetComponent<Animator>();
                 sm.RaiseEvent(new CEvent());
                 sm.CrossFadeCount = 0;
                 sm.RaiseEvent(new AEvent());
@@ -344,9 +331,10 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
         [UnityTest]
         public IEnumerator VerifyTransitionToUnknownAnimationStateCrossFade()
         {
-            yield return null;
-            InternalTestHelper((DemoNetworkSMAnim sm, Animator anim) =>
+            yield return WaitForSMReady();
+            base.ForEachOwner((sm, idx) =>
             {
+                Animator anim = sm.GetComponent<Animator>();
                 Assert.AreEqual(sm.CurrentState, typeof(StateA));
                 Assert.AreEqual(sm.CurrentAnimationState, Animator.StringToHash(AnimA));
                 Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimA));
@@ -355,8 +343,6 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
                 sm.RaiseEvent(new DEvent1());
                 Assert.AreEqual(sm.CrossFadeCount, 1);
 
-                sm.Update();
-                anim.Update(0.0f);
                 UnityEngine.TestTools.LogAssert.Expect(
                     LogType.Error,
                     $"Warning, did not find expected stateId:{Animator.StringToHash(AnimD)} in layer:0 for animator:{anim.name}");
@@ -368,11 +354,11 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
         [UnityTest]
         public IEnumerator VerifyTransitionOnClients()
         {
+            yield return WaitForSMReady();
             for (int i = 0; i < 3; i++)
             {
                 unityServiceMock.deltaTime = 1.0f;
                 DemoNetworkSMAnim sm = GetAttachedNetworkBehaviour(i, i);
-                sm.SetStateQuiet(typeof(StateA));
                 sm.Start();
                 sm.unityService = unityServiceMock;
                 Animator anim = sm.GetComponent<Animator>();
@@ -391,10 +377,11 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
                 }
 
                 sm.RaiseEvent(new BEvent());
-                Assert.AreEqual(typeof(StateB), sm.CurrentState);
+                Assert.AreEqual(sm.CurrentState, typeof(StateB));
+                Assert.AreEqual(sm.CurrentAnimationState, Animator.StringToHash(AnimA));
                 sm.Update();
+                Assert.AreEqual(sm.CurrentAnimationState, Animator.StringToHash(AnimB));
                 anim.Update(1.0f);
-                Assert.AreEqual(Animator.StringToHash(AnimB), sm.CurrentAnimationState);
                 Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimB));
 
                 for (int clientIdx = 0; clientIdx < 3; clientIdx++)
@@ -415,6 +402,7 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
         [UnityTest]
         public IEnumerator VerifyCrossFadeNotOwner()
         {
+            yield return WaitForSMReady();
             for (int i = 0; i < 3; i++)
             {
                 for (int j = 0; j < 3; j++)
@@ -441,16 +429,19 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
                     sm.CrossFade(new AnimSMRequest(AnimB));
 
                     Assert.AreEqual(typeof(StateA), sm.CurrentState);
+                    Assert.AreEqual(Animator.StringToHash(AnimA), sm.CurrentAnimationState);
                     Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimA));
                 }
             }
         }
 
-        [Test]
-        public void VerifyTransitionToUnknownAnimationStateCrossFadeFixed()
+        [UnityTest]
+        public IEnumerator VerifyTransitionToUnknownAnimationStateCrossFadeFixed()
         {
-            InternalTestHelper((DemoNetworkSMAnim sm, Animator anim) =>
+            yield return WaitForSMReady();
+            base.ForEachOwner((sm, idx) =>
             {
+                Animator anim = sm.GetComponent<Animator>();
                 Assert.AreEqual(sm.CurrentState, typeof(StateA));
                 Assert.AreEqual(sm.CurrentAnimationState, Animator.StringToHash(AnimA));
                 Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimA));
@@ -462,6 +453,7 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
                 UnityEngine.TestTools.LogAssert.Expect(
                     LogType.Error,
                     $"Warning, did not find expected stateId:{Animator.StringToHash(AnimD)} in layer:0 for animator:{anim.name}");
+                Assert.AreEqual(sm.CurrentAnimationState, Animator.StringToHash(AnimD));
                 Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimA));
             });
         }

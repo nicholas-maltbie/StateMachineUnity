@@ -190,9 +190,10 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
             yield return WaitForSMReady();
         }
 
-        [Test]
-        public void TimeoutAfterUpdate()
+        [UnityTest]
+        public IEnumerator TimeoutAfterUpdate()
         {
+            yield return WaitForSMReady();
             for (int i = 0; i < 3; i++)
             {
                 unityServiceMock.deltaTime = 1.0f;
@@ -215,9 +216,10 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
             }
         }
 
-        [Test]
-        public void FixedTimeoutAfterUpdate()
+        [UnityTest]
+        public IEnumerator FixedTimeoutAfterUpdate()
         {
+            yield return WaitForSMReady();
             for (int i = 0; i < 3; i++)
             {
                 unityServiceMock.fixedDeltaTime = 1.0f;
@@ -242,9 +244,10 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
             }
         }
 
-        [Test]
-        public void VerifyUpdateActionCounts()
+        [UnityTest]
+        public IEnumerator VerifyUpdateActionCounts()
         {
+            yield return WaitForSMReady();
             for (int i = 0; i < 3; i++)
             {
                 unityServiceMock.fixedDeltaTime = 1.0f;
@@ -287,7 +290,7 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    var sm = GetAttachedNetworkBehaviour(i, j);
+                    DemoNetworkSMBehaviour sm = GetAttachedNetworkBehaviour(i, j);
                     int k = 0;
                     while (k < 1000 && sm.CurrentState != typeof(StartingState))
                     {
