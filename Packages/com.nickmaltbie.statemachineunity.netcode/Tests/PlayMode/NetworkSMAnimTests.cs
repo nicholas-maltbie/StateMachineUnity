@@ -355,6 +355,8 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
                 sm.RaiseEvent(new DEvent1());
                 Assert.AreEqual(sm.CrossFadeCount, 1);
 
+                sm.Update();
+                anim.Update(0.0f);
                 UnityEngine.TestTools.LogAssert.Expect(
                     LogType.Error,
                     $"Warning, did not find expected stateId:{Animator.StringToHash(AnimD)} in layer:0 for animator:{anim.name}");
