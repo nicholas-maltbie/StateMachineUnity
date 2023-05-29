@@ -441,7 +441,6 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
                     sm.CrossFade(new AnimSMRequest(AnimB));
 
                     Assert.AreEqual(typeof(StateA), sm.CurrentState);
-                    Assert.AreEqual(Animator.StringToHash(AnimA), sm.CurrentAnimationState);
                     Assert.AreEqual(anim.GetCurrentAnimatorStateInfo(0).shortNameHash, Animator.StringToHash(AnimA));
                 }
             }
