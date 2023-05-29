@@ -1,10 +1,23 @@
 name: Create and Publish npm Package
 
 on:
-  push:
-    tags:
-      - '*'
-    branches: ['main']
+  workflow_call:
+    inputs:
+      version-name:
+        required: false
+        type: string
+        default: ""
+      release-publish:
+        required: false
+        type: boolean
+        default: false
+      latest-publish:
+        required: false
+        type: boolean
+        default: true
+    secrets:
+      token:
+        required: false
 
 jobs:
   create-statemachineunity-package:
@@ -34,20 +47,20 @@ jobs:
         id: releaseTagName
 
       # Deploy build to release branch
-      - name: Push package to git branch ${{ matrix.branch_prefix }}/${{ steps.releaseTagName.outputs.tag }}
-        if: "${{ steps.releaseTagName.outputs.tag != '' }}"
+      - name: Push package to git branch ${{ matrix.branch_prefix }}/${{ inputs.version-name }}
+        if: ${{ inputs.release-publish }}
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ matrix.branch_prefix }}/${{ steps.releaseTagName.outputs.tag }}
+          github_token: ${{ secrets.token }}
+          branch: ${{ matrix.branch_prefix }}/${{ inputs.version-name }}
           force: true
 
       # Deploy build to release branch
       - name: Push package to git branch ${{ matrix.branch_prefix }}/latest
-        if: github.ref == 'refs/heads/main'
+        if: ${{ inputs.latest-publish }}
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.token }}
           branch: ${{ matrix.branch_prefix }}/latest
           force: true
 
@@ -55,19 +68,17 @@ jobs:
         run: git lfs pull
         shell: bash
 
-      # Publish to 
-      - name: Use Node.js 14
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
           registry-url: https://registry.npmjs.org/
       
       - name: Publish Package to NpmJS
-        if: "${{ steps.releaseTagName.outputs.tag != '' }}"
+        if: "${{ inputs.release-publish }}"
         run: npm publish
-        continue-on-error: true
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.token }}
       
       # Restore back to original branch
       - uses: actions/checkout@v3
+        if: always()

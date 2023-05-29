@@ -29,17 +29,17 @@ namespace nickmaltbie.StateMachineUnity
         /// <summary>
         /// Type of event to listen for.
         /// </summary>
-        public Type TriggerEvent { get; }
+        Type TriggerEvent { get; }
 
         /// <summary>
         /// Target state upon event trigger.
         /// </summary>
-        public TState TargetState { get; }
+        TState TargetState { get; }
 
         /// <summary>
         /// Behaviour to invoke when this transition is triggered.
         /// </summary>
         /// <param name="sm">State machine being transitioned.</param>
-        public void OnTransition(IStateMachine<TState> sm);
+        void OnTransition(IStateMachine<TState> sm);
     }
 }

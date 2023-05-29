@@ -102,6 +102,7 @@ _site/
 Documentation/api/
 Documentation/latest/api/
 Documentation/**/CHANGELOG.md
+Documentation/**/CHANGELOG.netcode.md
 Documentation/Demo/
 Documentation/index.*
 Documentation/LICENSE.txt

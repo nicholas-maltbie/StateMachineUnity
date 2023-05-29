@@ -100,7 +100,7 @@ namespace nickmaltbie.StateMachineUnity.netcode
         {
             base.Start();
 
-            AttachedAnimator ??= gameObject.GetComponent<Animator>();
+            AttachedAnimator = AttachedAnimator ?? gameObject.GetComponent<Animator>();
 
             if (AttachedAnimator != null)
             {

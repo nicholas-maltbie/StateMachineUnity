@@ -30,12 +30,12 @@ namespace nickmaltbie.StateMachineUnity
         /// Gets the animator associated with this state machine.
         /// </summary>
         /// <returns>Get the animator associated with this state machine.</returns>
-        public Animator GetAnimator();
+        Animator GetAnimator();
 
         /// <summary>
         /// Current target animation state for the animator.
         /// </summary>
-        public int CurrentAnimationState { get; }
+        int CurrentAnimationState { get; }
 
         /// <summary>
         /// Set the animation state of the anim state machine using a normalized transition time.
@@ -43,6 +43,6 @@ namespace nickmaltbie.StateMachineUnity
         /// <param name="animState">Description of animation state to transition
         /// anim state machine into.</param>
         /// <param name="layerIdx">Layer to trigger animation in animator.</param>
-        public void CrossFade(AnimSMRequest animState, int layerIdx = 0);
+        void CrossFade(AnimSMRequest animState, int layerIdx = 0);
     }
 }
