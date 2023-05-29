@@ -132,6 +132,8 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
 
             yield return base.UnitySetUp();
             yield return WaitForSMReady();
+
+            ForEachOwner((anim, i) => anim.unityService = unityServiceMock);
         }
 
         [UnityTest]
