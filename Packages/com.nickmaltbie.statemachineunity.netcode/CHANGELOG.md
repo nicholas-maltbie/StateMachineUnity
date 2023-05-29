@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## In Progress
 
-* Added backwards compatibility and automated testing for versions 2020.3, and 2021.3 of unity.
+* Added backwards compatibility and automated testing for versions 2021.3 of unity.
 
 ## [1.3.0] - 2023-04-09
 
