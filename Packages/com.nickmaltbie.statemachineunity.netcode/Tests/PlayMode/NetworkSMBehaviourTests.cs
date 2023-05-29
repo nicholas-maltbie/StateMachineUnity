@@ -187,6 +187,7 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
         {
             unityServiceMock = new MockUnityService();
             yield return base.UnitySetUp();
+            yield return WaitForSMReady();
         }
 
         [Test]
@@ -277,6 +278,20 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
 
                 sm.Update();
                 Assert.GreaterOrEqual(sm.actionStateCounts.GetOrAdd((typeof(OnUpdateAttribute), typeof(StateA)), t => 0), 1);
+            }
+        }
+
+        protected IEnumerator WaitForSMReady()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    while (GetAttachedNetworkBehaviour(i, j).CurrentState != typeof(StateA))
+                    {
+                        yield return new WaitForSeconds(0.0f);
+                    }
+                }
             }
         }
     }
