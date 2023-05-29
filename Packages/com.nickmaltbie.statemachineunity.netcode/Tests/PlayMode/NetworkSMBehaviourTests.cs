@@ -287,10 +287,15 @@ namespace nickmaltbie.StateMachineUnity.netcode.Tests.PlayMode
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    while (GetAttachedNetworkBehaviour(i, j).CurrentState != typeof(StartingState))
+                    var sm = GetAttachedNetworkBehaviour(i, j);
+                    int k = 0;
+                    while (k < 1000 && sm.CurrentState != typeof(StartingState))
                     {
                         yield return new WaitForSeconds(0.0f);
+                        k++;
                     }
+
+                    Assert.AreEqual(typeof(StartingState), sm.CurrentState);
                 }
             }
         }
