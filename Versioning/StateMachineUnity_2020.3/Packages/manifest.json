@@ -10,7 +10,6 @@
   ],
   "dependencies": {
     "com.nickmaltbie.statemachineunity": "file:../../../Packages/com.nickmaltbie.statemachineunity",
-    "com.nickmaltbie.statemachineunity.netcode": "file:../../../Packages/com.nickmaltbie.statemachineunity.netcode",
     "com.unity.test-framework": "1.1.33",
     "com.unity.testtools.codecoverage": "1.2.3",
     "com.unity.modules.animation": "1.0.0",
@@ -18,7 +17,6 @@
   },
   "testables": [
     "com.nickmaltbie.statemachineunity",
-    "com.nickmaltbie.statemachineunity.netcode",
     "com.nickmaltbie.testutilsunity",
     "com.unity.inputsystem",
     "com.unity.netcode.gameobjects"
