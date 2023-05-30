@@ -26,7 +26,7 @@
     "com.nickmaltbie.testutilsunity" : "0.0.2",
     "com.nickmaltbie.statemachineunity" : "1.2.3",
     "com.unity.inputsystem": "1.0.0",
-    "com.unity.netcode.gameobjects": "1.1.0",
+    "com.unity.netcode.gameobjects": "1.0.0",
     "com.unity.modules.animation": "1.0.0"
   },
   "license": "MIT",
