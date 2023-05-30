@@ -121,7 +121,10 @@ namespace nickmaltbie.StateMachineUnity.netcode
 
                 _currentAnimationState.OnValueChanged += (AnimSMRequestNetwork oldValue, AnimSMRequestNetwork newValue) =>
                 {
-                    UpdateAnimatorStateInternal(newValue.AnimSMRequest);
+                    if (newValue.AnimSMRequest.targetStateHash != 0)
+                    {
+                        UpdateAnimatorStateInternal(newValue.AnimSMRequest);
+                    }
                 };
             }
         }
