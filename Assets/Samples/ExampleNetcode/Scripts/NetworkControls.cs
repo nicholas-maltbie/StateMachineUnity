@@ -17,12 +17,13 @@
 // SOFTWARE.
 
 using System.Net;
-using Netcode.Transports.WebSocket;
 using nickmaltbie.ScreenManager;
 using TMPro;
 using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 using UnityEngine.UI;
+using static Unity.Netcode.Transports.UTP.UnityTransport;
 
 namespace nickmaltbie.StateMachineUnity.netcode.ExampleAnim
 {
@@ -64,13 +65,15 @@ namespace nickmaltbie.StateMachineUnity.netcode.ExampleAnim
             clientButton.onClick.AddListener(() => StartNetworkManager(NMActionType.Client));
             serverButton.onClick.AddListener(() => StartNetworkManager(NMActionType.Server));
 
-            var networkTransport = NetworkManager.Singleton.NetworkConfig.NetworkTransport as WebSocketTransport;
+            var networkTransport = NetworkManager.Singleton.NetworkConfig.NetworkTransport as UnityTransport;
 
             serverAddress.onValueChanged.AddListener(address =>
             {
                 if (IPAddress.TryParse(address, out _))
                 {
-                    networkTransport.ConnectAddress = address;
+                    ConnectionAddressData connectionData = networkTransport.ConnectionData;
+                    connectionData.Address = address;
+                    networkTransport.ConnectionData = connectionData;
                     debugMessage.text = $"Valid Server IP Address!";
                 }
                 else
@@ -82,7 +85,9 @@ namespace nickmaltbie.StateMachineUnity.netcode.ExampleAnim
             {
                 if (ushort.TryParse(port, out ushort parsed))
                 {
-                    networkTransport.Port = parsed;
+                    ConnectionAddressData connectionData = networkTransport.ConnectionData;
+                    connectionData.Port = parsed;
+                    networkTransport.ConnectionData = connectionData;
                     debugMessage.text = $"Valid Server Port!";
                 }
                 else
@@ -139,9 +144,10 @@ namespace nickmaltbie.StateMachineUnity.netcode.ExampleAnim
                 return;
             }
 
-            var networkTransport = NetworkManager.Singleton.NetworkConfig.NetworkTransport as WebSocketTransport;
-            networkTransport.ConnectAddress = serverAddress.text;
-            networkTransport.Port = ushort.Parse(serverPort.text);
+            var networkTransport = NetworkManager.Singleton.NetworkConfig.NetworkTransport as UnityTransport;
+            ConnectionAddressData connectionData = networkTransport.ConnectionData;
+            connectionData.Address = serverAddress.text;
+            connectionData.Port = ushort.Parse(serverPort.text);
 
             switch (action)
             {

@@ -31,7 +31,7 @@ namespace nickmaltbie.StateMachineUnity.netcode.ExampleAnim
     {
         public void Update()
         {
-            ExampleNetworkSMAnim[] players = GameObject.FindObjectsOfType<ExampleNetworkSMAnim>();
+            ExampleNetworkSMAnim[] players = FindObjectsByType<ExampleNetworkSMAnim>(FindObjectsSortMode.None);
             var targetText = new StringBuilder();
 
             foreach (ExampleNetworkSMAnim player in players
