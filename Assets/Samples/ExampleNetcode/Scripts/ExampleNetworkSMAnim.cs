@@ -125,8 +125,10 @@ namespace nickmaltbie.StateMachineUnity.netcode.ExampleAnim
         /// <summary>
         /// Configure actions for the example NetworkState machine with animations.
         /// </summary>
-        public void Awake()
+        public override void Awake()
         {
+            base.Awake();
+
             jumpAction.action.performed += _ =>
             {
                 if (base.IsOwner)

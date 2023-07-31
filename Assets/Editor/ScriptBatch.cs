@@ -57,10 +57,14 @@ public class ScriptBatch : IPostprocessBuildWithReport, IPreprocessBuildWithRepo
     /// <summary>
     /// Gets the list of scenes in the project.
     /// </summary>
-    /// <returns></returns>
     public static string[] GameScenes => new[]
     {
         System.IO.Path.Combine(ScriptBatch.AssetDirectory, "Samples", "ExampleFSM", "ExampleFSM.unity")
+    };
+
+    public static string[] NetcodeScenes => new[]
+    {
+        System.IO.Path.Combine(ScriptBatch.AssetDirectory, "Samples", "ExampleNetcode", "NetcodeScene.unity")
     };
 
     /// <summary>
@@ -99,7 +103,7 @@ public class ScriptBatch : IPostprocessBuildWithReport, IPreprocessBuildWithRepo
     [MenuItem("Build/Demo/WebGL Build")]
     public static void WebGLBuild()
     {
-        PlayerSettings.SetScriptingBackend(BuildTargetGroup.WebGL, ScriptingImplementation.IL2CPP);
+        PlayerSettings.SetScriptingBackend(NamedBuildTarget.WebGL, ScriptingImplementation.IL2CPP);
 
         // Get file path of build.
         string appFolder = Path.Combine(
@@ -117,7 +121,7 @@ public class ScriptBatch : IPostprocessBuildWithReport, IPreprocessBuildWithRepo
     [MenuItem("Build/Demo/MacOS Build")]
     public static void MacOSBuild()
     {
-        PlayerSettings.SetScriptingBackend(BuildTargetGroup.Standalone, ScriptingImplementation.Mono2x);
+        PlayerSettings.SetScriptingBackend(NamedBuildTarget.Standalone, ScriptingImplementation.Mono2x);
 
         // Get file path of build.
         string path = Path.Combine(BuildDirectory, $"{Constants.ProjectName}-MacOS-{VersionNumber}");
@@ -134,7 +138,7 @@ public class ScriptBatch : IPostprocessBuildWithReport, IPreprocessBuildWithRepo
     [MenuItem("Build/Demo/Linux Build")]
     public static void LinuxBuild()
     {
-        PlayerSettings.SetScriptingBackend(BuildTargetGroup.Standalone, ScriptingImplementation.IL2CPP);
+        PlayerSettings.SetScriptingBackend(NamedBuildTarget.Standalone, ScriptingImplementation.IL2CPP);
 
         // Get file path of build.
         string path = Path.Combine(BuildDirectory, $"{Constants.ProjectName}-Linux-{VersionNumber}");
@@ -149,7 +153,7 @@ public class ScriptBatch : IPostprocessBuildWithReport, IPreprocessBuildWithRepo
     [MenuItem("Build/Demo/Windows64 Build")]
     public static void WindowsBuild()
     {
-        PlayerSettings.SetScriptingBackend(BuildTargetGroup.Standalone, ScriptingImplementation.IL2CPP);
+        PlayerSettings.SetScriptingBackend(NamedBuildTarget.Standalone, ScriptingImplementation.IL2CPP);
 
         var options = new BuildPlayerOptions
         {
@@ -157,6 +161,30 @@ public class ScriptBatch : IPostprocessBuildWithReport, IPreprocessBuildWithRepo
             locationPathName = Path.Combine(
                 BuildDirectory,
                 $"{Constants.ProjectName}-Win64-{VersionNumber}",
+                $"{AppName}.exe"),
+            targetGroup = BuildTargetGroup.Standalone,
+            target = BuildTarget.StandaloneWindows64,
+            options = BuildOptions.Development
+        };
+
+        // Build player.
+        BuildPipeline.BuildPlayer(options);
+    }
+
+    /// <summary>
+    /// Create a build for the windows 64 version with IL2CPP backend.
+    /// </summary>
+    [MenuItem("Build/Demo/Windows64 Build Netcode")]
+    public static void WindowsBuildNetcode()
+    {
+        PlayerSettings.SetScriptingBackend(NamedBuildTarget.Standalone, ScriptingImplementation.IL2CPP);
+
+        var options = new BuildPlayerOptions
+        {
+            scenes = NetcodeScenes,
+            locationPathName = Path.Combine(
+                BuildDirectory,
+                $"{Constants.ProjectName}-Netcode-Win64-{VersionNumber}",
                 $"{AppName}.exe"),
             targetGroup = BuildTargetGroup.Standalone,
             target = BuildTarget.StandaloneWindows64,
@@ -187,6 +215,25 @@ public class ScriptBatch : IPostprocessBuildWithReport, IPreprocessBuildWithRepo
     }
 
     /// <summary>
+    /// Create an official build for the WebGL Platform for netcode.
+    /// </summary>
+    [MenuItem("Build/Official/WebGL Build Netcode")]
+    public static void OfficialBuild_WebGL_Netcode()
+    {
+        PlayerSettings.WebGL.compressionFormat = WebGLCompressionFormat.Gzip;
+        PlayerSettings.WebGL.decompressionFallback = true;
+        var options = new BuildPlayerOptions
+        {
+            scenes = NetcodeScenes,
+            locationPathName = Path.Combine(BuildDirectory, $"{Constants.ProjectName}-WebGL-Netcode"),
+            target = BuildTarget.WebGL,
+        };
+
+        // Build player.
+        BuildPipeline.BuildPlayer(options);
+    }
+
+    /// <summary>
     /// Create a test build for the WebGL platform.
     /// </summary>
     public static void TestBuild_WebGL()
@@ -199,7 +246,7 @@ public class ScriptBatch : IPostprocessBuildWithReport, IPreprocessBuildWithRepo
     /// </summary>
     public static void TestBuild_Win64()
     {
-        PlayerSettings.SetScriptingBackend(BuildTargetGroup.Standalone, ScriptingImplementation.Mono2x);
+        PlayerSettings.SetScriptingBackend(NamedBuildTarget.Standalone, ScriptingImplementation.Mono2x);
 
         var options = new BuildPlayerOptions
         {
