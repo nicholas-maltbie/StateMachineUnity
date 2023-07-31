@@ -20,7 +20,6 @@
   },
   "testables": [
     "com.nickmaltbie.statemachineunity",
-    "com.nickmaltbie.statemachineunity.netcode",
     "com.nickmaltbie.testutilsunity",
     "com.unity.inputsystem",
     "com.unity.netcode.gameobjects"
